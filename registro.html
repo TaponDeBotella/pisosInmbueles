@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registro</title>
+    </head>
+
+    <header>   
+        <nav>
+            <ul>
+                <li>
+                    <button id="claro_oscuro">Modo claro/oscuro</button>
+                </li>
+
+                <li>
+                    <button id="menu_busqueda">Menú búsqueda</button>
+                </li>
+    
+                <li>
+                    <a href="index.html">Pisos & Inmuebles</a>
+                </li>
+
+                <li>
+                    <a href="log_registro.html">Acceder</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <br><br>
+
+    <body>
+        <h1>Registro</h1>
+        <form>
+            <label>Nombre: </label>
+            <input type="text" id="name"><br>
+
+            <label>Contraseña: </label>
+            <input type="password" id="password"><br>
+            
+            <label>Repetir contraseña: </label>
+            <input type="password" id="password2"><br>
+            
+            <label>Correo electrónico: </label>
+            <input type="email" id="email"><br>
+            
+            <label>Sexo: </label>
+            <select id="sex">
+                <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+            </select><br>
+            
+            <label>Fecha de nacimiento: </label>
+            <input type="date" id="birth"><br>
+            
+            <label>Ciudad de residencia: </label>
+            <input type="text" id="city"><br>
+            
+            <label>País de residencia: </label>
+            <select id="country">
+                <option value="gr">Alemania</option>
+                <option value="es">España</option>
+                <option value="fr">Francia</option>
+                <option value="gre">Grecia</option>
+                <option value="it">Italia</option>
+                <option value="pol">Polonia</option>
+                <option value="uk">Reino unido</option>
+                <option value="swi">Suecia</option>
+                <option value="swe">Suiza</option>
+                <option value="ukr">Ucrania</option>
+            </select><br>
+            
+            <label>Foto: </label>
+            <!-- <input type="file" accept="image/*" required> -->
+            <input type="file">
+
+
+            <input type="submit" value="Confirmar">
+            <input type="reset" value="Reset"><br>
+
+        </form>
+    </body>
+    <br><br>
+    <footer> ©<time datetime="2025">2025</time> PI - Pisos & Inmuebles - Desarrollado por Ariadna Guillén y Raúl Cervera</footer>
+</html>

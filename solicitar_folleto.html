@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Solicitar folleto</title>
+    </head>
+
+    <header>   
+        <nav>
+            <ul>
+                <li>
+                    <p id="menu_busqueda">Menú búsqueda</button>
+                </li>
+    
+                <li>
+                    <a href="index.html">Pisos & Inmuebles</a>
+                </li>
+
+                <li>
+                    <a href="log_registro.html">Mi perfil</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <br><br>
+
+    <body>
+        <h1>Solicitar folleto</h1>
+        <section>
+            <h2>Solicitud de impresión de folleto publicitario</h2>
+            <p>Presenta tu solicitud de impresión de folleto publicitario.</p>
+        </section>
+        <section>
+            <h3>Tarifas</h3>
+            <table border="1" cellspacing="0" cellpadding="8">
+                <tr>
+                    <th>Concepto</th>
+                    <th>Tarifa</th>
+                </tr>
+                <tr>
+                    <th>Coste procesamiento y envío</th>
+                    <th>10€</th>
+                </tr>
+                <tr>
+                    <th>Menos de 5 páginas></th>
+                    <th>2€ por página</th>
+                </tr>
+                <tr>
+                    <th>Entre 5 y 10 páginas</th>
+                    <th>1.8€ por página</th>
+                </tr>
+                <tr>
+                    <th>Más de 10 páginas</th>
+                    <th>1.6€</th>
+                </tr>
+                <tr>
+                    <th>Blanco y negro</th>
+                    <th>0€</th>
+                </tr>
+                <tr>
+                    <th>Color</th>
+                    <th>0.5€ por foto</th>
+                </tr>
+                <tr>
+                    <th>Resolución 300dpi o menos</th>
+                    <th>0€ por foto</th>
+                </tr>
+                <tr>
+                    <th>Resolución menor que 300dpi</th>
+                    <th>0.2€ por foto</th>
+                </tr>
+            </table>
+        </section>
+        <section>
+            <h3>Formulario de solicitud</h3>
+            <p>Rellena el siguiente formulario aportando todos los detalles para confeccionar tu folleto publicitario.
+            Los campos marcados con (*) son obligatotios.</p> <br>
+
+            <form action="respuesta_folleto.html">
+                <label>Texto adicional</label>
+                <input type="text" id="texto_adicional_folleto" maxlength="4000"> <br> <br>
+
+                <label>Nombre</label>
+                <input type="text" id="nombre_folleto" maxlength="200" required>
+                <label>(*)</label> <br> <br>
+
+                <label>Correo Electrónico</label>
+                <input type="email" id="email_folleto" maxlength="200" required>
+                <label>(*)</label> <br> <br>
+
+                <label>Dirección</label>
+                <input type="text" id="calle_folleto" placeholder="Calle" required> 
+                <input type="number" id="numCalle_folleto" min="1" placeholder="Número" required> 
+                <input type="number" id="cp_folleto" min="1" placeholder="CP" required>
+                <select id="localidad_folleto" placeholder="Localidad" required>
+                    <option value="l1">localidad 1</option>
+                    <option value="l2">localidad 2</option>
+                    <option value="l3">localidad 3</option>
+                    <option value="l4">localidad 4</option>
+                </select>
+                <select id="provincia_folleto" placeholder="Provincia" required>
+                    <option value="br">Barcelona</option>
+                    <option value="ma">Málaga</option>
+                    <option value="al">Alicante</option>
+                    <option value="mu">Murcia</option>
+                    <option value="se">Sevilla</option>
+                </select>
+                <label>(*)</label> <br> <br>
+
+                <label>Número de teléfono</label>
+                <input type="tel" id="tel_folleto"> <br> <br>
+
+                <label>Color de la portada</label>
+                <input type="color" id="color_folleto" value="#000000"> <br> <br>
+
+                <label>Número de copias</label>
+                <input type="number" id="numCopias_folleto" min="1" max="99" value="1"> <br> <br>
+
+                <label>Resolución de impresión</label>
+                <input type="number" id="resolucion_folleto" min="150" max="900" step="150" value="150"> <br> <br>
+
+                <label for="anuncio">Anuncio del usuario</label>
+                <select id="anuncio_folelto" required>
+                <option value="a1">Anuncio 1</option>
+                <option value="a2">Anuncio 2</option>
+                <option value="a3">Anuncio 3</option>
+                </select>
+                <label>(*)</label> <br> <br>
+
+                <label>Fecha de recepción</label>
+                <input type="date" id="fecha" name="fecha"> <br> <br>
+
+                <label>¿Impresión a color?</label>
+                <input type="radio" id="bn_folleto" name="impresion_color">
+                <label>Blanco y negro</label>
+                <input type="radio" id="color_folleto" name="impresion_color">
+                <label>A todo color</label> <br> <br>
+
+                <label>¿Impresión del precio?</label>
+                <input type="radio" id="siPrecio_folleto" name="impresion_precio">
+                <label>Si</label>
+                <input type="radio" id="noPrecio_folleto" name="impresion_precio">
+                <label>No</label> <br> <br> <br>
+
+                <input type="submit" value="Confirmar">
+            </form>
+        </section>
+    </body>
+    <br><br>
+    <footer> ©<time datetime="2025">2025</time> PI - Pisos & Inmuebles - Desarrollado por Ariadna Guillén y Raúl Cervera</footer>
+</html>

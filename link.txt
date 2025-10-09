@@ -1,2 +1,8 @@
 Link de la página web:
 https://greenyellow-camel-248742.hostingersite.com/
+
+campo dirección field set
+
+label el form
+
+label e input englobarlos con un p para poder tocar el css

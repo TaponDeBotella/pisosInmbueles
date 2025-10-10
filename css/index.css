@@ -1,6 +1,6 @@
 header {
     text-align: center;
-    background-color: aqua;
+    background-color: #5C84FE;
     display: flex;
     justify-content: center;
     height: fit-content;
@@ -28,9 +28,13 @@ header {
 }
 
 #menu {
-    border: 1px solid #000;
+    border: 3px solid #A461EF;
     box-sizing: border-box;
-    padding: 1em 1em 1em 1em;
+    padding: 20px 30px;
+    display: block;
+    background: #E5A6FF;
+    border-radius: 4px;
+    cursor: pointer;
     > p {
         margin: 0;
     }
@@ -38,16 +42,29 @@ header {
     grid-column: 1;
 }
 
+#menu:hover {
+    background: #f1d1ff;
+    border: 3px solid #E5A6FF;
+}
+
 #acceder {
-    border: 1px solid #000;
+    border: 3px solid #A461EF;
     box-sizing: border-box;
-    padding: 1em 1em 1em 1em;
+    padding: 20px 30px;
     display: block;
+    background: #E5A6FF;
+    border-radius: 4px;
+    cursor: pointer;
     > a {
         display: block;
     }
 
-    grid-column: 9;
+    grid-column: 9;       
+}
+
+#acceder:hover {
+    background: #f1d1ff;
+    border: 3px solid #E5A6FF;
 }
 
 
@@ -55,4 +72,105 @@ header {
 #index {
     font-size: xx-large;
     grid-column: 5;
+}
+
+body {
+    background: #D7E7FF;
+}
+
+#sectio_barraNav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: #9FCFFF;
+    padding: 20px 0;
+}
+
+#ciudad_busqueda {
+    width: 40vw; /* esto es para que se haga largo el buscador, que no se porque no va con px o con el %*/
+    min-width: 200px;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+#boton_buscar {
+    padding: 10px 20px;
+    border: 3px solid #A461EF;
+    border-radius: 4px;
+    background: #E5A6FF;
+    cursor: pointer;
+}
+
+#boton_buscar:hover {
+    background: #f1d1ff;
+    border: 3px solid #E5A6FF;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 3em;
+    color: black;
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+.ul_articulos {
+    list-style-type: none; /* para quitar los puntitos de las listas */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    justify-items: center;
+    padding-left: 0; /* para que no se quede tirado a la derecha los articles */
+}
+
+article {
+    width: 90%;
+    height: auto;
+    border: 1px solid lightgrey;
+    background: #FFF691;
+    box-shadow: 1px 1px 10px #00000050;
+    border-radius: 10px;
+    margin: 30px;
+}
+
+.imagen_articulo { 
+    width: 100%;
+    height: 200px;
+    object-fit: cover;        /* para que las fotos no se vean deformes */        
+    border-radius: 10px 10px 0px 0px;
+}
+
+.a_tituloPublicacion {
+    display: block;
+    text-decoration: none;
+    color: black;
+    font-size: 1em;
+    font-weight: 700;
+    margin: 10px;
+}
+
+.p_fechaA {
+    font-size: 0.8em;
+    font-weight: 600;
+    padding: 5px;
+    margin: 10px;
+}
+
+.p_descripcionA {
+    font-size: 1.2em;
+    padding: 5px;
+    margin: 10px;
+}
+
+footer {
+    background: #5C84FE;
+    text-align: center;
+    width: 100%;
+    padding: 1em 0 1em 0; 
+    font-weight: 600;
 }

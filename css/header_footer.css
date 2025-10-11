@@ -1,0 +1,83 @@
+header {
+    text-align: center;
+    background-color: #5C84FE;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+    padding: 2em 0 2em 0;
+    > nav > ul {
+        /* display: flex; */
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        align-items: center; /* ESTO HA ALINEADO DE FORMA VERTICAL */
+        list-style-type: none;
+        padding-right: 1em;
+
+        > li {
+            display: flex;
+            float:left;
+            padding: 0 1em 0 1em; /* top right bottom left */
+        
+            > a {
+                text-decoration: none;
+                color:#000
+            }
+        }
+    }
+
+}
+
+#menu {
+    border: 3px solid #A461EF;
+    box-sizing: border-box;
+    padding: 20px 30px;
+    display: block;
+    background: #E5A6FF;
+    border-radius: 4px;
+    cursor: pointer;
+    > p {
+        margin: 0;
+    }
+
+    grid-column: 1;
+}
+
+#menu:hover {
+    background: #f1d1ff;
+    border: 3px solid #E5A6FF;
+}
+
+#acceder {
+    border: 3px solid #A461EF;
+    box-sizing: border-box;
+    padding: 20px 30px;
+    display: block;
+    background: #E5A6FF;
+    border-radius: 4px;
+    cursor: pointer;
+    > a {
+        display: block;
+    }
+
+    grid-column: 9;       
+}
+
+#acceder:hover {
+    background: #f1d1ff;
+    border: 3px solid #E5A6FF;
+}
+
+
+
+#index {
+    font-size: xx-large;
+    grid-column: 5;
+}
+
+footer {
+    background: #5C84FE;
+    text-align: center;
+    width: 100%;
+    padding: 1em 0 1em 0; 
+    font-weight: 600;
+}

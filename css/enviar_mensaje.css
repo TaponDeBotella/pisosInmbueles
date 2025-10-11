@@ -1,0 +1,38 @@
+* {
+    margin: 0; /* esto es para que el header y el body puedan ocupar todo el espacio */
+}
+
+body {
+    background: #D7E7FF;
+}
+
+h1 {
+    padding: 1% 0 0 1%;
+}
+
+form {
+    border: 2px solid #000;
+    background-color: white;
+    width: fit-content;
+    text-align: center;
+    margin: auto; /* sin esto se queda a la izquierda, porque he puesto margin 0 */
+    border-collapse: collapse;
+}
+
+#texto_mensaje {
+    display: block;
+    border-bottom: 2px solid #000;
+}
+
+textarea {
+    margin: 1em;
+    width: 90%;
+}
+
+#tipo_mensaje {
+    margin: 1em;
+}
+
+input {
+    margin: 1em;
+}

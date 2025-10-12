@@ -9,7 +9,7 @@ body {
 
 h1 {
     padding-left: 1%;
-    padding-top: 1em;
+    padding-top: 1%;
 
 }
 h2 {
@@ -42,13 +42,14 @@ article {
 }
 
 table, th, td {
+    background-color: white;
     border: 2px solid #000;
     border-collapse: collapse;
     padding: 1em 1em 1em 1em;
 }
 
 table {
-    margin-left: 1%;
+    margin: auto;
 }
 
 th {

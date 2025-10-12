@@ -50,3 +50,13 @@ label {
     text-align: center;
     margin: auto;
 }
+
+@media (max-width: 480px) {
+    form {
+        width: 90%;
+    }
+
+    #examinar {
+        max-width: 160px;
+    }
+}

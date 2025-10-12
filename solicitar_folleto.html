@@ -13,7 +13,7 @@
         <nav>
             <ul>
                 <li id="menu">
-                    <p id="menu_busqueda">Menú búsqueda</p>
+                    <p id="menu_busqueda"><i class="fa-solid fa-bars"></i></p>
                 </li>
     
                 <li id="index">
@@ -21,7 +21,7 @@
                 </li>
 
                 <li id="acceder">
-                    <a href="mi_perfil.html">Mi perfil</a>
+                    <a href="mi_perfil.html"><i class="fa-solid fa-user"></i>Mi perfil</a>
                 </li>
             </ul>
         </nav>
@@ -89,19 +89,17 @@
                     </p>  
 
                     <p>
-                        <label for="nombre_folleto">Nombre</label>
-                        <input type="text" id="nombre_folleto" maxlength="200" class="input_select">
-                        <p>(*)</p>  
+                        <label for="nombre_folleto">Nombre (*)</label>
+                        <input type="text" id="nombre_folleto" maxlength="200" class="input_select">  
                     </p>
 
                     <p>
-                        <label for="email_folleto">Correo Electrónico</label>
-                        <input type="email" id="email_folleto" maxlength="200" class="input_select">
-                        <p>(*)</p>  
+                        <label for="email_folleto">Correo Electrónico (*)</label>
+                        <input type="email" id="email_folleto" maxlength="200" class="input_select"> 
                     </p>
 
                     <p>
-                        <label for="direccion">Dirección</label>
+                        <label for="direccion">Dirección (*)</label>
                         <input type="text" id="calle_folleto" placeholder="Calle" class="input_select"> 
                         <input type="number" id="numCalle_folleto" min="1" placeholder="Número" class="input_select"> 
                         <input type="number" id="cp_folleto" min="1" placeholder="CP" class="input_select">
@@ -118,7 +116,6 @@
                             <option value="mu">Murcia</option>
                             <option value="se">Sevilla</option>
                         </select>
-                        <p>(*)</p> 
                     </p> 
 
                     <p>
@@ -142,13 +139,12 @@
                     </p>
 
                     <p>
-                        <label for="anuncio_folleto">Anuncio del usuario</label>
+                        <label for="anuncio_folleto">Anuncio del usuario (*)</label>
                         <select id="anuncio_folleto" class="input_select">
                             <option value="a1">Anuncio 1</option>
                             <option value="a2">Anuncio 2</option>
                             <option value="a3">Anuncio 3</option>
                         </select>
-                        <p>(*)</p> 
                     </p> 
 
                     <p>
@@ -158,18 +154,19 @@
 
                     <p>
                         <label for="color">¿Impresión a color?</label>
-                        <input type="radio" id="bn_folleto" name="impresion_color" class="input_select">
                         <label for="bn_folleto">Blanco y negro</label>
-                        <input type="radio" id="color_folleto" name="impresion_color" class="input_select">
+                        <input type="radio" id="bn_folleto" name="impresion_color" class="input_select">
                         <label for="color_folleto">A todo color</label>  
+                        <input type="radio" id="color_folleto" name="impresion_color" class="input_select">
                     </p>
+
                     <p>
                         <label for="precio">¿Impresión del precio?</label>
-                        <input type="radio" id="siPrecio_folleto" name="impresion_precio" class="input_select">
                         <label for="siPrecio_folleto">Si</label>
-                        <input type="radio" id="noPrecio_folleto" name="impresion_precio" class="input_select">
+                        <input type="radio" id="siPrecio_folleto" name="impresion_precio" class="input_select">
                         <label for="noPrecio_folleto">No</label> 
-                    </p>  
+                        <input type="radio" id="noPrecio_folleto" name="impresion_precio" class="input_select">
+                    </p>
 
                     <p>
                         <input type="submit" value="Confirmar" class="boton">

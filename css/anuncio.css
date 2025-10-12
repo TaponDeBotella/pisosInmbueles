@@ -37,6 +37,10 @@ figure {
     text-align: center;
 }
 
+article {
+    margin-bottom: 2em;
+}
+
 table, th, td {
     border: 2px solid #000;
     border-collapse: collapse;

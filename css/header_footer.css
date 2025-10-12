@@ -18,6 +18,10 @@
     font-family: "Comic Relief";
 }
 
+html {
+    background-color: var(--colorHeader);
+}
+
 header {
     text-align: center;
     background-color: var(--colorHeader);

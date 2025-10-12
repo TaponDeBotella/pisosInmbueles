@@ -3,9 +3,19 @@ body {
     margin: 0;
 }
 
-p {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+section {
+    margin: auto;
     width: fit-content;
+}
+
+p {
+    text-align: left;
+    width: fit-content;
+}
+
+
+@media (max-width: 480px) {
+    p {
+        font-size: small;
+    }
 }

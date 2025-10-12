@@ -1,0 +1,26 @@
+body {
+    background-color: var(--colorFondo);
+    margin: 0;
+}
+
+h3 {
+    margin-left: 1em;
+}
+
+p {
+    text-align: left;
+    margin-left: 1em;
+    width: fit-content;
+}
+
+@media (max-width:480px) {
+    body {
+        text-align: center;
+    }
+
+    article {
+        width: fit-content;
+        margin: auto;
+        text-align: center;
+    }
+}

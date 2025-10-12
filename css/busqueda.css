@@ -4,6 +4,8 @@
 
 body {
     background: var(--colorFondo);
+    display: flex;
+    flex-direction: column;
 }
 
 #sectio_barraNav {
@@ -27,6 +29,26 @@ a:hover {
     opacity: 0.7;
 }
 
+#sectionsBusquedaResultado {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#filtrosBusquedaLateral {
+    width: 20%;
+    background: var(--colorNav);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#sectionArticulos {
+    width: 80%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
 #ul_articulos {
     list-style-type: none; /* para quitar los puntitos de las listas */
     display: grid;
@@ -37,7 +59,6 @@ a:hover {
 }
 
 article {
-    position: relative;
     width: 90%;
     height: auto;
     border: 1px solid var(--colorBordesArticulos);
@@ -63,35 +84,36 @@ article {
     margin: 10px;
 }
 
+.p_fechaA {
+    font-size: 0.8em;
+    font-weight: 600;
+    padding: 5px;
+    margin: 10px;
+}
+
 .p_descripcionA {
     font-size: 1.2em;
     padding: 5px;
     margin: 10px;
-    clear: both; /* como he movido elementos com el float y quiero que este se quede si o si debajo de ellos, se pone esto para evitar que se meta entre medio de los floats y haga cosas raras */
 }
 
-.fecha, .precio, .pais, .ciudad {
-    margin: 20px 20px 0 20px;
+#formBusquedaFiltros {
+    width: 100%;
+    max-width: 450px;
+    margin-left: 0;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+label {
     font-weight: 600;
+    font-size: 1.1em;
 }
 
-.fecha {
-    float: left;
-    clear: left;
-}
-
-.precio {
-    float: right;
-    clear: right;
-}
-
-.pais {
-    float: left;
-    clear: left;
-}
-
-.ciudad {
-    float: right;
-    clear: right;
+h3 {
     margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.5em;
 }

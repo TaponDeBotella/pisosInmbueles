@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&display=swap');
+
 :root {
     --colorHeader: #5C84FE;
     --colorFondo: #D7E7FF;
@@ -11,6 +14,9 @@
     --colorFuente: black;   
 }
 
+* {
+    font-family: "Comic Relief";
+}
 
 header {
     text-align: center;
@@ -99,6 +105,10 @@ header {
 #index {
     font-size: xx-large;
     grid-column: 5;
+
+    > a {
+        font-family: "DynaPuff";
+    }
 }
 
 footer {

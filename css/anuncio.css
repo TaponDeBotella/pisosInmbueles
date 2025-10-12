@@ -37,6 +37,10 @@ figure {
     text-align: center;
 }
 
+#carrusel {
+    width: 80%;
+}
+
 article {
     margin-bottom: 2em;
 }
@@ -55,3 +59,11 @@ table {
 th {
     text-align: left;
 }
+
+#simular {
+    padding-bottom: 2em;
+}
+
+/* @media (max-width:480px) {
+
+} */

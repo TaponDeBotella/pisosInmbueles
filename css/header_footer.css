@@ -61,7 +61,7 @@ header {
 #menu {
     border: 3px solid var(--colorBordeBoton);
     box-sizing: border-box;
-    padding: 20px 30px;
+    padding: 10% 10%;
     display: block;
     background: var(--colorBoton);
     border-radius: 4px;
@@ -81,7 +81,7 @@ header {
 #acceder {
     border: 3px solid var(--colorBordeBoton);
     box-sizing: border-box;
-    padding: 20px 30px;
+    padding: 10% 10%;
     display: block;
     background: var(--colorBoton);
     border-radius: 4px;

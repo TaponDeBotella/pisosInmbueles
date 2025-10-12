@@ -13,3 +13,14 @@ h1, h2 {
 .nav_body {
     margin: 1%;
 }
+
+@media (max-width:480px) {
+    ul {
+        padding: 0;
+        list-style-type: none;
+    }
+    
+    .nav_body {
+        text-align: center;
+    }
+}

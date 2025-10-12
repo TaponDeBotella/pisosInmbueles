@@ -21,6 +21,7 @@ h1, h2 {
     }
     
     .nav_body {
+        padding-bottom: 1em;
         text-align: center;
     }
 }

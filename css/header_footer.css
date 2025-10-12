@@ -154,3 +154,11 @@ h1 {
         width: fit-content;
     }
 }
+
+@media (max-width: 480px) {
+    #accecer {
+        > a {
+            display: none;
+        }
+    }
+}

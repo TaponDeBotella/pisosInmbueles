@@ -1,0 +1,118 @@
+
+* {
+    margin: 0; /* esto es para que el header y el body puedan ocupar todo el espacio */
+}
+
+body {
+    background: #D7E7FF;
+}
+
+h1 {
+    padding-left: 1%;
+    padding-top: 1em;
+
+}
+
+section {
+    padding: 3em 2em 3em 2em;
+    background-color: aliceblue;
+    width: 80%;
+    margin: auto;
+    border: 2px solid black;
+    margin-bottom: 1em;
+}
+
+h2 {
+    padding: 1em 0 1% 1%;
+    padding-left: 1%;
+    padding-top: 1em;
+    font-style: italic;
+}
+
+h3 {
+    padding-left: 1%;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-decoration: underline;
+}
+
+h4, time {
+    padding-left: 1%;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    padding: 1em 1em 1em 1em;
+}
+
+table {
+    margin-left: 1%;
+}
+
+th {
+    text-align: left;
+}
+
+ul {
+    font-size: large;
+    list-style-type: none;
+}
+
+li {
+    padding-bottom: 1em;
+}
+
+a {
+    color: black;
+}
+
+#primer_li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 1em;
+}
+
+#mis_datos {
+    display: inline;
+    grid-column: 1;
+}
+
+#nombre_perfil {
+    display: inline;
+    font-size: x-large;
+    text-align: center;
+    grid-column: 2;
+}
+
+.user_time {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 1em;
+    
+}
+
+.nombre {
+    padding-left: 2em;
+    display: inline;
+    grid-column: 1;
+}
+
+.fecha {
+    display: inline;
+    text-align: center;
+}
+
+.todo_el_mensaje {
+    border: 2px solid black;
+    background-color: var(--colorArticulo);
+    margin-bottom: 2em;
+    width: auto;
+}
+
+.cont_mensaje {
+    margin: 1em;
+    padding: 2em 0 2em 0;
+    background-color: var(--colorTextoMensaje);
+    text-align: center;
+}

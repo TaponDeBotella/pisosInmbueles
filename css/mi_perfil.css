@@ -82,3 +82,9 @@ a {
     text-align: center;
     grid-column: 2;
 }
+
+@media (max-width: 480px) {
+    section {
+        width: 80%;
+    }
+}

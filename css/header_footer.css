@@ -136,3 +136,10 @@ h1 {
     background-color: var(--colorBotonHover);
     border-color: var(--colorBordeBoton);
 }
+
+.todos_enlaces {
+    > a {
+        display: flex;
+        width: fit-content;
+    }
+}

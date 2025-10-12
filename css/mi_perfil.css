@@ -15,7 +15,7 @@ h1 {
 
 section {
     padding: 3em 3em 3em 0;
-    background-color: white;
+    background-color: aliceblue;
     width: fit-content;
     margin: auto;
     border: 2px solid black;
@@ -38,16 +38,9 @@ h4, time {
     padding-left: 1%;
 }
 
-figure {
-    padding: 2em 0 2em 0;
-    width: 100%;
-    background-color: aliceblue;
-    align-items: center;
-    text-align: center;
-}
 
 table, th, td {
-    border: 2px solid #000;
+    border: 2px solid black;
     border-collapse: collapse;
     padding: 1em 1em 1em 1em;
 }
@@ -58,4 +51,35 @@ table {
 
 th {
     text-align: left;
+}
+
+ul {
+    font-size: large;
+    list-style-type: none;
+}
+
+li {
+    padding-bottom: 1em;
+}
+
+a {
+    color: black;
+}
+
+#primer_li {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 1em;
+}
+
+#mis_datos {
+    display: inline;
+    grid-column: 1;
+}
+
+#nombre_perfil {
+    display: inline;
+    font-size: x-large;
+    text-align: center;
+    grid-column: 2;
 }

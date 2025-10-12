@@ -47,3 +47,10 @@ label {
     text-align: center;
     margin: auto;
 }
+
+
+@media (max-width:480px) {
+    #password {
+        display: block;
+    }
+}

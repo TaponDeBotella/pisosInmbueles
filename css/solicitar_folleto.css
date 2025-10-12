@@ -59,3 +59,47 @@ h3 {
     flex-direction: column;
     gap: 8px;
 }
+
+@media (max-width: 480px) {
+
+    #solicitudFolletoPresentacion {
+        margin: 20px 0 0 20px;
+    }
+
+    #solcitarFolleto {
+        display: grid;
+        grid-template-columns: 1fr;
+        height: 100%;
+        width: 100%;
+        background: var(--colorCeldaClara);
+    }
+
+    #sectionTarifas {
+        width: 90%;
+        background: var(--colorNav);
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #sectionFormFolleto {
+        width: 100%;
+        padding: 30px 20px;
+        box-sizing: border-box;
+    }
+
+    #formFolleto {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px 30px;
+        width: 100%;
+        align-items: start;
+    }
+
+    #formFolleto p {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+}

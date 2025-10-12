@@ -95,3 +95,32 @@ article {
     clear: right;
     margin-bottom: 10px;
 }
+
+@media (max-width: 480px) {
+    #sectionArticulos {
+        width: 95%;
+        padding: 20px 10px;
+    }
+
+    #ul_articulos {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .a_tituloPublicacion {
+        font-size: 1em;
+        margin: 10px 0;
+    }
+
+    .p_descripcionA {
+        font-size: 1em;
+        margin: 10px 0;
+    }
+
+    .fecha, .precio, .pais, .ciudad {
+        margin: 10px 10px 0 10px;
+        font-size: 1em;
+        clear: right;
+        float: left;
+    }
+}

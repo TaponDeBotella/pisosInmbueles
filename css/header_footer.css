@@ -1,6 +1,20 @@
+:root {
+    --colorHeader: #5C84FE;
+    --colorFondo: #D7E7FF;
+    --colorBordeBoton: #A461EF;
+    --colorBoton: #fcf5ff;
+    --colorBotonHover: #F1D1FF;
+    --colorNav: #9FCFFF;
+    --colorArticulo: #FFF691;
+    --sombra: #00000050;
+    --colorBordesArticulos: lightgrey;
+    --colorFuente: black;   
+}
+
+
 header {
     text-align: center;
-    background-color: #5C84FE;
+    background-color: var(--colorHeader);
     display: flex;
     justify-content: center;
     height: fit-content;
@@ -20,7 +34,7 @@ header {
         
             > a {
                 text-decoration: none;
-                color:#000
+                color: var(--colorFuente);
             }
         }
     }
@@ -28,11 +42,11 @@ header {
 }
 
 #menu {
-    border: 3px solid #A461EF;
+    border: 3px solid var(--colorBordeBoton);
     box-sizing: border-box;
     padding: 20px 30px;
     display: block;
-    background: #E5A6FF;
+    background: var(--colorBoton);
     border-radius: 4px;
     cursor: pointer;
     > p {
@@ -43,16 +57,16 @@ header {
 }
 
 #menu:hover {
-    background: #f1d1ff;
-    border: 3px solid #E5A6FF;
+    background: var(--colorBotonHover);
+    border: 3px solid var(--colorBoton);
 }
 
 #acceder {
-    border: 3px solid #A461EF;
+    border: 3px solid var(--colorBordeBoton);
     box-sizing: border-box;
     padding: 20px 30px;
     display: block;
-    background: #E5A6FF;
+    background: var(--colorBoton);
     border-radius: 4px;
     cursor: pointer;
     > a {
@@ -63,8 +77,8 @@ header {
 }
 
 #acceder:hover {
-    background: #f1d1ff;
-    border: 3px solid #E5A6FF;
+    background: var(--colorBotonHover);
+    border: 3px solid var(--colorBoton);
 }
 
 
@@ -75,9 +89,16 @@ header {
 }
 
 footer {
-    background: #5C84FE;
+    background: var(--colorHeader);
     text-align: center;
     width: 100%;
     padding: 1em 0 1em 0; 
     font-weight: 600;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 3em;
+    color: var(--colorFuente);
 }

@@ -3,7 +3,7 @@
 }
 
 body {
-    background: #D7E7FF;
+    background: var(--colorFondo);
 }
 
 #sectio_barraNav {
@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    background: #9FCFFF;
+    background: var(--colorNav);
     padding: 20px 0;
 }
 
@@ -25,22 +25,15 @@ body {
 
 #boton_buscar {
     padding: 10px 20px;
-    border: 3px solid #A461EF;
+    border: 3px solid var(--colorBordeBoton);
     border-radius: 4px;
-    background: #E5A6FF;
+    background: var(--colorBoton);
     cursor: pointer;
 }
 
 #boton_buscar:hover {
-    background: #f1d1ff;
-    border: 3px solid #E5A6FF;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 3em;
-    color: black;
+    background: var(--colorBotonHover);
+    border: 3px solid var(--colorBoton);
 }
 
 a:hover {
@@ -59,9 +52,9 @@ a:hover {
 article {
     width: 90%;
     height: auto;
-    border: 1px solid lightgrey;
-    background: #FFF691;
-    box-shadow: 1px 1px 10px #00000050;
+    border: 1px solid var(--colorBordesArticulos);
+    background: var(--colorArticulo);
+    box-shadow: 1px 1px 10px var(--sombra);
     border-radius: 10px;
     margin: 30px;
 }
@@ -76,7 +69,7 @@ article {
 .a_tituloPublicacion {
     display: block;
     text-decoration: none;
-    color: black;
+    color: var(--colorFuente);
     font-size: 1em;
     font-weight: 700;
     margin: 10px;

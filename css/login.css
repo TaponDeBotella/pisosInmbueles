@@ -10,6 +10,12 @@ h1 {
     margin: 1%;
 }
 
+/* section {
+    padding: 2% 0 2% 0;
+    background-color: #9FCFFF;
+}
+ */
+
 form {
     width: fit-content;
     text-align: left;
@@ -17,15 +23,27 @@ form {
     border-collapse: collapse;
 }
 
-label, input {
+input {
+    padding-left: 0.5em;
     margin: 1% 1em 1% 1em;
 }
 
+input:hover {
+    background-color: var(--colorBotonHover);
+    border-color: var(--colorBordeBoton);
+}
+
 label {
+    margin: 1% 1em 1% 1em;
     display: block;
 }
 
 
 #confirmar {
     margin: 1em 0 1em 4em;
+}
+
+#simulacion {
+    text-align: center;
+    margin: auto;
 }

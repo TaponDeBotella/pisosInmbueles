@@ -10,6 +10,12 @@ h1 {
     margin: 1%;
 }
 
+/* section {
+    padding: 2% 0 2% 0;
+    background-color: #9FCFFF;
+} */
+
+
 form {
     width: fit-content;
     text-align: left;
@@ -17,8 +23,18 @@ form {
     border-collapse: collapse;
 }
 
-label, input {
+input, select {
+    padding-left: 0.5em;
     margin: 1% 1em 1% 1em;
+}
+
+label {
+    margin: 1em 1em 0 1em;
+}
+
+#foto {
+    border-radius: 5px;
+    margin: 1em 1em 1em 0.5em;
 }
 
 label {
@@ -27,5 +43,10 @@ label {
 
 
 #confirmar {
-    margin: 1em 0 1em 4em;
+    margin: 0 0 1em 1em;
+}
+
+#simulacion {
+    text-align: center;
+    margin: auto;
 }

@@ -81,6 +81,19 @@ header {
     border: 3px solid var(--colorBoton);
 }
 
+.boton {
+    padding: 10px 20px;
+    border: 3px solid var(--colorBordeBoton);
+    border-radius: 4px;
+    background: var(--colorBoton);
+    cursor: pointer;
+}
+
+.boton:hover {
+    background: var(--colorBotonHover);
+    border: 3px solid var(--colorBoton);
+}
+
 
 
 #index {

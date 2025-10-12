@@ -23,24 +23,11 @@ body {
     border-radius: 4px;
 }
 
-#boton_buscar {
-    padding: 10px 20px;
-    border: 3px solid var(--colorBordeBoton);
-    border-radius: 4px;
-    background: var(--colorBoton);
-    cursor: pointer;
-}
-
-#boton_buscar:hover {
-    background: var(--colorBotonHover);
-    border: 3px solid var(--colorBoton);
-}
-
 a:hover {
     opacity: 0.7;
 }
 
-.ul_articulos {
+#ul_articulos {
     list-style-type: none; /* para quitar los puntitos de las listas */
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -1,5 +1,6 @@
 body {
     background-color: var(--colorFondo);
+    margin: 0;
 }
 
 #solicitudFolletoPresentacion {

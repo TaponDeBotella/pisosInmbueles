@@ -156,9 +156,9 @@ h1 {
 }
 
 @media (max-width: 480px) {
-    #accecer {
-        > a {
-            display: none;
+    #acceder {
+        > i {
+            text-align: center;
         }
     }
 }

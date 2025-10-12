@@ -2,10 +2,60 @@ body {
     background-color: var(--colorFondo);
 }
 
+#solicitudFolletoPresentacion {
+    margin: 20px 0 0 20px;
+}
+
+#tablaTarifa {
+    border: 3px solid var(--colorBordeBoton);
+
+}
+
 .celdaOscura {
     background-color: var(--colorCeldaOscura);
 }
 
 .celdaClara {
     background-color: var(--colorCeldaClara);
+}
+
+#solcitarFolleto {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+h3 {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+#sectionTarifas {
+    width: 20%;
+    background: var(--colorNav);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#sectionFormFolleto {
+    width: 80%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+#formFolleto {
+    width: 100%;
+    max-width: 450px;
+    margin-left: 0;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#formFolleto p {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }

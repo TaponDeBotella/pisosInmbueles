@@ -24,6 +24,10 @@ html {
     background-color: var(--colorHeader);
 }
 
+i {
+    padding-right: 1em;
+}
+
 header {
     text-align: center;
     background-color: var(--colorHeader);

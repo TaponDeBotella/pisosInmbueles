@@ -84,19 +84,6 @@ article {
     margin: 10px;
 }
 
-.p_fechaA {
-    font-size: 0.8em;
-    font-weight: 600;
-    padding: 5px;
-    margin: 10px;
-}
-
-.p_descripcionA {
-    font-size: 1.2em;
-    padding: 5px;
-    margin: 10px;
-}
-
 #formBusquedaFiltros {
     width: 100%;
     max-width: 450px;
@@ -116,4 +103,37 @@ h3 {
     margin-bottom: 10px;
     text-align: center;
     font-size: 1.5em;
+}
+
+.p_descripcionA {
+    font-size: 1.2em;
+    padding: 5px;
+    margin: 10px;
+    clear: both; /* como he movido elementos com el float y quiero que este se quede si o si debajo de ellos, se pone esto para evitar que se meta entre medio de los floats y haga cosas raras */
+}
+
+.fecha, .precio, .pais, .ciudad {
+    margin: 20px 20px 0 20px;
+    font-weight: 600;
+}
+
+.fecha {
+    float: left;
+    clear: left;
+}
+
+.precio {
+    float: right;
+    clear: right;
+}
+
+.pais {
+    float: left;
+    clear: left;
+}
+
+.ciudad {
+    float: right;
+    clear: right;
+    margin-bottom: 10px;
 }

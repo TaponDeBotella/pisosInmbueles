@@ -11,7 +11,9 @@
     --colorArticulo: #FFF691;
     --sombra: #00000050;
     --colorBordesArticulos: lightgrey;
-    --colorFuente: black;   
+    --colorFuente: black;
+    --colorCeldaOscura: #B0CFFF;
+    --colorCeldaClara: #cedbff;   
 }
 
 * {

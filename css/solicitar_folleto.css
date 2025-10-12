@@ -1,0 +1,11 @@
+body {
+    background-color: var(--colorFondo);
+}
+
+.celdaOscura {
+    background-color: var(--colorCeldaOscura);
+}
+
+.celdaClara {
+    background-color: var(--colorCeldaClara);
+}

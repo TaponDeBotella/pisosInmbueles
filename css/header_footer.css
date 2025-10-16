@@ -162,6 +162,63 @@ h1 {
     }
 }
 
+nav label[for="burger_menu"], #burger_menu { /* para que no se vea el checkbox*/
+    display: none;
+    color: var(--colorFuente);
+    
+}
+
+#nav_nav {
+    position: sticky;               /* es un fixed pero para que se mueva a top: 0 cuando se baje mas del header */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+    height: 30px;
+    z-index: 200;
+}
+
+.menu:not(#paginacion .menu) {
+    flex-direction: column;
+}
+
+#menu_head {
+    position: absolute;
+    width: 100%;
+    top: 30px;
+    left: 0;
+    transform: translateX(-145%);
+    text-align: center;
+    background-color: var(--colorBordeBoton);
+    transition: 1s;
+    gap:0;
+    
+}
+
+#menu_head li{
+    padding: 10px;
+}
+
+#menu_head li:hover{
+    background: var(--colorBotonHover);
+}
+
+nav label[for="burger_menu"] {
+    display: flex;
+}
+
+nav label[for="burger_menu"]:hover {
+    color:var(--colorFuente);
+}
+
+#burger_menu:checked~#menu_head { /* el ~ sirve para referirse al hermano adyacente */
+    display: flex;
+    transform: translateX(-50%);
+    transition: 1s;
+   
+}
+
 @media (max-width: 480px) {
     #acceder {
         > i {

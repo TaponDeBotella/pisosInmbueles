@@ -2,14 +2,6 @@
     margin: 0; /* esto es para que el header y el body puedan ocupar todo el espacio */
 }
 
-body {
-    background: #D7E7FF;
-}
-
-h1 {
-    padding: 1% 0 0 1%;
-}
-
 form {
     border: 2px solid #000;
     background-color: white;

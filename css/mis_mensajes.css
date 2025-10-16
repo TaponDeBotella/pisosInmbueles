@@ -3,16 +3,6 @@
     margin: 0; /* esto es para que el header y el body puedan ocupar todo el espacio */
 }
 
-body {
-    background: #D7E7FF;
-}
-
-h1 {
-    padding-left: 1%;
-    padding-top: 1em;
-
-}
-
 section {
     padding: 3em 2em 3em 2em;
     background-color: aliceblue;

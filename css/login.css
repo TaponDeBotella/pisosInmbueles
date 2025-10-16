@@ -2,20 +2,6 @@
     margin: 0;
 }
 
-body {
-    background: #D7E7FF;
-}
-
-h1 {
-    margin: 1%;
-}
-
-/* section {
-    padding: 2% 0 2% 0;
-    background-color: #9FCFFF;
-}
- */
-
 form {
     width: fit-content;
     text-align: left;
@@ -49,8 +35,6 @@ label {
 }
 
 
-@media (max-width:480px) {
-    #password {
-        display: block;
-    }
+#password {
+    display: block;
 }

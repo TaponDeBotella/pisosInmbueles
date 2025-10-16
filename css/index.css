@@ -2,10 +2,6 @@
     margin: 0; /* esto es para que el header y el body puedan ocupar todo el espacio */
 }
 
-body {
-    background: var(--colorFondo);
-}
-
 #sectio_barraNav {
     display: flex;
     justify-content: center;

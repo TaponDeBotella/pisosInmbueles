@@ -25,6 +25,11 @@ html {
     background-color: var(--colorHeader);
 }
 
+body {
+    background-color: var(--colorFondo);
+    margin: 0;
+}
+
 i {
     padding-right: 1em;
 }

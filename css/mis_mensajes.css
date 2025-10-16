@@ -5,10 +5,10 @@
 
 section {
     padding: 3em 2em 3em 2em;
-    background-color: aliceblue;
+    background-color: var(--colorFondoClaro);
     width: 80%;
     margin: auto;
-    border: 2px solid black;
+    border: 2px solid var(--colorBordes);
     margin-bottom: 1em;
 }
 
@@ -54,7 +54,7 @@ li {
 }
 
 a {
-    color: black;
+    color: var(--colorFuente);
 }
 
 #primer_li {

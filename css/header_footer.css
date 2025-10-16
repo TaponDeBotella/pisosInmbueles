@@ -4,6 +4,7 @@
 :root {
     --colorHeader: #5C84FE;
     --colorFondo: #D7E7FF;
+    --colorFondoClaro: aliceblue;
     --colorBordeBoton: #A461EF;
     --colorBoton: #fcf5ff;
     --colorBotonHover: #F1D1FF;
@@ -14,7 +15,8 @@
     --colorBordesArticulos: lightgrey;
     --colorFuente: black;
     --colorCeldaOscura: #B0CFFF;
-    --colorCeldaClara: #cedbff;   
+    --colorCeldaClara: #e4ecff;
+    --colorBordes: black;   
 }
 
 * {

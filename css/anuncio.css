@@ -23,7 +23,7 @@ h4, time {
 figure {
     padding: 2em 0 2em 0;
     width: 100%;
-    background-color: aliceblue;
+    background-color: var(--colorFondoClaro);
     align-items: center;
     text-align: center;
 }
@@ -36,9 +36,16 @@ article {
     margin-bottom: 2em;
 }
 
-table, th, td {
-    background-color: white;
-    border: 2px solid #000;
+th {
+    background-color: var(--colorCeldaOscura);
+    border: 2px solid var(--colorBordes);
+    border-collapse: collapse;
+    padding: 1em 1em 1em 1em;
+}
+
+table, td {
+    background-color: var(--colorCeldaClara);
+    border: 2px solid var(--colorBordes);
     border-collapse: collapse;
     padding: 1em 1em 1em 1em;
 }

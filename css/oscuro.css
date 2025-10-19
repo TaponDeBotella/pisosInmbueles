@@ -1,39 +1,18 @@
-/* :root {
-    --colorHeader: #0d2d8b;
-    --colorFondo: #D7E7FF;
-    --colorFondoClaro: aliceblue;
-    --colorBordeBoton: #A461EF;
-    --colorBoton: #fcf5ff;
-    --colorBotonHover: #F1D1FF;
-    --colorNav: #9FCFFF;
-    --colorTextoMensaje: #fffac7;
-    --colorArticulo: #fceb2c;
-    --sombra: #00000050;
-    --colorBordesArticulos: lightgrey;
-    --colorFuente: white;
-    --colorCeldaOscura: #B0CFFF;
-    --colorCeldaClara: #e4ecff;
-    --colorBordes: black;   
-    --colorFuenteMenu: #5C2090;
-} */
-
-
-
 :root {
-    --colorHeader: #0d2d8b;
-    --colorFondo: #2C5596;
-    --colorFondoClaro: aliceblue;
-    --colorBordeBoton: #30085C;
-    --colorBoton: #c44df6;
-    --colorBotonHover: #F1D1FF;
-    --colorNav: #1B3046;
-    --colorTextoMensaje: #fffac7;
-    --colorArticulo: #fceb2c96;
-    --sombra: #00000050;
-    --colorBordesArticulos: lightgrey;
-    --colorFuente: white;
-    --colorCeldaOscura: #88a4d0;
-    --colorCeldaClara: #e4ecff;
-    --colorBordes: black;
-    --colorFuenteMenu: #DBC2F1;
+    --colorHeader: #1a1a2e;
+    --colorFondo: #0f0f1a;
+    --colorFondoClaro: #1e1e2e;
+    --colorBordeBoton: #5c2e91;
+    --colorBoton: #2e2e4f;
+    --colorBotonHover: #4a3f70;
+    --colorNav: #1f2a40;
+    --colorTextoMensaje: #fff9b0;
+    --colorArticulo: #3b3b60;
+    --sombra: #00000080;
+    --colorBordesArticulos: #3a3a3a;
+    --colorFuente: #e0e0ff;
+    --colorCeldaOscura: #2c2c4a;
+    --colorCeldaClara: #3a3a5a;
+    --colorBordes: #888;
+    --colorFuenteMenu: #c5a3ff;
 }

@@ -199,13 +199,14 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
     position: absolute;
     width: max-content;
     padding-right: 10%;
+    padding-left: 6em;
     top: 30px;
     left: 0;
     transform: translateX(-1000%);
     text-align: center;
     background-color: var(--colorBordeBoton);
     transition: 1s;
-    gap:0;
+    gap: 0;
 
     > li {
         > a {
@@ -235,7 +236,7 @@ nav label[for="burger_menu"]:hover {
 
 #burger_menu:checked~.menu_head { /* el ~ sirve para referirse al hermano adyacente */
     display: flex;
-    transform: translateX(-50%);
+    transform: translateX(-40%);
     transition: 1s;
     
 }

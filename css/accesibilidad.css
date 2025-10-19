@@ -1,0 +1,18 @@
+#explicacion { 
+    font-size: var(--tamFuenteMediana);
+    margin: 5%;
+}
+
+h2 {
+    font-size: var(--tamFuenteGrande);
+    background-color: var(--colorNav);
+}
+
+body > section > p {
+    background-color: var(--colorCeldaOscura);
+    width: 100%;
+}
+
+ul {
+  list-style-type: none;
+}

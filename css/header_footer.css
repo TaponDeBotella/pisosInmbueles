@@ -18,6 +18,7 @@
     --colorCeldaClara: #e4ecff;
     --colorBordes: black;   
     --colorFuenteMenu: #5C2090;
+    --tamFuenteSuperGrande: 2em;
     --tamFuenteGrande: 1.5em;
     --tamFuenteMediana: 1.2em;
     --tamFuentePequena: 1em;
@@ -127,7 +128,7 @@ menu:hover {
 
 
 #index {
-    font-size: xx-large;
+    font-size: var(--tamFuenteSuperGrande);
     grid-column: 5;
 
     > a {
@@ -146,7 +147,7 @@ footer {
 h1 {
     text-align: center;
     margin-top: 20px;
-    font-size: 3em;
+    font-size: var(--tamFuenteSuperGrande);
     color: var(--colorFuente);
 }
 

@@ -17,6 +17,7 @@
     --colorCeldaOscura: #B0CFFF;
     --colorCeldaClara: #e4ecff;
     --colorBordes: black;   
+    --colorBordesArticulos: inherit;
     --colorFuenteMenu: #5C2090;
     --tamFuenteSuperGrande: 2em;
     --tamFuenteGrande: 1.5em;

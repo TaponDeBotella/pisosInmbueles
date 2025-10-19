@@ -65,10 +65,11 @@ header {
 
 }
 
-#menu {
+.menu {
     border: 3px solid var(--colorBordeBoton);
+    width: fit-content;
     box-sizing: border-box;
-    padding: 10% 10%;
+    padding: 10% 0 10% 10%;
     display: block;
     background: var(--colorBoton);
     border-radius: 4px;
@@ -80,7 +81,8 @@ header {
     grid-column: 1;
 }
 
-#menu:hover {
+
+menu:hover {
     background: var(--colorBotonHover);
     border: 3px solid var(--colorBoton);
 }
@@ -162,7 +164,7 @@ h1 {
     }
 }
 
-nav label[for="burger_menu"], #burger_menu { /* para que no se vea el checkbox*/
+nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_estilo { /* para que no se vea el checkbox*/
     display: none;
     color: var(--colorFuente);
     
@@ -175,20 +177,21 @@ nav label[for="burger_menu"], #burger_menu { /* para que no se vea el checkbox*/
     justify-content: center;
     top: 0;
     width: 100%;
-    height: 30px;
+    height: 30%;
     z-index: 200;
 }
+
 
 .menu:not(#paginacion .menu) {
     flex-direction: column;
 }
 
-#menu_head {
+.menu_head {
     position: absolute;
-    width: 100%;
+    width: fit-content;
     top: 30px;
     left: 0;
-    transform: translateX(-145%);
+    transform: translateX(-1000%);
     text-align: center;
     background-color: var(--colorBordeBoton);
     transition: 1s;
@@ -196,11 +199,11 @@ nav label[for="burger_menu"], #burger_menu { /* para que no se vea el checkbox*/
     
 }
 
-#menu_head li{
+.menu_head li{
     padding: 10px;
 }
 
-#menu_head li:hover{
+.menu_head li:hover{
     background: var(--colorBotonHover);
 }
 
@@ -212,11 +215,41 @@ nav label[for="burger_menu"]:hover {
     color:var(--colorFuente);
 }
 
-#burger_menu:checked~#menu_head { /* el ~ sirve para referirse al hermano adyacente */
+#burger_menu:checked~.menu_head { /* el ~ sirve para referirse al hermano adyacente */
     display: flex;
     transform: translateX(-50%);
     transition: 1s;
-   
+    
+}
+
+#section_estilo {
+    position: sticky;               /* es un fixed pero para que se mueva a top: 0 cuando se baje mas del header */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100%;
+    z-index: 300;
+}
+
+nav label[for="menu_estilo"] {
+    display: flex;
+}
+
+nav label[for="menu_estilo"]:hover {
+    color:var(--colorFuente);
+}
+
+#menu_estilo:checked~.menu_head { /* el ~ sirve para referirse al hermano adyacente */
+    display: flex;
+    transform: translateX(-50%);
+    transition: 1s;
+}
+
+#li_estilos {
+    grid-column: 2;
+    margin-left: 5%;
+    width: fit-content;
 }
 
 @media (max-width: 480px) {

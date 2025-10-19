@@ -187,8 +187,12 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
 }
 
 .menu_head {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
     position: absolute;
-    width: fit-content;
+    width: max-content;
+    padding-right: 10%;
     top: 30px;
     left: 0;
     transform: translateX(-1000%);
@@ -196,7 +200,6 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
     background-color: var(--colorBordeBoton);
     transition: 1s;
     gap:0;
-    
 }
 
 .menu_head li{
@@ -250,6 +253,17 @@ nav label[for="menu_estilo"]:hover {
     grid-column: 2;
     margin-left: 5%;
     width: fit-content;
+}
+
+.estilo_radio {
+    margin-left: 0;
+    text-align: left;
+    > label {
+        input{
+            margin-left: 0;
+        }
+    } 
+    
 }
 
 @media (max-width: 480px) {

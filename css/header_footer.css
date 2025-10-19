@@ -16,17 +16,10 @@
     --colorFuente: black;
     --colorCeldaOscura: #B0CFFF;
     --colorCeldaClara: #e4ecff;
-<<<<<<< HEAD
-    --colorBordes: black; 
-    --tamFuenteGrande: 1.5em;
-    --tamFuenteMediana: 1.2em;
-    --tamFuentePequena: 1em;  
-=======
     --colorBordes: black;   
     --tamFuenteGrande: 1.5em;
     --tamFuenteMediana: 1.2em;
-    --tamFuentePequena: 1em;
->>>>>>> ceb873264476264634f6929611e423dce19c5cd3
+    --tamFuentePequena: 1em;
 }
 
 * {

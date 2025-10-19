@@ -16,10 +16,17 @@
     --colorFuente: black;
     --colorCeldaOscura: #B0CFFF;
     --colorCeldaClara: #e4ecff;
+<<<<<<< HEAD
     --colorBordes: black; 
     --tamFuenteGrande: 1.5em;
     --tamFuenteMediana: 1.2em;
     --tamFuentePequena: 1em;  
+=======
+    --colorBordes: black;   
+    --tamFuenteGrande: 1.5em;
+    --tamFuenteMediana: 1.2em;
+    --tamFuentePequena: 1em;
+>>>>>>> ceb873264476264634f6929611e423dce19c5cd3
 }
 
 * {
@@ -203,8 +210,8 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
     background-color: var(--colorBordeBoton);
     transition: 1s;
     gap:0;
-}
 
+<<<<<<< HEAD
 .menu_head li{
     padding: 0;
     > label {
@@ -213,6 +220,17 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
         width: 100%;
         padding: 10% 20%;
     }
+=======
+    > li {
+        > a {
+            display: block;
+        }
+
+        > label {
+            padding: 0.5em 1em 0.5em;
+        }
+    } 
+>>>>>>> ceb873264476264634f6929611e423dce19c5cd3
 }
 
 .menu_head li:hover{
@@ -268,6 +286,7 @@ nav label[for="menu_estilo"]:hover {
     margin-left: 0;
     text-align: left;
     > label {
+        display: block;
         input{
             margin-left: 0;
         }

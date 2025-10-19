@@ -11,6 +11,6 @@ p {
 
 @media (max-width: 480px) {
     p {
-        font-size: small;
+        font-size: var(--tamFuentePequena);
     }
 }

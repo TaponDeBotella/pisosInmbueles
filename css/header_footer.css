@@ -16,7 +16,10 @@
     --colorFuente: black;
     --colorCeldaOscura: #B0CFFF;
     --colorCeldaClara: #e4ecff;
-    --colorBordes: black;   
+    --colorBordes: black; 
+    --tamFuenteGrande: 1.5em;
+    --tamFuenteMediana: 1.2em;
+    --tamFuentePequena: 1em;  
 }
 
 * {
@@ -203,7 +206,13 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
 }
 
 .menu_head li{
-    padding: 10px;
+    padding: 0;
+    > label {
+        display: block;
+        cursor: pointer;
+        width: 100%;
+        padding: 10% 20%;
+    }
 }
 
 .menu_head li:hover{

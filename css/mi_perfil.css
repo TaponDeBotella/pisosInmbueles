@@ -43,7 +43,7 @@ th {
 }
 
 ul {
-    font-size: large;
+    font-size: var(--tamFuenteMediana);
     list-style-type: none;
 }
 
@@ -68,7 +68,7 @@ a {
 
 #nombre_perfil {
     display: inline;
-    font-size: x-large;
+    font-size: var(--tamFuenteGrande);
     text-align: center;
     grid-column: 2;
 }

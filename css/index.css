@@ -54,13 +54,13 @@ article {
     display: block;
     text-decoration: none;
     color: var(--colorFuente);
-    font-size: 1em;
+    font-size: var(--tamFuentePequena);
     font-weight: 700;
     margin: 10px;
 }
 
 .p_descripcionA {
-    font-size: 1.2em;
+    font-size: var(--tamFuenteMediana);
     padding: 5px;
     margin: 10px;
     clear: both; /* como he movido elementos com el float y quiero que este se quede si o si debajo de ellos, se pone esto para evitar que se meta entre medio de los floats y haga cosas raras */
@@ -104,18 +104,18 @@ article {
     }
 
     .a_tituloPublicacion {
-        font-size: 1em;
+        font-size: var(--tamFuentePequena);
         margin: 10px 0;
     }
 
     .p_descripcionA {
-        font-size: 1em;
+        font-size: var(--tamFuentePequena);
         margin: 10px 0;
     }
 
     .fecha, .precio, .pais, .ciudad {
         margin: 10px 10px 0 10px;
-        font-size: 1em;
+        font-size: var(--tamFuentePequena);
         clear: right;
         float: left;
     }

@@ -17,6 +17,7 @@
     --colorCeldaOscura: #B0CFFF;
     --colorCeldaClara: #e4ecff;
     --colorBordes: black;   
+    --colorFuenteMenu: #5C2090;
     --tamFuenteGrande: 1.5em;
     --tamFuenteMediana: 1.2em;
     --tamFuentePequena: 1em;
@@ -207,9 +208,12 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
     > li {
         > a {
             display: block;
+            color: var(--colorFuenteMenu);
+            text-decoration: none;
         }
 
         > label {
+            color: var(--colorFuenteMenu);
             padding: 0.5em 1em 0.5em;
         }
     } 

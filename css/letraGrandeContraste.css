@@ -17,8 +17,8 @@
   --colorFuenteMenu: #blue; 
   --tamFuenteSuperGrande: 3.5em;
   --tamFuenteGrande: 2.2em;
-  --tamFuenteMediana: 1.9em;
-  --tamFuentePequena: 1.7em;
+    --tamFuenteMediana: 1.5em;
+    --tamFuentePequena: 1.2em;
 }
 
 .menu_head {

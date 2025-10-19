@@ -21,6 +21,18 @@ header > nav > ul > li > a {
     color: var(--colorFondo);
 }
 
+.cont_mensaje {
+    background-color: white;
+}
+
+#burger_menu:checked~.menu_head { /* el ~ sirve para referirse al hermano adyacente */
+    display: flex;
+    transform: translateX(-20%);
+    transition: 1s;
+    
+}
+
+
 #acceder > a {
     color: var(--colorFuente);
 }

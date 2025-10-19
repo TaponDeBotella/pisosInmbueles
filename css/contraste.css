@@ -1,0 +1,26 @@
+:root {
+  --colorHeader: #black;    
+  --colorFondo: #white;    
+  --colorFondoClaro: #F8F8F8;  
+  --colorBordeBoton: #black;  
+  --colorBoton: #FFD700;  
+  --colorBotonHover: #black;   
+  --colorNav: #E0E0E0;   
+  --colorTextoMensaje: #black; 
+  --colorArticulo: #fff4b0; 
+  --sombra: none;
+  --colorBordesArticulos: #black;
+  --colorFuente: #black; 
+  --colorCeldaOscura: #909eff;
+  --colorCeldaClara: #bec7ff;
+  --colorBordes: #black;
+  --colorFuenteMenu: #blue; 
+}
+
+.menu_head {
+  background-color: var(--colorBoton) !important;
+}
+
+.menu_head li:hover {
+  background: var(--colorBotonHover) !important;
+}

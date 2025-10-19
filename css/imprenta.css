@@ -1,0 +1,66 @@
+:root {
+    --colorHeader: #000000;
+    --colorFondo: #ffffff;
+    --colorFondoClaro: #ffffff;
+    --colorBordeBoton: #000000;
+    --colorBoton: #ffffff;
+    --colorBotonHover: #ffffff;
+    --colorNav: #ffffff;
+    --colorTextoMensaje: #000000;
+    --colorArticulo: #ffffff;
+    --sombra: none;
+    --colorBordesArticulos: #000000;
+    --colorFuente: #000000;
+    --colorCeldaOscura: #dddddd;
+    --colorCeldaClara: #ffffff;
+    --colorBordes: #000000;
+    --colorFuenteMenu: #000000;
+}
+
+header > nav > ul > li > a {
+    color: var(--colorFondo);
+}
+
+#acceder > a {
+    color: var(--colorFuente);
+}
+
+footer {
+    color: var(--colorFondo);
+    > time {
+        color: var(--colorFondo);
+    }
+}
+
+form, button, input, select, textarea {
+    display: none !important;
+}
+
+a {
+    text-decoration: underline; /* para que se note mas que es un enlace se le subraya el tetxo */
+}
+
+a::after {
+    content: " (" attr(href) ")"; /* esto es lo que muestra la url de la pagina a la que va un enlace */
+}
+
+/* controladores de pagina (preguntar porque no se si esta bien) */
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+article { /* esto evita que los articulos se queden cortados cuando se imprimen y lo de auto es para que el navegador decida si el articulo se imprime en una pagina o en otra (para que quede bien) */
+    page-break-inside: avoid;
+    page-break-before: auto;
+    page-break-after: auto;
+}
+
+h1, h2, h3 { /* se supone que evita que los encabezados se queden solos si se impreime la pagina y es lo ultimo que hay */
+    page-break-after: avoid;
+}
+
+p { /* creo que los orphans son para que las lineas que se quedan al final de la pagina y las widows para las del inicio */
+    orphans: 3;
+    widows: 3;
+}

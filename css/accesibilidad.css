@@ -9,7 +9,6 @@ h2 {
 }
 
 body > section > p {
-    background-color: var(--colorBordesArticulos);
     width: 100%;
 }
 

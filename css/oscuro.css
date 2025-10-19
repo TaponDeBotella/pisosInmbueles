@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --colorHeader: #0d2d8b;
     --colorFondo: #D7E7FF;
     --colorFondoClaro: aliceblue;
@@ -7,12 +7,33 @@
     --colorBotonHover: #F1D1FF;
     --colorNav: #9FCFFF;
     --colorTextoMensaje: #fffac7;
-    --colorArticulo: #FFF691;
+    --colorArticulo: #fceb2c;
     --sombra: #00000050;
     --colorBordesArticulos: lightgrey;
-    --colorFuente: black;
+    --colorFuente: white;
     --colorCeldaOscura: #B0CFFF;
     --colorCeldaClara: #e4ecff;
     --colorBordes: black;   
     --colorFuenteMenu: #5C2090;
+} */
+
+
+
+:root {
+    --colorHeader: #0d2d8b;
+    --colorFondo: #2C5596;
+    --colorFondoClaro: aliceblue;
+    --colorBordeBoton: #30085C;
+    --colorBoton: #c44df6;
+    --colorBotonHover: #F1D1FF;
+    --colorNav: #1B3046;
+    --colorTextoMensaje: #fffac7;
+    --colorArticulo: #fceb2c96;
+    --sombra: #00000050;
+    --colorBordesArticulos: lightgrey;
+    --colorFuente: white;
+    --colorCeldaOscura: #88a4d0;
+    --colorCeldaClara: #e4ecff;
+    --colorBordes: black;
+    --colorFuenteMenu: #DBC2F1;
 }

@@ -26,6 +26,7 @@
 
 * {
     font-family: "Comic Relief";
+    color: var(--colorFuente);
 }
 
 html {

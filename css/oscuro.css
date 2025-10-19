@@ -1,0 +1,18 @@
+:root {
+    --colorHeader: #0d2d8b;
+    --colorFondo: #D7E7FF;
+    --colorFondoClaro: aliceblue;
+    --colorBordeBoton: #A461EF;
+    --colorBoton: #fcf5ff;
+    --colorBotonHover: #F1D1FF;
+    --colorNav: #9FCFFF;
+    --colorTextoMensaje: #fffac7;
+    --colorArticulo: #FFF691;
+    --sombra: #00000050;
+    --colorBordesArticulos: lightgrey;
+    --colorFuente: black;
+    --colorCeldaOscura: #B0CFFF;
+    --colorCeldaClara: #e4ecff;
+    --colorBordes: black;   
+    --colorFuenteMenu: #5C2090;
+}

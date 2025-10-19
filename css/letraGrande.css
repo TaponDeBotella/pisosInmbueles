@@ -1,8 +1,8 @@
 :root {
     --tamFuenteSuperGrande: 3.5em;
     --tamFuenteGrande: 2.2em;
-    --tamFuenteMediana: 1.9em;
-    --tamFuentePequena: 1.7em;
+    --tamFuenteMediana: 1.5em;
+    --tamFuentePequena: 1.2em;
 }
 
 @media (max-width: 480px) {

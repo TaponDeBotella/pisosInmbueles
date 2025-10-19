@@ -21,7 +21,7 @@
     --tamFuenteSuperGrande: 2em;
     --tamFuenteGrande: 1.5em;
     --tamFuenteMediana: 1.2em;
-    --tamFuentePequena: 1em;
+    --tamFuentePequena: 1em;
 }
 
 * {
@@ -198,7 +198,7 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
     list-style-type: none;
     position: absolute;
     width: max-content;
-    padding-right: 10%;
+    padding-right: 1vw;
     padding-left: 6em;
     top: 30px;
     left: 0;
@@ -207,8 +207,10 @@ nav label[for="burger_menu"], #burger_menu, label[for="menu_estilo"], #menu_esti
     background-color: var(--colorBordeBoton);
     transition: 1s;
     gap: 0;
+    font-size: var(--tamFuenteMediana);
 
     > li {
+        padding-bottom: 0;
         > a {
             display: block;
             color: var(--colorFuenteMenu);

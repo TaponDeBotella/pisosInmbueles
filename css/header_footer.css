@@ -19,6 +19,8 @@
     --colorBordes: black;   
     --colorBordesArticulos: inherit;
     --colorFuenteMenu: #5C2090;
+    --colorBordeError: red;
+    --colorFondoError: #eed8d8;
     --tamFuenteSuperGrande: 2em;
     --tamFuenteGrande: 1.5em;
     --tamFuenteMediana: 1.2em;
@@ -286,6 +288,16 @@ nav label[for="menu_estilo"]:hover {
     
 }
 
+@keyframes shake {
+    0% { transform: translateX(0)}
+    20% { transform: translateX(-5px)}
+    40% { transform: translateX(5px)}
+    60% { transform: translateX(-5px)}
+    80% { transform: translateX(5px)}
+    100% { transform: translateX(0)}
+
+}
+
 @media (max-width: 480px) {
     #acceder {
         > i {
@@ -293,3 +305,4 @@ nav label[for="menu_estilo"]:hover {
         }
     }
 }
+

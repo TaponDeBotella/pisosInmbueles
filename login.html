@@ -14,6 +14,7 @@
         <link rel="alternate stylesheet" type="text/css" href="css/letraGrandeContraste.css" title="Estilo de tamaño grande y alto contraste"/>
         <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta"/>
         <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta pero con media print" media="print"/>
+        <script src="js/login.js"></script>
     </head>
 
     <header>   
@@ -59,9 +60,9 @@
     <body>
         <h1>Inicio de sesión</h1>
         <section>
-            <form>
+            <form onsubmit="misubmit( event );">
                 <label for="labelEmail">Correo electrónico: </label>
-                <input class="input_select" type="email" id="email" required>
+                <input onfocus="restaurarEstilo(this.id)" class="input_select" type="text" id="email" required>
     
                 <label for="labelPassword">Contraseña: </label>
                 <input class="input_select" type="password" id="password" required>

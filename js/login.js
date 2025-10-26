@@ -104,14 +104,14 @@ function restaurarEstilo (id) {
 function validarCampo(id) {
     let campoTexto = document.getElementById(id);
     let texto = campoTexto.value;
-    let emailValido = false;
+    let campoValido = false;
 
     if(texto.length != 0) {
         for(let i=0; i< texto.length; i++) {
             if(texto[i] != ' ' && texto[i] != '\t')
-                emailValido = true;
+                campoValido = true;
         }
     }
 
-    return emailValido;
+    return campoValido;
 }

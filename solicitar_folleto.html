@@ -14,6 +14,7 @@
         <link rel="alternate stylesheet" type="text/css" href="css/letraGrandeContraste.css" title="Estilo de tamaño grande y alto contraste"/>
         <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta"/>
         <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta pero con media print" media="print"/>
+        <script src="js/solcitar_folleto.js"></script>
     </head>
 
     <header>   
@@ -64,6 +65,7 @@
         </section>
         <section id="solcitarFolleto">
             <section id="sectionTarifas">
+                <button id="botonTarifas" class="boton" onclick="verPrecios()">Ver Posibles Precios</button>
                 <h3>Tarifas</h3>
                 <table border="1" cellspacing="0" cellpadding="8" id="tablaTarifa">
                     <tr class="celdaOscura">
@@ -99,7 +101,7 @@
                         <th>0€ por foto</th>
                     </tr>
                     <tr class="celdaClara">
-                        <th>Resolución menor que 300dpi</th>
+                        <th>Resolución mayor que 300dpi</th>
                         <th>0.2€ por foto</th>
                     </tr>
                 </table>

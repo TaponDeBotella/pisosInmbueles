@@ -16,19 +16,6 @@ function misubmit( evt ) {
     campoEmail.offsetHeight;
     campoPass.style.animation = 'none';
     campoPass.offsetHeight;
-    
-
-    if(!emailValido){
-        campoEmail.style.borderColor = 'var(--colorBordeError)';
-        campoEmail.style.backgroundColor = 'var(--colorFondoError)';
-        campoEmail.style.animation = 'shake 0.5s';
-    }
-    
-    if(!passValida) {
-        campoPass.style.borderColor = 'var(--colorBordeError)';
-        campoPass.style.backgroundColor = 'var(--colorFondoError)';
-        campoPass.style.animation = 'shake 0.5s';
-    }
 
     if(emailValido && passValida)
         document.getElementById("formularioLogin").submit();
@@ -43,14 +30,14 @@ function ventanaModal( email, pass ) {
     modal.style.left = '0';
     modal.style.width = '100%';
     modal.style.height = '100%';
-    modal.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
     modal.style.display = 'flex';        
     modal.style.justifyContent = 'center';
     modal.style.alignItems = 'center';
     modal.style.zIndex = '1000';
 
     let modalContent = document.createElement('section');
-    modalContent.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+    modalContent.style.backgroundColor = 'white';
     modalContent.style.padding = '20px';
     modalContent.style.borderRadius = '5px';
     modalContent.style.textAlign = 'center';
@@ -86,6 +73,21 @@ function ventanaModal( email, pass ) {
     closeButton.onclick = function () {
 
         document.body.removeChild(modal); // Eliminar la ventana modal
+
+        let campoEmail = document.getElementById('email');
+        let campoPass = document.getElementById('password');
+        
+        if(email){
+            campoEmail.style.borderColor = 'var(--colorBordeError)';
+            campoEmail.style.backgroundColor = 'var(--colorFondoError)';
+            campoEmail.style.animation = 'shake 0.5s';
+        }
+        
+        if(pass) {
+            campoPass.style.borderColor = 'var(--colorBordeError)';
+            campoPass.style.backgroundColor = 'var(--colorFondoError)';
+            campoPass.style.animation = 'shake 0.5s';
+        }
     };
     
     modalContent.appendChild(message);

@@ -1,16 +1,35 @@
 "use strict";
+let ESTILO_EMAIL;
+window.addEventListener('load', function() {
+    ESTILO_EMAIL = this.window.getComputedStyle(this.document.getElementById('email'));
+});
+
 
 function misubmit( evt ) {
     evt.preventDefault();
     
     let emailValido = validarEmail();;
     let passValida = validarPass();
+    let campoEmail = document.getElementById('email');
+    let campoPass = document.getElementById('password');
+    
 
-    if(!emailValido)
-        console.log('email invalido');
-    else if(!passValida) 
-        console.log('pass invalida')
+    if(!emailValido){
+        
+        campoEmail.style.borderColor = 'var(--colorBordeError)';
+        campoEmail.style.backgroundColor = 'var(--colorFondoError)';
+        campoEmail.style.animation = 'shake 0.5s';
+    }
+    else if(!passValida) {
+        campoPass.style.borderColor = 'var(--colorBordeError)';
+        campoPass.style.backgroundColor = 'var(--colorFondoError)';
+        campoPass.style.animation = 'shake 0.5s';
+    }
+}
 
+function restaurarEstilo (id) {
+    document.getElementById(id).style = ESTILO_EMAIL;
+    console.log('estilo restaurado');
 }
 
 function validarEmail() {

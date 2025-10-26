@@ -60,12 +60,12 @@
     <body>
         <h1>Inicio de sesión</h1>
         <section>
-            <form onsubmit="misubmit( event );">
+            <form id="formularioLogin" onsubmit="misubmit( event );">
                 <label for="labelEmail">Correo electrónico: </label>
                 <input onfocus="restaurarEstilo(this.id)" class="input_select" type="text" id="email" required>
     
                 <label for="labelPassword">Contraseña: </label>
-                <input class="input_select" type="password" id="password" required>
+                <input onfocus="restaurarEstilo(this.id)" class="input_select" type="password" id="password" required>
                 <input class="boton" id="confirmar" type="submit" value="Confirmar">
     
             </form>

@@ -55,9 +55,21 @@ function costePorPaginas(paginas) {
 function calcularPrecio(paginas, fotos, color, dpi) {
     const precioEnvio = 10.0;
     const precioPag = costePorPaginas(paginas); // se saca el precio de las paginas con la funcion
-    const precioFotoColor = color ? 0.5 : 0.0; // si la foto es a color entonces cada una vale 0.5 y si no entonces es 0 
-    const precioResolucion = (dpi > 300) ? 0.2 : 0.0; // si la resolucion es mayor a 300 entonces vale cada una 0.2, si no es 0
-    const precioFotos = fotos * (precioFotoColor + precioResolucion); // se calcula el precio de las fotos
+    let precioResolucion, precioFotoColor, precioFotos;
+
+    if(color) { // si la foto es a color entonces cada una vale 0.5 y si no entonces es 0
+        precioFotoColor = 0.5;
+    } else {
+        precioFotoColor = 0.0;
+    }
+
+    if (dpi > 300) { // si la resolucion es mayor a 300 entonces vale cada una 0.2, si no es 0
+        precioResolucion = 0.2;
+    } else {
+        precioResolucion = 0.0;
+    }
+
+    precioFotos = fotos * (precioFotoColor + precioResolucion); // se calcula el precio de las fotos
 
     return precioEnvio + precioPag + precioFotos; // se devuelve el precio total sumandole el envio, las paginas y las fotos
 }

@@ -1,0 +1,3 @@
+dateTime para validar la fecha
+Poner el error en cada uno de los inputs
+Tabla precio va por tramos, no vale lo mismo las 5 primeras que las 5 siguientes (ejemplo 6 paginas: 5 primeras valen 1€ cada 1, pero la sexta vale 0.8€ asi que el total es 5.8€)

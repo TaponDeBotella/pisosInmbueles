@@ -71,17 +71,18 @@
                 <input class="input_select" onfocus="restaurarEstilo(this.id);" type="password" id="password2">
                 
                 <label for="labelEmail">Correo electrónico: </label>
-                <input class="input_select" onfocus="restaurarEstilo(this.id);" type="text" id="email">
+                <input class="input_select" onfocus="restaurarEstilo(this.id);" type="text" id="email" placeholder="parte-local@dominio">
                 
                 <label for="labelSex">Sexo: </label>
-                <select class="input_select" id="sex">
-                    <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
+                <select onchange="borrarVacio();" onclick="restaurarEstilo(this.id);" class="input_select" id="sex">
+                    <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->´
+                    <option id="vacio" value=""></option>
                     <option value="Hombre">Hombre</option>
                     <option value="Mujer">Mujer</option>
                 </select>
                 
                 <label for="labelBirth">Fecha de nacimiento: </label>
-                <input class="input_select" onfocus="restaurarEstilo(this.id);" type="text" id="birth">
+                <input class="input_select" onfocus="restaurarEstilo(this.id);" placeholder="dia-mes-año" type="text" id="birth">
                 
                 <label for="labelCity">Ciudad de residencia: </label>
                 <input class="input_select" onfocus="restaurarEstilo(this.id);" type="text" id="city">

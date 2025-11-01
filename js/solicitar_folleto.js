@@ -95,13 +95,15 @@ function verPrecios() {
         backgroundColor: 'var(--colorFondoClaro)'
     });
 
+
+
     const tabla = document.createElement('table'); // la tabla de los precios
 
     Object.assign(tabla.style, {
         borderCollapse: 'collapse',
         alignItems: 'center',
         justifyContent: 'center',   // NO VAAAAAAAAAAAAAAA
-        width: '90%',
+        width: '40%',
         border: '3px solid var(--colorBordeBoton)', 
         display: 'block', // vale no va lo de poner en el centro por esto, pero es que si lo quito entonces no se ve bien la tabla y ya no puedo pensar mas SOCORRO
         tableLayout: 'fixed',
@@ -164,3 +166,15 @@ function verPrecios() {
 
     document.body.appendChild(fondo); // se anyade todo
 }
+
+function mostrarTablaPrecios(){
+    document.getElementById("seccion-precios").classList.add("mostrarTabla");
+}
+function cerrarTablaPrecios(){
+    document.getElementById("seccion-precios").classList.remove("mostrarTabla");
+    document.getElementById("seccion-precios").classList.add("ocultarTabla");
+}
+botonMostrarTabla=document.getElementById("botonTarifasPHP");
+botonOcultarTabla=document.getElementById("botonCerrarTarifas");
+botonMostrarTabla.addEventListener('click', mostrarTablaPrecios);
+botonOcultarTabla.addEventListener('click', cerrarTablaPrecios);

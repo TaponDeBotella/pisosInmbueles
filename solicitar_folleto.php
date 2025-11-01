@@ -1,71 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/header_footer.css">
-        <link rel="stylesheet" href="css/solicitar_folleto.css">
-        <script src="https://kit.fontawesome.com/7cae898421.js" crossorigin="anonymous"></script>  <!-- ESTO EN TODAS LAS PAGINAS PARA QUE VAYAN LOS ICONOS --> 
-        <title>Solicitar folleto</title>
-        <link rel="alternate stylesheet" type="text/css" href="css/predeterminado.css" title="Estilo predeterminado"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/letraGrande.css" title="Estilo de tamaño grande"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/contraste.css" title="Estilo de alto contraste"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/oscuro.css" title="Modo noche"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/letraGrandeContraste.css" title="Estilo de tamaño grande y alto contraste"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta pero con media print" media="print"/>
-        <script src="js/solcitar_folleto.js"></script>
-    </head>
-
-    <header>   
-        <nav>
-            <ul>
-                <li class="menu">
-                    <nav id="nav_nav">
-                        <label for="burger_menu"><p id="menu_busqueda"><i class="fa-solid fa-bars"></i></p></label>
-                        <input type="checkbox" id="burger_menu">
-                        <ul class="menu_head" >
-                            <li><a href="index.html">Inicio</a></li>
-                            <li><a href="anuncio.html">Anuncio</a></li>
-                            <li><a href="log_registro.html">Menú</a></li>
-                            <li><a href="alerta.html">Alerta</a></li>
-                            <li><a href="registro.html">Registro</a></li>
-                            <li><a href="busqueda.html">Busqueda</a></li>
-                            <li><a href="enviar_mensaje.html">Enviar Mensaje</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="mi_perfil.html">Mi perfil</a></li>
-                            <li><a href="mis_mensajes.html">Mis mensajes</a></li>
-                            <li><a href="respuesta_folleto.html">Respuesta Folleto</a></li>
-                            <li><a href="respuesta_mensaje.html">Respuesta Mensaje</a></li>
-                            <li><a href="accesibilidad.html">Accesibilidad</a></li>
-                            <li><a href="solicitar_folleto.html">Solicitar Folleto</a></li>
-                        </ul>
-                    </nav>
-                    
-                </li>
-    
-                <li id="index">
-                    <a href="index.html">Pisos & Inmuebles</a>
-                </li>
-
-                <li id="acceder">
-                    <a href="mi_perfil.html"><i class="fa-solid fa-user"></i>Mi perfil</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
+<?php
+    $title="Solicitar folleto";
+    $css="css/solicitar_folleto.css";
+    $js="js/solicitar_folleto.js";
+    include 'includes/header.php';
+    require_once 'includes/funciones.php';
     
 
-    <body>
-        <h1>Solicitar folleto</h1>
+?>
+        <h1><?php echo $title ?></h1>
         <section id="solicitudFolletoPresentacion">
             <h2>Solicitud de impresión de folleto publicitario</h2>
             <p>Presenta tu solicitud de impresión de folleto publicitario.</p>
         </section>
+        <section id="seccion-precios" class="ocultarTabla">
+            <button id="botonCerrarTarifas" class="boton" onclick="cerrarTablaPrecios()">X</button>
+
+            <table id="tablaPrecios" class="tabla">
+                <tbody>
+                    <tr >
+                        <th colspan="2"></th>
+                        <th colspan="2">Blanco y Negro</th>
+                        <th colspan="2">Color</th>
+                    </tr>
+                    <tr>
+                        <th>Numero de páginas</th>
+                        <th>Número de fotos</th>
+                        <th>150-300dpi</th>
+                        <th>450-900dpi	</th>
+                        <th>150-300dpi</th>
+                        <th>450-900dpi</th>
+                    </tr>
+            <?php
+                for ($i=0; $i<15; $i++){
+                    $paginas = $i + 1;
+                    $fotos = ($i*3)+3;
+                   
+                    echo '<tr>';
+                        echo '<td>' . $paginas .'</td>';
+                    
+                        echo '<td>' . $fotos . '</td>';
+
+                        echo '<td>' . number_format(calcularPrecio($paginas,$fotos,false,300), 2) . ' €</td>';
+                        echo '<td>' . number_format(calcularPrecio($paginas,$fotos,false,450), 2) . ' €</td>';
+                        echo '<td>' . number_format(calcularPrecio($paginas,$fotos,true,300) , 2). ' €</td>';
+                        echo '<td>' . number_format(calcularPrecio($paginas,$fotos,true,450) , 2). ' €</td>';
+                        
+                    echo '</tr>';
+                }
+            ?>
+
+        
+                </tbody>
+            </table>
+
+        </section>
+
         <section id="solcitarFolleto">
             <section id="sectionTarifas">
                 <button id="botonTarifas" class="boton" onclick="verPrecios()">Ver Posibles Precios</button>
+                <button id="botonTarifasPHP" class="boton" onclick="mostrarTablaPrecios()">Ver Posibles Precios PHP</button>
                 <h3>Tarifas</h3>
                 <table border="1" cellspacing="0" cellpadding="8" id="tablaTarifa">
                     <tr class="celdaOscura">
@@ -111,7 +104,7 @@
                 <p>Rellena el siguiente formulario aportando todos los detalles para confeccionar tu folleto publicitario.
                 Los campos marcados con (*) son obligatotios.</p> 
 
-                <form id="formFolleto" action="respuesta_folleto.html">
+                <form id="formFolleto" action="respuesta_folleto.php" method="post">
                     <p>
                         <i class="fa-solid fa-clipboard"></i>
                         <label for="texto_adicional_folleto">Texto adicional</label>
@@ -216,7 +209,10 @@
                 </form>
             </section>
         </section>
-    </body>
 
-    <footer> ©<time datetime="2025">2025</time> PI - Pisos & Inmuebles - Desarrollado por Ariadna Guillén y Raúl Cervera. <a href="accesibilidad.html">Accesibilidad de la Página</a></footer>
-</html>
+        
+
+
+<?php
+    include 'includes/footer.php';
+?>

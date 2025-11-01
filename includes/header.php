@@ -14,7 +14,7 @@
         <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta"/>
         <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta pero con media print" media="print"/>
         <script src="https://kit.fontawesome.com/7cae898421.js" crossorigin="anonymous"></script>  <!-- ESTO EN TODAS LAS PAGINAS PARA QUE VAYAN LOS ICONOS -->
-        <script src="<?php echo $js; ?>" ></script> 
+        <script src="<?php echo $js; ?>" defer></script> 
     </head>
 
     <header>   

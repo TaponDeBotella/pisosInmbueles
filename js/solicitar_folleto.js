@@ -174,7 +174,8 @@ function cerrarTablaPrecios(){
     document.getElementById("seccion-precios").classList.remove("mostrarTabla");
     document.getElementById("seccion-precios").classList.add("ocultarTabla");
 }
-botonMostrarTabla=document.getElementById("botonTarifasPHP");
-botonOcultarTabla=document.getElementById("botonCerrarTarifas");
+
+const botonMostrarTabla=document.getElementById("botonTarifasPHP");
+const botonOcultarTabla=document.getElementById("botonCerrarTarifas");
 botonMostrarTabla.addEventListener('click', mostrarTablaPrecios);
 botonOcultarTabla.addEventListener('click', cerrarTablaPrecios);

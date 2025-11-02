@@ -2,9 +2,15 @@
     $title="Solicitar folleto";
     $css="css/solicitar_folleto.css";
     $js="js/solicitar_folleto.js";
-    include 'includes/header.php';
-    require_once 'includes/funciones.php';
     
+    require_once 'includes/funciones.php';
+    if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['error'])) {
+        
+            $error="Rellena campos obligatorios";
+     
+
+    }
+    include 'includes/header.php';
 
 ?>
         <h1><?php echo $title ?></h1>
@@ -103,75 +109,80 @@
                 <h3>Formulario de solicitud</h3>
                 <p>Rellena el siguiente formulario aportando todos los detalles para confeccionar tu folleto publicitario.
                 Los campos marcados con (*) son obligatotios.</p> 
+                <?php
+                    if (isset($error)){
+                        echo "<p style='color:red'>" . $error . "</p>";
+                    }
+                ?>
 
                 <form id="formFolleto" action="respuesta_folleto.php" method="post">
                     <p>
                         <i class="fa-solid fa-clipboard"></i>
                         <label for="texto_adicional_folleto">Texto adicional</label>
-                        <input type="text" id="texto_adicional_folleto" maxlength="4000" class="input_select">
+                        <input type="text" id="texto_adicional_folleto" name="texto_adicional_folleto" maxlength="4000" class="input_select">
                     </p>  
 
                     <p>
                         <i class="fa-solid fa-user"></i>
                         <label for="nombre_folleto">Nombre (*)</label>
-                        <input type="text" id="nombre_folleto" maxlength="200" class="input_select">  
+                        <input type="text" id="nombre_folleto" name="nombre_folleto" maxlength="200" class="input_select">  
                     </p>
 
                     <p>
                         <i class="fa-solid fa-envelope"></i>
                         <label for="email_folleto">Correo Electrónico (*)</label>
-                        <input type="email" id="email_folleto" maxlength="200" class="input_select"> 
+                        <input type="email" id="email_folleto" name="email_folleto" maxlength="200" class="input_select"> 
                     </p>
 
                     <p>
                         <i class="fa-solid fa-location-dot"></i>
                         <label for="direccion">Dirección (*)</label>
-                        <input type="text" id="calle_folleto" placeholder="Calle" class="input_select"> 
-                        <input type="number" id="numCalle_folleto" min="1" placeholder="Número" class="input_select"> 
-                        <input type="number" id="cp_folleto" min="1" placeholder="CP" class="input_select">
-                        <select id="localidad_folleto" placeholder="Localidad" class="input_select">
-                            <option value="l1">localidad 1</option>
-                            <option value="l2">localidad 2</option>
-                            <option value="l3">localidad 3</option>
-                            <option value="l4">localidad 4</option>
+                        <input type="text" id="calle_folleto"  name="calle_folleto" placeholder="Calle" class="input_select"> 
+                        <input type="number" id="numCalle_folleto" name="numCalle_folleto" min="1" placeholder="Número" class="input_select">                         
+                        <input type="number" id="cp_folleto" name="cp_folleto" min="1" placeholder="CP" class="input_select">
+                        <select id="localidad_folleto" name="localidad_folleto" placeholder="Localidad" class="input_select">
+                            <option value="localidad 1">localidad 1</option>
+                            <option value="localidad 2">localidad 2</option>
+                            <option value="localidad 3">localidad 3</option>
+                            <option value="localidad 4">localidad 4</option>
                         </select>
-                        <select id="provincia_folleto" placeholder="Provincia" class="input_select">
-                            <option value="br">Barcelona</option>
-                            <option value="ma">Málaga</option>
-                            <option value="al">Alicante</option>
-                            <option value="mu">Murcia</option>
-                            <option value="se">Sevilla</option>
+                        <select id="provincia_folleto" name="provincia_folleto" placeholder="Provincia" class="input_select">
+                            <option value="Barcelona">Barcelona</option>
+                            <option value="Málaga">Málaga</option>
+                            <option value="Alicante">Alicante</option>
+                            <option value="Murcia">Murcia</option>
+                            <option value="Sevilla">Sevilla</option>
                         </select>
                     </p> 
 
                     <p>
                         <i class="fa-solid fa-phone"></i>
                         <label for="tel_folleto">Número de teléfono</label>
-                        <input type="tel" id="tel_folleto" class="input_select"> 
+                        <input type="tel" id="tel_folleto" name="tel_folleto" class="input_select"> 
                     </p> 
 
                     <p>
                         <i class="fa-solid fa-brush"></i>
                         <label for="color_folleto">Color de la portada</label>
-                        <input type="color" id="color_folleto" value="#000000" class="input_select">
+                        <input type="color" id="color_folleto" name="color_folleto" value="#000000" class="input_select">
                     </p> 
 
                     <p>
                         <i class="fa-solid fa-print"></i>
                         <label for="numCopias_folleto">Número de copias</label>
-                        <input type="number" id="numCopias_folleto" min="1" max="99" value="1" class="input_select">  
+                        <input type="number" id="numCopias_folleto" name="numCopias_folleto" min="1" max="99" value="1" class="input_select">  
                     </p>
 
                     <p>
                         <i class="fa-solid fa-eye"></i>
                         <label for="resolucion_folleto">Resolución de impresión</label>
-                        <input type="number" id="resolucion_folleto" min="150" max="900" step="150" value="150" class="input_select">  
+                        <input type="number" id="resolucion_folleto" name="resolucion_folleto" min="150" max="900" step="150" value="150" class="input_select">  
                     </p>
 
                     <p>
                         <i class="fa-solid fa-file"></i>
                         <label for="anuncio_folleto">Anuncio del usuario (*)</label>
-                        <select id="anuncio_folleto" class="input_select">
+                        <select id="anuncio_folleto" name="anuncio_folleto" class="input_select">
                             <option value="a1">Anuncio 1</option>
                             <option value="a2">Anuncio 2</option>
                             <option value="a3">Anuncio 3</option>
@@ -181,25 +192,27 @@
                     <p>
                         <i class="fa-solid fa-calendar"></i>
                         <label for="fecha_folleto">Fecha de recepción</label>
-                        <input type="date" id="fecha_folleto" class="input_select"> 
+                        <input type="date" id="fecha_folleto" name="fecha_folleto" class="input_select"> 
                     </p> 
 
                     <p>
                         <i class="fa-solid fa-palette"></i>
-                        <label for="color">¿Impresión a color?</label>
-                        <label for="bn_folleto">Blanco y negro</label>
-                        <input type="radio" id="bn_folleto" name="impresion_color" class="input_select">
-                        <label for="color_folleto">A todo color</label>  
-                        <input type="radio" id="color_folleto" name="impresion_color" class="input_select">
+                        <label>¿Impresión a color?</label>
+                        <label for="bn_folleto">Blanco y negro
+                            <input type="radio" id="bn_folleto" name="impresion_color" value="no" class="input_select">
+                        </label>
+                        <label for="color_folleto">A todo color
+                            <input type="radio" id="color_folleto" name="impresion_color" value="si" class="input_select">
+                        </label>  
                     </p>
 
                     <p>
                         <i class="fa-solid fa-barcode"></i>
                         <label for="precio">¿Impresión del precio?</label>
                         <label for="siPrecio_folleto">Si</label>
-                        <input type="radio" id="siPrecio_folleto" name="impresion_precio" class="input_select">
+                        <input type="radio" id="siPrecio_folleto" name="impresion_precio" value="si" class="input_select">
                         <label for="noPrecio_folleto">No</label> 
-                        <input type="radio" id="noPrecio_folleto" name="impresion_precio" class="input_select">
+                        <input type="radio" id="noPrecio_folleto" name="impresion_precio" value="no" class="input_select">
                     </p>
 
                     <p>

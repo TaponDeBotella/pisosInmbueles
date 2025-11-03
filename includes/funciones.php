@@ -27,3 +27,9 @@
             return $precioEnvio + $precioPag + $precioFotos;
 
         }
+
+
+
+
+
+?>

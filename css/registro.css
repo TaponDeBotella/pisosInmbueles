@@ -27,6 +27,14 @@ label {
     display: block;
 }
 
+.errorForm {
+    display: flex;
+
+    > p {
+        color: var(--colorBordeError);
+    }
+}
+
 
 #confirmar {
     margin: 0 0 1em 1em;

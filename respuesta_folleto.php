@@ -1,5 +1,6 @@
 <?php
     $title="Respuesta folleto";
+    $acceder = "Mi perfil";
     $css="css/respuesta_folleto.css";
    
     require_once 'includes/funciones.php';

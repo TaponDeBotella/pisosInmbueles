@@ -1,11 +1,12 @@
 <?php
     $title="Resultados de Búsqueda";
     $css="css/busqueda.css";
+    $acceder="Acceder";
     include 'includes/header.php';   
 ?>
 
     <section id="secio_barraNav">
-            <form action="busqueda.html">
+            <form action="busqueda.php">
                 <input type="text" id="ciudad_busqueda">
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 
@@ -85,10 +86,10 @@
             <ul id="ul_articulos">
                 <li>
                     <article>
-                        <a href="anuncio.html">
+                        <a href="anuncio">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="anuncio.html" class="a_tituloPublicacion">
+                        <a href="anuncio" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>
@@ -100,10 +101,10 @@
                 </li>
                 <li>
                     <article>
-                        <a href="alerta.html">
+                        <a href="alerta">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="alerta.html" class="a_tituloPublicacion">
+                        <a href="alerta" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>
@@ -115,10 +116,10 @@
                 </li>
                 <li>
                     <article>
-                        <a href="anuncio.html">
+                        <a href="anuncio">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="anuncio.html" class="a_tituloPublicacion">
+                        <a href="anuncio" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>
@@ -130,10 +131,10 @@
                 </li>
                 <li>
                     <article>
-                        <a href="anuncio.html">
+                        <a href="anuncio">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="anuncio.html" class="a_tituloPublicacion">
+                        <a href="anuncio" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>

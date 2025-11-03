@@ -1,5 +1,6 @@
 <?php
     $title = "Inicio";
+    $acceder = "Acceder";
     $css = "css/index.css";
     include 'includes/header.php';
 ?>

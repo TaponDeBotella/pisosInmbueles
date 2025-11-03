@@ -1,5 +1,6 @@
 <?php
     $title="Página del anuncio";
+    $acceder = "Acceder";
     $css="css/anuncio.css";
     include 'includes/header.php'; 
 ?>
@@ -57,7 +58,8 @@
         </figure>
 
         <nav id="simular">
-            <a href="enviar_mensaje.html">Enviar mensaje al dueño</a>
+            <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>
         </nav>
 <?php
     include 'includes/footer.php';
+?>

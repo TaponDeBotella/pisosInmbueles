@@ -1,6 +1,7 @@
 <?php
     $title="Solicitar folleto";
     $css="css/solicitar_folleto.css";
+    $acceder = "Mi perfil";
     $js="js/solicitar_folleto.js";
     
     require_once 'includes/funciones.php';

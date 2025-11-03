@@ -1,5 +1,6 @@
 <?php
     $title="Accesibilidad de la Página";
+    $acceder = "Acceder";
     $css="css/accesibilidad.css";
     include 'includes/header.php';
 ?>
@@ -47,3 +48,4 @@
         </section>
 <?php
     include 'includes/footer.php';
+?>

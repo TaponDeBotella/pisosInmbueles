@@ -61,7 +61,13 @@
                 </li>
 
                 <li id="acceder">
-                    <a href="log_registro.php"><i class="fa-solid fa-user-plus"></i>Acceder</a>
+                    <?php
+                        if($acceder == 'Acceder')
+                            echo '<a href="log_registro.php"><i class="fa-solid fa-user-plus"></i>'.htmlspecialchars($acceder).'</a>';
+                        else if($acceder == 'Mi perfil')
+                            echo '<a href="log_registro.php"><i class="fa-solid fa-user"></i>'.htmlspecialchars($acceder).'</a>';
+                    ?>
+                    
                 </li>
             </ul>
         </nav>

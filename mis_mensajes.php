@@ -1,60 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/header_footer.css">
-        <link rel="stylesheet" href="css/mis_mensajes.css">
-        <script src="https://kit.fontawesome.com/7cae898421.js" crossorigin="anonymous"></script>  <!-- ESTO EN TODAS LAS PAGINAS PARA QUE VAYAN LOS ICONOS --> 
-        <title>Mis mensajes</title>
-        <link rel="alternate stylesheet" type="text/css" href="css/predeterminado.css" title="Estilo predeterminado"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/letraGrande.css" title="Estilo de tamaño grande"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/contraste.css" title="Estilo de alto contraste"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/oscuro.css" title="Modo noche"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/letraGrandeContraste.css" title="Estilo de tamaño grande y alto contraste"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta pero con media print" media="print"/>
-    </head>
-
-    <header>   
-        <nav>
-            <ul>
-                <li class="menu">
-                    <nav id="nav_nav">
-                        <label for="burger_menu"><p id="menu_busqueda"><i class="fa-solid fa-bars"></i></p></label>
-                        <input type="checkbox" id="burger_menu">
-                        <ul class="menu_head" >
-                            <li><a href="index.html">Inicio</a></li>
-                            <li><a href="anuncio.html">Anuncio</a></li>
-                            <li><a href="log_registro.html">Menú</a></li>
-                            <li><a href="alerta.html">Alerta</a></li>
-                            <li><a href="registro.html">Registro</a></li>
-                            <li><a href="busqueda.html">Busqueda</a></li>
-                            <li><a href="enviar_mensaje.html">Enviar Mensaje</a></li>
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="mi_perfil.html">Mi perfil</a></li>
-                            <li><a href="mis_mensajes.html">Mis mensajes</a></li>
-                            <li><a href="respuesta_folleto.html">Respuesta Folleto</a></li>
-                            <li><a href="respuesta_mensaje.html">Respuesta Mensaje</a></li>
-                            <li><a href="accesibilidad.html">Accesibilidad</a></li>
-                            <li><a href="solicitar_folleto.html">Solicitar Folleto</a></li>
-                        </ul>
-                    </nav>
-                    
-                </li>
-    
-                <li id="index">
-                    <a href="index.html">Pisos & Inmuebles</a>
-                </li>
-
-                <li id="acceder">
-                    <a href="mi_perfil.html"><i class="fa-solid fa-user"></i>Mi perfil</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-
-    <body>
+<?php
+    $title="Mis mensajes";
+    $acceder = "Mi perfil";
+    $css="css/mis_mensajes.css";
+    include 'includes/header.php'; 
+?>
         <h1>Mis mensajes</h1>
         <section>
             <h2>ENVIADOS</h2>
@@ -152,10 +101,7 @@
                 </p>
             </article>
         </section>
-    </body>
-
-    
-    <footer> ©<time datetime="2025">2025</time> PI - Pisos & Inmuebles - Desarrollado por Ariadna Guillén y Raúl Cervera. <a href="accesibilidad.html">Accesibilidad de la Página</a></footer>
-
-
-</html>
+        
+<?php
+    include 'includes/footer.php';
+?>

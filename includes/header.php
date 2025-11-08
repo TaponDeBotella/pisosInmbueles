@@ -1,3 +1,34 @@
+<?php // esto tiene que ir en todos los php, es para poder guardar las sesiones de los usuarios y que se puedan recordar
+    
+    // verificar si hay cookies y si no hay sesion activa
+    if(!isset($_SESSION['logueado']) && isset($_COOKIE['recordarme_email']) && isset($_COOKIE['recordarme_password'])) {
+        require_once __DIR__ . '/usuarios.php';
+        
+        $email_cookie = $_COOKIE['recordarme_email'];
+        $password_cookie = $_COOKIE['recordarme_password'];
+        
+        // se busca el usuario
+        $usuario_encontrado = null;
+        foreach($usuarios as $usuario) {
+            if($usuario['email'] === $email_cookie && $usuario['password'] === $password_cookie) {
+                $usuario_encontrado = $usuario;
+                break;
+            }
+        }
+        
+        // si existe el usuario se inicia sesion sin que el usuario tenga que hacerlo
+        if($usuario_encontrado !== null) {
+            $_SESSION['usuario'] = $usuario_encontrado['email'];
+            $_SESSION['nombre'] = $usuario_encontrado['nombre'];
+            $_SESSION['logueado'] = true;
+            $_SESSION['es_recordado'] = true; 
+            
+            // se actualiza la hora de la ultima visita
+            $duracion_cookie = time() + (90 * 24 * 60 * 60);
+            setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>

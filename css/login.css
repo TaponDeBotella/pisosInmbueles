@@ -38,3 +38,10 @@ label {
 #password {
     display: block;
 }
+
+#checkboxLogin {
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    margin-top: 15px;
+}

@@ -92,10 +92,10 @@
             <ul id="ul_articulos">
                 <li>
                     <article>
-                        <a href="anuncio">
+                        <a href="anuncio.php?idAnuncio=1">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="anuncio" class="a_tituloPublicacion">
+                        <a href="anuncio.php?idAnuncio=1" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>
@@ -122,10 +122,10 @@
                 </li>
                 <li>
                     <article>
-                        <a href="anuncio">
+                        <a href="anuncio.php?idAnuncio=3">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="anuncio" class="a_tituloPublicacion">
+                        <a href="anuncio.php?idAnuncio=3" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>
@@ -137,10 +137,10 @@
                 </li>
                 <li>
                     <article>
-                        <a href="anuncio">
+                        <a href="anuncio.php?idAnuncio=4">
                             <img class="imagen_articulo" src="img/orihuela.jpg" alt="Foto piso">
                         </a>
-                        <a href="anuncio" class="a_tituloPublicacion">
+                        <a href="anuncio.php?idAnuncio=4" class="a_tituloPublicacion">
                             <h2>Piso en Orihuela</h2>
                         </a>  
                         <p class="fecha">Fecha publicación: <time datetime="2025-09-27 20:00">27-09-2025 20:00</time></p>

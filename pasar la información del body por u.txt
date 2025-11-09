@@ -1,5 +1,1 @@
-pasar la información del body por un pos
-arreglar el get de registro para que no se vea en la url
-añadir lo de las fotos y num paginas en el form del folleto
-documentar todo
-hacer lo del select con un bucle
+

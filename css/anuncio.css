@@ -50,6 +50,12 @@ table, td {
     padding: 1em 1em 1em 1em;
 }
 
+time {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 table {
     margin: auto;
 }
@@ -60,6 +66,12 @@ th {
 
 #simular {
     padding-bottom: 2em;
+}
+
+.miniatura {
+    width: 20%;
+    height: 20%;
+    margin: 1em 1em 1em 1em;
 }
 
 @media (max-width:480px) {

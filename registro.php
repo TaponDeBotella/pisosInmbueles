@@ -1,22 +1,21 @@
 <?php
+    session_start();
     $title="Registro";
     $acceder = "Acceder";
     $css="css/registro.css";
     include 'includes/header.php'; 
 
-    $localizacion = $_SERVER['REQUEST_URI'];
     
-    if(explode('registro.php', $localizacion)[1] != '') { // si hay algo despues de registro.php
-        $separadorLocalizacion = explode('_', $localizacion);
-    
-        $nombre = $separadorLocalizacion[1];
-        $pass1 = $separadorLocalizacion[3];
-        $pass2 = $separadorLocalizacion[5];
-        $email = $separadorLocalizacion[7];
-        $sex = $separadorLocalizacion[9];
-        $nacimiento = $separadorLocalizacion[11];
-        $ciudad = $separadorLocalizacion[13];
-        $pais = $separadorLocalizacion[15];
+    // Recupero los datos de la sesión si existen
+    if(isset($_SESSION['registro'])) {
+        $nombre = $_SESSION['registro']['nombre'];
+        $pass1 = $_SESSION['registro']['pass1'];
+        $pass2 = $_SESSION['registro']['pass2'];
+        $email = $_SESSION['registro']['email'];
+        $sex = $_SESSION['registro']['sex'];
+        $nacimiento = $_SESSION['registro']['nacimiento'];
+        $ciudad = $_SESSION['registro']['ciudad'];
+        $pais = $_SESSION['registro']['pais'];
     }
 
 ?>
@@ -26,69 +25,66 @@
             <form id="formRegistro" action="respuesta_registro.php" method="post">
                 <label for="labelName">Nombre: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '') 
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="nombre" type="text" id="name">';
-
-                    else if(sizeof(explode('nombreVacio', $localizacion)) == 2) {
+                    if (!$nombre && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                        echo '<input class="input_select" name="nombre" type="text" id="name">';
+                    }
+                    else if(isset($_SESSION['errores']) && in_array('nombreVacio', $_SESSION['errores'])) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
                         echo   '<section class="errorForm">
-                                    <input class="input_select" onfocus="restaurarEstilo(this.id);" name="nombre" type="text" id="name"><p class="errorForm">Este campo no puede estar vacío</p>
+                                    <input class="input_select" name="nombre" type="text" id="name"><p class="errorForm">Este campo no puede estar vacío</p>
                                 </section>';
                     }
-                    else
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="nombre" value="'.htmlspecialchars($nombre).'" type="text" id="name">';
+                    else if($nombre) // si no hay errores en este campo pero se ha recargado la pagina se mantienen los datos almacenados en sesion
+                        echo '<input class="input_select" name="nombre" value="'.htmlspecialchars($nombre).'" type="text" id="name">';
 
                 ?>
 
                 <label for="labelPassword">Contraseña: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '') 
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="pass1" type="password" id="password">';
-
-                    else if(sizeof(explode('pass1Vacia', $localizacion)) == 2) {
+                    if (!$pass1 && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                        echo '<input class="input_select" name="pass1" type="password" id="password">';
+                    }
+                    else if(isset($_SESSION['errores']) && in_array('pass1Vacia', $_SESSION['errores'])) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
                         echo   '<section class="errorForm">
-                                    <input class="input_select" onfocus="restaurarEstilo(this.id);" name="pass1" type="password" id="password"><p class="errorForm">Este campo no puede estar vacío</p>
+                                    <input class="input_select" name="pass1" type="password" id="password"><p class="errorForm">Este campo no puede estar vacío</p>
                                 </section>';
                     }
-                    else
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="pass1" value="'.htmlspecialchars($pass1).'" type="password" id="password">';
-
-
+                    else // si no hay errores en este campo pero se ha recargado la pagina se mantienen los datos almacenados en sesion
+                        echo '<input class="input_select" name="pass1" value="'.htmlspecialchars($pass1).'" type="password" id="password">';
                 ?>
                 
                 
                 <label for="labelPassword2">Repetir contraseña: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '') 
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="pass2" type="password" id="password2">';
-
-                    else if(sizeof(explode('pass2Vacia', $localizacion)) == 2) {
+                    if (!$pass2 && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                        echo '<input class="input_select" name="pass2" type="password" id="password2">';
+                    }
+                    else if(isset($_SESSION['errores']) && in_array('pass2Vacia', $_SESSION['errores'])) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
                         echo   '<section class="errorForm">
-                                    <input class="input_select" onfocus="restaurarEstilo(this.id);" name="pass2" type="password" id="password2"><p class="errorForm">Este campo no puede estar vacío</p>
+                                    <input class="input_select" name="pass2" type="password" id="password2"><p class="errorForm">Este campo no puede estar vacío</p>
                                 </section>';
                     }
-                    else if(sizeof(explode('passNoCoinciden', $localizacion)) == 2) {
+                    else if(isset($_SESSION['errores']) && in_array('passNoCoinciden', $_SESSION['errores'])) { // si las contrasenyas no coinciden
                         echo   '<section class="errorForm">
-                                    <input class="input_select" onfocus="restaurarEstilo(this.id);" name="pass2" type="password" value="'.htmlspecialchars($pass2).'" id="password2"><p class="errorForm">Las contraseñas no coinciden</p>
+                                    <input class="input_select" name="pass2" type="password" value="'.htmlspecialchars($pass2).'" id="password2"><p class="errorForm">Las contraseñas no coinciden</p>
                                 </section>';
                     }
-                    else 
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" value="'.htmlspecialchars($pass2).'" name="pass2" type="password" id="password2">';
+                    else // si no hay errores en este campo pero se ha recargado la pagina se mantienen los datos almacenados en sesion
+                        echo '<input class="input_select" value="'.htmlspecialchars($pass2).'" name="pass2" type="password" id="password2">';
                 ?>
                 
                 
                 <label for="labelEmail">Correo electrónico: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '') 
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="email" type="text" id="email" placeholder="parte-local@dominio">';
-                    else
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="email" value="'.htmlspecialchars($email).'" type="text" id="email" placeholder="parte-local@dominio">';
-
+                    if (!$email)  // si no hay datos en la sesion pongo el html por defecto
+                        echo '<input class="input_select" name="email" type="text" id="email" placeholder="parte-local@dominio">';
+                    else // si hay datos en la sesion los introduzco
+                        echo '<input class="input_select" name="email" value="'.htmlspecialchars($email).'" type="text" id="email" placeholder="parte-local@dominio">';
                 ?>
                 
                 <label for="labelSex">Sexo: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '') {
-                        echo '  <select onchange="borrarVacio();" onclick="restaurarEstilo(this.id);" name="sex" class="input_select" id="sex">
+                    if (!$sex) { // si no hay nada en la sesion pongo los datos por defecto
+                        echo '  <select   name="sex" class="input_select" id="sex">
                                     <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
                                     <option id="vacio" value=""></option>
                                     <option value="Hombre">Hombre</option>
@@ -96,24 +92,22 @@
                                 </select>';
                     }
                     else {
-                        if($sex == 'Hombre') {
-                            echo '  <select onchange="borrarVacio();" onclick="restaurarEstilo(this.id);" name="sex" class="input_select" id="sex">
+                        if($sex == 'Hombre') { // caso hombre
+                            echo '  <select  name="sex" class="input_select" id="sex">
                                     <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
-                                    <option id="vacio" value=""></option>
                                     <option selected value="Hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>
                                 </select>';
                         }
-                        else if($sex == 'Mujer') {
-                            echo '  <select onchange="borrarVacio();" onclick="restaurarEstilo(this.id);" name="sex" class="input_select" id="sex">
+                        else if($sex == 'Mujer') { // caso mujer
+                            echo '  <select   name="sex" class="input_select" id="sex">
                                     <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
-                                    <option id="vacio" value=""></option>
                                     <option value="Hombre">Hombre</option>
                                     <option selected value="Mujer">Mujer</option>
                                 </select>';
                         }
-                        else {
-                            echo '  <select onchange="borrarVacio();" onclick="restaurarEstilo(this.id);" name="sex" class="input_select" id="sex">
+                        else { // caso si habia sesion pero se dejo el campo por defecto
+                            echo '  <select   name="sex" class="input_select" id="sex">
                                     <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
                                     <option id="vacio" value=""></option>
                                     <option value="Hombre">Hombre</option>
@@ -127,28 +121,30 @@
                 
                 <label for="labelBirth">Fecha de nacimiento: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '') 
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="nacimiento" placeholder="dia-mes-año" type="text" id="birth">';
+                    if (!$nacimiento) // si no hay nada en la sesion pongo los datos por defecto
+                        echo '<input class="input_select" name="nacimiento" placeholder="dia-mes-año" type="text" id="birth">';
                     else
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="nacimiento" value="'.htmlspecialchars($nacimiento).'" placeholder="dia-mes-año" type="text" id="birth">';
+                        echo '<input class="input_select" name="nacimiento" value="'.htmlspecialchars($nacimiento).'" placeholder="dia-mes-año" type="text" id="birth">';
                 ?>
                         
 
                 
                 <label for="labelCity">Ciudad de residencia: </label>
                 <?php
-                    if (explode('registro.php', $localizacion)[1] == '')
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="ciudad" type="text" id="city">';
+                    if (!$ciudad) // si no hay nada en la sesion pongo los datos por defecto
+                        echo '<input class="input_select" name="ciudad" type="text" id="city">';
                     else
-                        echo '<input class="input_select" onfocus="restaurarEstilo(this.id);" name="ciudad" value="'.htmlspecialchars($ciudad).'" type="text" id="city">';
+                        echo '<input class="input_select" name="ciudad" value="'.htmlspecialchars($ciudad).'" type="text" id="city">';
                 ?>
 
                 <label for="labelCountry">País de residencia: </label>
 
                 <select class="input_select" name="pais" id="country">
                     <?php
-                        if (explode('registro.php', $localizacion)[1] == '') {
-                            echo '  <option value="Alemania">Alemania</option>
+                        if (!$pais) { // si no hay nada en la sesion pongo los datos por defecto
+                            echo '  
+                                    <option selected value=""></option>
+                                    <option value="Alemania">Alemania</option>
                                     <option value="Espanya">España</option>
                                     <option value="Francia">Francia</option>
                                     <option value="Grecia">Grecia</option>
@@ -159,150 +155,18 @@
                                     <option value="Suiza">Suiza</option>
                                     <option value="Ucrania">Ucrania</option>';
                         }
+                        $paises_value = ["Alemania", "Espanya", "Francia", "Grecia", "Italia", "Polonia", "ReinoUnido", "Suecia", "Suiza", "Ucrania"];
+                        $paises_nombre_bien_puesto = ["Alemania", "España", "Francia", "Grecia", "Italia", "Polonia", "Reino Unido", "Suecia", "Suiza", "Ucrania"];
                         else {
-                            switch($pais) {
-                                case "Alemania":
-                                    echo '  <option selected value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
+                            
+                            for($i=0; $i<sizeof($paises_value); $i++) {
+                                $cadena = '<option';
+                                if($paises_value[$i] == $pais) 
+                                    $cadena .= ' selected';
 
-                                case "Espanya":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option selected value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
+                                $cadena .= ' value="'.htmlspecialchars($paises_value[$i]).'">'.htmlspecialchars($paises_nombre_bien_puesto[$i]).'</option>';
 
-                                case "Francia":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option selected value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "Grecia":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option selected value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "Italia":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option selected value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "Polonia":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option selected value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "ReinoUnido":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option selected value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "Suecia":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option selected value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "Suiza":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option selected value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                case "Ucrania":
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option selected value="Ucrania">Ucrania</option>';
-                                    break;
-
-                                default:
-                                    echo '  <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
-                                    break;
+                                echo $cadena;
                             }
                         }
                     ?>

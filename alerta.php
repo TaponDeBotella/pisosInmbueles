@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     $title="Mi perfil";
     $acceder = "Mi perfil";
     $css="css/mi_perfil.css";

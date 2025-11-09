@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     $title = "Inicio";
     $acceder = "Acceder";
     $css = "css/index.css";

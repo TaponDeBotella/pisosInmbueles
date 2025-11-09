@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     $title="Accesibilidad de la Página";
     $acceder = "Acceder";
     $css="css/accesibilidad.css";

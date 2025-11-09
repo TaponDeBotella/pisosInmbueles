@@ -59,14 +59,14 @@
             if(isset($_SESSION['estilo'])) { // si el usuario tiene un estilo guardado entonces se mete a la variable
                 $estilo_usuario = $_SESSION['estilo']; // se guarda el estilo del usuario
             } else {
-                $estilo_usuario = ''; // si no hay se deja vacio
+                $estilo_usuario = 'predeterminado.css'; // si no hay se deja el predeterminado
             }
             
             foreach($estilos_alternativos as $archivo => $titulo) { // ahora se recorren todos los estilos para ver cual de todos es el que tiene el usuario
                 if($estilo_usuario === $archivo) { // si el estilo coincide con uno de los que tenemos, se le aplica
                     echo '<link rel="stylesheet" type="text/css" href="css/' . $archivo . '" title="' . $titulo . '"/>' . "\n";
-                } else { // si no, se le pone el predeterminado
-                    echo '<link rel="alternate stylesheet" type="text/css" href="css/predeterminado.css" title="Estilo predeterminado"/>' . "\n";
+                } else { // si no, se le pone como alternativo
+                    echo '<link rel="alternate stylesheet" type="text/css" href="css/' . $archivo . '" title="' . $titulo . '"/>' . "\n";
                 }
             }
         ?>
@@ -120,10 +120,11 @@
 
                 <li id="acceder">
                     <?php
-                        if($acceder == 'Acceder')
-                            echo '<a href="log_registro.php"><i class="fa-solid fa-user-plus"></i>'.htmlspecialchars($acceder).'</a>';
-                        else if($acceder == 'Mi perfil')
-                            echo '<a href="log_registro.php"><i class="fa-solid fa-user"></i>'.htmlspecialchars($acceder).'</a>';
+                        if(isset($_SESSION['logueado']) && $_SESSION['logueado'] === true){
+                            echo '<a href="mi_perfil.php"><i class="fa-solid fa-user-plus"></i>Mi perfil</a>';
+                        } else {
+                            echo '<a href="log_registro.php"><i class="fa-solid fa-user"></i>Acceder</a>';
+                        }
                     ?>
                     
                 </li>

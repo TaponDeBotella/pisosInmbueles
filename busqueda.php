@@ -1,4 +1,6 @@
 <?php
+    session_start();
+    
     $title="Resultados de Búsqueda";
     $css="css/busqueda.css";
     $acceder="Acceder";

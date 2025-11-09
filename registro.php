@@ -183,9 +183,6 @@
     
             </form>
         </section>
-        <nav id="simulacion">
-                <a href="mi_perfil.php">Simular que has iniciado sesión</a>
-        </nav>
 
 <?php
     include 'includes/footer.php';

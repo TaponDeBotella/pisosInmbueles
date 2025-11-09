@@ -44,16 +44,16 @@ $_SESSION['usuario'] = $usuario_encontrado['email'];
 $_SESSION['nombre'] = $usuario_encontrado['nombre'];
 $_SESSION['logueado'] = true;
 
-// ahora se hace lo de las cookies si el usurio lo ha marcado
+// se guarda la fecha de la ultima visita
+$duracion_cookie = time() + (90 * 24 * 60 * 60);
+setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
+$_SESSION['es_recordado'] = true;
+
+// ahora se hace lo de las cookies si el usurio lo ha marcado recordarme
 if($recordarme) {
-    // se le ponen 90 dias a las cookies
-    $duracion_cookie = time() + (90 * 24 * 60 * 60);
-    
     // se guarda el email y contrasenya
     setcookie('recordarme_email', $email, $duracion_cookie, '/', '', false, true);
     setcookie('recordarme_password', $password, $duracion_cookie, '/', '', false, true);
-    // se guarda la fecha de la ultima visita tambeien
-    setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
 }
 
 // se redirige al perfil de usuario

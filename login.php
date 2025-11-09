@@ -16,6 +16,7 @@
     $email_error = false;
     $password_error = false;
     $credenciales_error = false;
+    $no_logueado_error = false;
     
     if(isset($_GET['error'])) { // se comprueba que clase de error hay
         if($_GET['error'] == 'ambos_vacios') { // si los dos estan vacios
@@ -27,6 +28,8 @@
             $password_error = true;
         } else if($_GET['error'] == 'credenciales_incorrectas') { // si son credenciales incorrectas es que o una esta vacia o se ha introducido un usuario que no existe o que se ha equivocado poniendo el email o contrasenya
             $credenciales_error = true;
+        } else if($_GET['error'] == 'no_logueado') { // si intenta acceder a una pagina protegida sin estar logueado se manda error
+            $no_logueado_error = true;
         }
     }
 ?>
@@ -34,6 +37,10 @@
     
         <h1>Inicio de sesión</h1>
         <section>
+            <?php 
+                if($no_logueado_error) // error cuando intenta acceder a paginas protegida sin estar logueado
+                    echo '<p style="color: red; font-size: 14px; margin-bottom: 20px;"><strong>Debes iniciar sesión para acceder a esa página</strong></p>'; 
+            ?>
             <form id="formularioLogin" onsubmit="misubmit( event );" method="POST" action="includes/procesar_login.php">
                 <label for="labelEmail">Correo electrónico: </label>
                 <input onfocus="restaurarEstilo(this.id);" class="input_select" type="text" id="email" name="email">

@@ -103,6 +103,8 @@
             ?>
         </figure>
 
+        <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['duenyo']?></h4>
+
         <nav id="simular">
             <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>
         </nav>

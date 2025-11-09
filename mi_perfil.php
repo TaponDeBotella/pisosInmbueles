@@ -7,6 +7,9 @@
         exit;
     }
     
+    // Incluir la función de mensajes personalizados
+    require_once 'includes/mensajes.php';
+    
     $title="Mi perfil";
     $acceder = "Mi perfil";
     $css="css/mi_perfil.css";
@@ -20,8 +23,15 @@
                         <p>
                             <?php 
                                 // el mensaje de bienvenida con el nombre del usuario y la fecha y hora de la ultima visita
-                                if(isset($_SESSION['nombre']) && $_COOKIE['recordarme_ultima_visita']) { // se comprueba que hay un nombre de usuario y una fecah
-                                    echo '<h2><strong>¡Hola ' . htmlspecialchars($_SESSION['nombre']) . '</strong>, tu última visita fue el ' . htmlspecialchars($_COOKIE['recordarme_ultima_visita']) .'!</h2>';
+                                if(isset($_SESSION['nombre']) && isset($_COOKIE['recordarme_ultima_visita'])) { // se comprueba si hay un nombre en el session y una fecha
+                                    // si es autologin desde cookies, se muestra la fecha de la ultima visita
+                                    if(isset($_SESSION['ultima_visita_anterior'])){ // depende si hay una sesion recordada se pone una fecha u otra, para que si el usuario se ha logueado el dia 5 a las 13 salga esa fecha en la siguiente visita y luego salga la nueva fecha en la siguiente
+                                        $fecha_mostrar = $_SESSION['ultima_visita_anterior']; // si hace autologin
+                                    }else {
+                                        $fecha_mostrar = $_COOKIE['recordarme_ultima_visita']; // si no hace autologin
+                                    }
+                                    $saludo = obtenerMensajeBienvenida($_SESSION['nombre']); // se llama a la funcion de los mensajes personalizados dependiendo de la hroa del dia
+                                    echo '<h2>' . $saludo . ', tu última visita fue el ' . htmlspecialchars($fecha_mostrar) .'!</h2>'; // y se pone el mensaje en un h2 para que se vea bien y grande
                                 }
                             ?>
                         </p>

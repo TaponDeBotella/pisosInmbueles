@@ -42,6 +42,7 @@ if($usuario_encontrado === null) {
 // si si que existe se inicia la sesion con el SESSION
 $_SESSION['usuario'] = $usuario_encontrado['email'];
 $_SESSION['nombre'] = $usuario_encontrado['nombre'];
+$_SESSION['estilo'] = $usuario_encontrado['estilo'];
 $_SESSION['logueado'] = true;
 
 // se guarda la fecha de la ultima visita

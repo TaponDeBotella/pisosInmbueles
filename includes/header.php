@@ -20,8 +20,14 @@
         if($usuario_encontrado !== null) {
             $_SESSION['usuario'] = $usuario_encontrado['email'];
             $_SESSION['nombre'] = $usuario_encontrado['nombre'];
+            $_SESSION['estilo'] = $usuario_encontrado['estilo'];
             $_SESSION['logueado'] = true;
-            $_SESSION['es_recordado'] = true; 
+            $_SESSION['es_recordado'] = true;
+            
+            // se guardar la fecha ANTERIOR IMPORTANTE en la session antes de actualizar la cookie para hacer lo de las multiples visitas recordadno la fecha de la ultima
+            if(isset($_COOKIE['recordarme_ultima_visita'])) {
+                $_SESSION['ultima_visita_anterior'] = $_COOKIE['recordarme_ultima_visita'];
+            }
             
             // se actualiza la hora de la ultima visita
             $duracion_cookie = time() + (90 * 24 * 60 * 60);
@@ -37,13 +43,33 @@
         <title><?php echo $title; ?></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
         <link rel="stylesheet" href="css/header_footer.css">
-        <link rel="alternate stylesheet" type="text/css" href="css/predeterminado.css" title="Estilo predeterminado"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/letraGrande.css" title="Estilo de tamaño grande"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/contraste.css" title="Estilo de alto contraste"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/oscuro.css" title="Modo noche"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/letraGrandeContraste.css" title="Estilo de tamaño grande y alto contraste"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta"/>
-        <link rel="alternate stylesheet" type="text/css" href="css/imprenta.css" title="Estilo de imprenta pero con media print" media="print"/>
+        
+        <?php
+            // primero hago un array con todos los css de los estilos para poder recorrerlos mejor
+            $estilos_alternativos = array(
+                'predeterminado.css' => 'Estilo predeterminado',
+                'letraGrande.css' => 'Estilo de tamaño grande',
+                'contraste.css' => 'Estilo de alto contraste',
+                'oscuro.css' => 'Modo noche',
+                'letraGrandeContraste.css' => 'Estilo de tamaño grande y alto contraste',
+                'imprenta.css' => 'Estilo de imprenta'
+            );
+            
+            if(isset($_SESSION['estilo'])) { // si el usuario tiene un estilo guardado entonces se mete a la variable
+                $estilo_usuario = $_SESSION['estilo']; // se guarda el estilo del usuario
+            } else {
+                $estilo_usuario = ''; // si no hay se deja vacio
+            }
+            
+            foreach($estilos_alternativos as $archivo => $titulo) { // ahora se recorren todos los estilos para ver cual de todos es el que tiene el usuario
+                if($estilo_usuario === $archivo) { // si el estilo coincide con uno de los que tenemos, se le aplica
+                    echo '<link rel="stylesheet" type="text/css" href="css/' . $archivo . '" title="' . $titulo . '"/>' . "\n";
+                } else { // si no, se le pone el predeterminado
+                    echo '<link rel="alternate stylesheet" type="text/css" href="css/predeterminado.css" title="Estilo predeterminado"/>' . "\n";
+                }
+            }
+        ?>
+        
         <script src="https://kit.fontawesome.com/7cae898421.js" crossorigin="anonymous"></script>  <!-- ESTO EN TODAS LAS PAGINAS PARA QUE VAYAN LOS ICONOS -->
         <script src="<?php echo $js; ?>" defer></script> 
     </head>

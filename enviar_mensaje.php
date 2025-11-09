@@ -1,4 +1,7 @@
 <?php
+    require_once 'includes/proteger.php';
+    verificarSesion(); // se comprueba si el usuario esta logueado
+    
     $title="Enviar mensaje";
     $acceder = "Acceder";
     $css="css/enviar_mensaje.css";

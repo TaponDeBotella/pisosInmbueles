@@ -1,4 +1,7 @@
 <?php
+    require_once 'includes/proteger.php';
+    verificarSesion(); // se verifica si el usuario esta logueado
+    
     $title="Solicitar folleto";
     $css="css/solicitar_folleto.css";
     $acceder = "Mi perfil";

@@ -9,6 +9,7 @@
     
     $title = "Login";
     $css = "css/login.css";
+    $css_errores = "css/errores.css";
     $acceder = "Acceder";
     include 'includes/header.php';
     
@@ -39,7 +40,7 @@
         <section>
             <?php 
                 if($no_logueado_error) // error cuando intenta acceder a paginas protegida sin estar logueado
-                    echo '<p style="color: red; font-size: 14px; margin-bottom: 20px;"><strong>Debes iniciar sesión para acceder a esa página</strong></p>'; 
+                    echo '<p class="mensaje-error-grande"><strong>Debes iniciar sesión para acceder a esa página</strong></p>'; 
             ?>
             <form id="formularioLogin" onsubmit="misubmit( event );" method="POST" action="includes/procesar_login.php">
                 <label for="labelEmail">Correo electrónico: </label>
@@ -47,22 +48,22 @@
                 <!-- si hay error se muestra al lado del input -->
                 <?php 
                     if($email_error) // error del email vacio
-                        echo '<span style="color: red; font-size: 12px; display: block;">Campo requerido</span>'; 
+                        echo '<span class="mensaje-error">Campo requerido</span>'; 
                 ?>
                 <?php 
                     if($credenciales_error) // error de credenciales incorrectas
-                        echo '<span style="color: red; font-size: 12px; display: block;">Email o contraseña incorrectos</span>'; 
+                        echo '<span class="mensaje-error">Email o contraseña incorrectos</span>'; 
                 ?>
     
                 <label for="labelPassword">Contraseña: </label>
                 <input onfocus="restaurarEstilo(this.id);" class="input_select" type="password" id="password" name="password">
                 <?php 
                     if($password_error) // error de contrasenya vacia
-                        echo '<span style="color: red; font-size: 12px; display: block;">Campo requerido</span>'; 
+                        echo '<span class="mensaje-error">Campo requerido</span>'; 
                 ?>
                 <?php 
                     if($credenciales_error && !$password_error) 
-                        echo '<span style="color: red; font-size: 12px; display: block;"></span>'; 
+                        echo '<span class="mensaje-error"></span>'; 
                 ?>
 
                 <!-- el checkbox para saber si guardar las cookies o no -->

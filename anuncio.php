@@ -1,4 +1,7 @@
 <?php
+    require_once 'includes/proteger.php';
+    verificarSesion(); // se verifica si el usuario esta logueado
+    
     $title="Página del anuncio";
     $acceder = "Acceder";
     $css="css/anuncio.css";

@@ -1,0 +1,15 @@
+.mensaje-error { /* el estilo de todos los errores con el important para que se les anyade si o si*/
+    color: red !important;
+    font-size: 12px !important;
+    display: block !important;
+    margin-bottom: 10px !important;
+    font-weight: bold !important;
+}
+
+
+.mensaje-error-grande { /* este solo es para el error de no logueado porque no va acompanya de ningun input*/
+    color: red !important; 
+    font-size: 14px !important;
+    margin-bottom: 20px !important;
+    font-weight: bold !important;
+}

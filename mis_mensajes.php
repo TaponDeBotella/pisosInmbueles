@@ -1,4 +1,7 @@
 <?php
+    require_once 'includes/proteger.php';
+    verificarSesion(); // se verifica si el usuario esta logueado
+    
     $title="Mis mensajes";
     $acceder = "Mi perfil";
     $css="css/mis_mensajes.css";

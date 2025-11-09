@@ -43,6 +43,7 @@
         <title><?php echo $title; ?></title>
         <link rel="stylesheet" type="text/css" href="<?php echo $css; ?>">
         <link rel="stylesheet" href="css/header_footer.css">
+        <link rel="stylesheet" href="css/errores.css">
         
         <?php
             // primero hago un array con todos los css de los estilos para poder recorrerlos mejor

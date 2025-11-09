@@ -6,7 +6,7 @@
 ?>
         <section id="sectio_barraNav">
             <form action="busqueda.php">
-                <input type="text" id="ciudad_busqueda">
+                <input type="text" id="ciudad_busqueda" name="ciudad_busqueda">
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 
         </section>

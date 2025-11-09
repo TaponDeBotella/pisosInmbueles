@@ -7,7 +7,7 @@
 
     <section id="secio_barraNav">
             <form action="busqueda.php">
-                <input type="text" id="ciudad_busqueda">
+                <input type="text" id="ciudad_busqueda" name="ciudad_busqueda">
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 
         </section>
@@ -57,7 +57,13 @@
 
                     <p>
                     <label for="ciudad_busquedaForm">Ciudad: </label>
-                    <input type="text" id="ciudad_busquedaForm" class="input_select">
+                    <input type="text" id="ciudad_busquedaForm" class="input_select" value="<?php 
+                        if(isset($_GET['ciudad_busqueda'])) { // si el usuario ha hecho una busqueda rapida entonces se mete al form
+                            echo htmlspecialchars($_GET['ciudad_busqueda']);
+                        } else { // si no simplemente se deja vacio y ya
+                            echo '';
+                        }
+                    ?>">
                     </p>
 
                     <p>

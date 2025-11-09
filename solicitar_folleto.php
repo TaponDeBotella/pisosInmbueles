@@ -22,9 +22,11 @@
             <h2>Solicitud de impresión de folleto publicitario</h2>
             <p>Presenta tu solicitud de impresión de folleto publicitario.</p>
         </section>
+        <!-- se crea la tabla sobre el html de la pagina, pero se oculta con css -->
         <section id="seccion-precios" class="ocultarTabla">
+            <!-- se crea el boton para cerrar (ocultar otra vez) la tabla -->
             <button id="botonCerrarTarifas" class="boton" onclick="cerrarTablaPrecios()">X</button>
-
+            <!-- ahora se crea la tabla como tal, primero los encabezados que son fijos -->
             <table id="tablaPrecios" class="tabla">
                 <tbody>
                     <tr >
@@ -41,15 +43,16 @@
                         <th>450-900dpi</th>
                     </tr>
             <?php
+                // y ahora se hace un for para crear 15 filas
                 for ($i=0; $i<15; $i++){
-                    $paginas = $i + 1;
-                    $fotos = ($i*3)+3;
+                    $paginas = $i + 1; // se crea la variable de paginas para poder pasarsela a la funcion que calcula el precio
+                    $fotos = ($i*3)+3; // y lo mismo con las fotos
                    
                     echo '<tr>';
-                        echo '<td>' . $paginas .'</td>';
+                        echo '<td>' . $paginas .'</td>'; // se anyade la pagina a la celda
                     
-                        echo '<td>' . $fotos . '</td>';
-
+                        echo '<td>' . $fotos . '</td>'; // y la foto
+                        // y ahora se llama a la funcion de calcular precio pasandole todos los datos necesarios para que en cada celda salga el precio que tiene que salir
                         echo '<td>' . number_format(calcularPrecio($paginas,$fotos,false,300), 2) . ' €</td>';
                         echo '<td>' . number_format(calcularPrecio($paginas,$fotos,false,450), 2) . ' €</td>';
                         echo '<td>' . number_format(calcularPrecio($paginas,$fotos,true,300) , 2). ' €</td>';
@@ -173,7 +176,7 @@
 
                     <p>
                         <i class="fa-solid fa-print"></i>
-                        <label for="numCopias_folleto">Número de copias</label>
+                        <label for="numCopias_folleto">Número páginas</label>
                         <input type="number" id="numCopias_folleto" name="numCopias_folleto" min="1" max="99" value="1" class="input_select">  
                     </p>
 

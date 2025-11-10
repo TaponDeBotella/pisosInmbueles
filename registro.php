@@ -25,7 +25,7 @@
             <form id="formRegistro" action="respuesta_registro.php" method="post">
                 <label for="labelName">Nombre: </label>
                 <?php
-                    if (!$nombre && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                    if (!isset($_SESSION['registro']) && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
                         echo '<input class="input_select" name="nombre" type="text" id="name">';
                     }
                     else if(isset($_SESSION['errores']) && in_array('nombreVacio', $_SESSION['errores'])) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
@@ -40,7 +40,7 @@
 
                 <label for="labelPassword">Contraseña: </label>
                 <?php
-                    if (!$pass1 && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                    if (!isset($_SESSION['registro']) && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
                         echo '<input class="input_select" name="pass1" type="password" id="password">';
                     }
                     else if(isset($_SESSION['errores']) && in_array('pass1Vacia', $_SESSION['errores'])) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
@@ -55,7 +55,7 @@
                 
                 <label for="labelPassword2">Repetir contraseña: </label>
                 <?php
-                    if (!$pass2 && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                    if (!isset($_SESSION['registro']) && !isset($_SESSION['errores'])) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
                         echo '<input class="input_select" name="pass2" type="password" id="password2">';
                     }
                     else if(isset($_SESSION['errores']) && in_array('pass2Vacia', $_SESSION['errores'])) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
@@ -75,7 +75,7 @@
                 
                 <label for="labelEmail">Correo electrónico: </label>
                 <?php
-                    if (!$email)  // si no hay datos en la sesion pongo el html por defecto
+                    if (!isset($_SESSION['registro']))  // si no hay datos en la sesion pongo el html por defecto
                         echo '<input class="input_select" name="email" type="text" id="email" placeholder="parte-local@dominio">';
                     else // si hay datos en la sesion los introduzco
                         echo '<input class="input_select" name="email" value="'.htmlspecialchars($email).'" type="text" id="email" placeholder="parte-local@dominio">';
@@ -83,7 +83,7 @@
                 
                 <label for="labelSex">Sexo: </label>
                 <?php
-                    if (!$sex) { // si no hay nada en la sesion pongo los datos por defecto
+                    if (!isset($_SESSION['registro'])) { // si no hay nada en la sesion pongo los datos por defecto
                         echo '  <select   name="sex" class="input_select" id="sex">
                                     <!-- <option value="null" selected disabled hidden>Selecciona una opción</option> -->
                                     <option id="vacio" value=""></option>
@@ -121,7 +121,7 @@
                 
                 <label for="labelBirth">Fecha de nacimiento: </label>
                 <?php
-                    if (!$nacimiento) // si no hay nada en la sesion pongo los datos por defecto
+                    if (!isset($_SESSION['registro'])) // si no hay nada en la sesion pongo los datos por defecto
                         echo '<input class="input_select" name="nacimiento" placeholder="dia-mes-año" type="text" id="birth">';
                     else
                         echo '<input class="input_select" name="nacimiento" value="'.htmlspecialchars($nacimiento).'" placeholder="dia-mes-año" type="text" id="birth">';
@@ -131,7 +131,7 @@
                 
                 <label for="labelCity">Ciudad de residencia: </label>
                 <?php
-                    if (!$ciudad) // si no hay nada en la sesion pongo los datos por defecto
+                    if (!isset($_SESSION['registro'])) // si no hay nada en la sesion pongo los datos por defecto
                         echo '<input class="input_select" name="ciudad" type="text" id="city">';
                     else
                         echo '<input class="input_select" name="ciudad" value="'.htmlspecialchars($ciudad).'" type="text" id="city">';
@@ -141,7 +141,9 @@
 
                 <select class="input_select" name="pais" id="country">
                     <?php
-                        if (!$pais) { // si no hay nada en la sesion pongo los datos por defecto
+                        $paises_value = ["Alemania", "Espanya", "Francia", "Grecia", "Italia", "Polonia", "ReinoUnido", "Suecia", "Suiza", "Ucrania"];
+                        $paises_nombre_bien_puesto = ["Alemania", "España", "Francia", "Grecia", "Italia", "Polonia", "Reino Unido", "Suecia", "Suiza", "Ucrania"];
+                        if (!isset($_SESSION['registro'])) { // si no hay nada en la sesion pongo los datos por defecto
                             echo '  
                                     <option selected value=""></option>
                                     <option value="Alemania">Alemania</option>
@@ -155,10 +157,7 @@
                                     <option value="Suiza">Suiza</option>
                                     <option value="Ucrania">Ucrania</option>';
                         }
-                        $paises_value = ["Alemania", "Espanya", "Francia", "Grecia", "Italia", "Polonia", "ReinoUnido", "Suecia", "Suiza", "Ucrania"];
-                        $paises_nombre_bien_puesto = ["Alemania", "España", "Francia", "Grecia", "Italia", "Polonia", "Reino Unido", "Suecia", "Suiza", "Ucrania"];
                         else {
-                            
                             for($i=0; $i<sizeof($paises_value); $i++) {
                                 $cadena = '<option';
                                 if($paises_value[$i] == $pais) 

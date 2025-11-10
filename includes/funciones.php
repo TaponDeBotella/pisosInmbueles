@@ -13,17 +13,17 @@
         }
 
 
-        function calcularPrecio($paginas,$fotos,$color,$dpi){ // esta funcion es la que se usa para calcular el precio que se va a mostrar en cada una de las celdas de la tabla 
-            $precioEnvio=10.00; // esto es fijo
-            $precioPag=costePorPagina($paginas); // se saca el precio de las paginas
+    function calcularPrecio($paginas,$fotos,$color,$dpi){ // esta funcion es la que se usa para calcular el precio que se va a mostrar en cada una de las celdas de la tabla 
+        $precioEnvio=10.00; // esto es fijo
+        $precioPag=costePorPagina($paginas); // se saca el precio de las paginas
 
-            $precioFotoColor= $color ? 0.5 : 0.0; // ahora si es a color vale 0.5 y si no 0
+        $precioFotoColor= $color ? 0.5 : 0.0; // ahora si es a color vale 0.5 y si no 0
 
-            $precioResolucion = ($dpi > 300) ? 0.2 : 0.0; // si el dpi es mayor que 300 vale 0.2 y si no vale 0
+        $precioResolucion = ($dpi > 300) ? 0.2 : 0.0; // si el dpi es mayor que 300 vale 0.2 y si no vale 0
 
-            $precioFotos = $fotos * ($precioFotoColor+$precioResolucion); // ahora se saca el precio de las fotos teniendo en cuenta las dos variables que acabamos de sacar
+        $precioFotos = $fotos * ($precioFotoColor+$precioResolucion); // ahora se saca el precio de las fotos teniendo en cuenta las dos variables que acabamos de sacar
 
-            return $precioEnvio + $precioPag + $precioFotos; // y se suma todo
+        return $precioEnvio + $precioPag + $precioFotos; // y se suma todo
 
-        }
+    }
 ?>

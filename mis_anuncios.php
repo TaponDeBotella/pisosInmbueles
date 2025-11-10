@@ -35,7 +35,7 @@
                         <p class="ciudad">Ciudad: <?php echo $anuncio['ciudad']; ?></p>
                         <p class="p_descripcionA"><?php echo substr($anuncio['texto'], 0, 100) . '...'; ?></p>  
                         
-                        <a id="ver_anuncio" href="ver_anuncio.php?idAnuncio=<?php echo htmlspecialchars($anuncio['idAnuncio']) ?>">¿Editar anuncio?</a>
+                        <a id="ver_anuncio" href="ver_anuncio.php?idAnuncio=<?php echo htmlspecialchars($anuncio['idAnuncio']) ?>"><i class="fa-solid fa-square-plus"></i>Añadir una foto</a>
                     </article>
                 </li>
             <?php

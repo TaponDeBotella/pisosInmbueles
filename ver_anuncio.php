@@ -10,10 +10,14 @@
     
 
     $anuncio = null; // inicializo el anuncio
+    $anuncios_del_usuario = [];
     if(isset($_GET['idAnuncio'])) { // compruebo que esta en la peticion get de la url
         for($i=0; $i<sizeof($anuncios); $i++) { // para cada  anuncio de anuncios
             if($_GET['idAnuncio'] == $anuncios[$i]['idAnuncio']) // si la id del anuncio de esta iteracion coincide con el que recibo por el get
                 $anuncio = $anuncios[$i]; // asigno a anuncio ese anuncio
+
+            if($anuncios[$i]['duenyo'] == $_SESSION['nombre'])
+                $anuncios_del_usuario[] = $anuncios[$i]; 
         }
     }
 
@@ -108,13 +112,31 @@
         <form method="post">   
             <section>
                 <h3>¿Añadir una nueva foto?</h3>
+                <label for="labelAnuncioAElegir">Elige el anuncio al que quieres añadir la foto</label>
+                <select class="input_select" disabled name="anuncio" id="anuncio">
+                    <?php
+                        for($i=0; $i<sizeof($anuncios_del_usuario); $i++){
+                            $cadena = '<option';
+                            if($anuncios_del_usuario[$i]['idAnuncio'] == $anuncio['idAnuncio']) 
+                                $cadena .= ' selected';
+
+                            $cadena .= ' value="'.htmlspecialchars($anuncios_del_usuario[$i]['idAnuncio']).'">'.htmlspecialchars($anuncios_del_usuario[$i]['titulo']).'</option>';
+
+                            echo $cadena;
+                        }
+                    ?>
+                </select>
+                
                 <label for="labelTitulo">Título de la foto</label>
-                <input type="text" id="titulo" name="titulo">
+                <input class="input_select" required type="text" id="titulo" name="titulo">
+                
+                <label for="labelTextoAlternativo">Texto alternativo</label>
+                <textarea class="input_select" required minlength="10" name="textoAlternativo" id="textoAlternativo"></textarea>
 
                 <label for="labelFoto">Foto: </label>
                 <label for="foto" class="boton" id="examinar" name="examinar">Examinar </label>
                 <!-- <input type="file" accept="image/*" required> -->
-                <input id="foto" type="file" style="display:none;">
+                <input required id="foto" type="file" style="display:none;">
 
                 <input type="submit" class="boton">
             </section>

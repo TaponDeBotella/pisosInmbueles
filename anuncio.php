@@ -1,6 +1,5 @@
 <?php
     require_once 'includes/proteger.php';
-    session_start();
     verificarSesion(); // se verifica si el usuario esta logueado
     
     $title="Página del anuncio";

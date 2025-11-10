@@ -96,7 +96,16 @@
                 <label for="labelFechaCreacion">Año de construcción de la vivienda</label>
                 <input readonly class="input_select" type="number" step="1" min="1900" max="<?php echo date('Y'); ?>" name="fechaCreacion" id="fechaCreacion" value="<?php echo $anuncio['caracteristicas']['anyoConstruccion']; ?>">
             </section>
+        </form>
+        
+        <figure>
+            <?php
+                for($i = 0; $i < count($anuncio['fotos'][0]) && $i < 4; $i++) 
+                    echo '<img class="miniatura" src="img/'.$anuncio['fotos'][0][$i].'" alt="'.$anuncio['fotos'][1][$i].'">';
+            ?>
+        </figure>
 
+        <form method="post">   
             <section>
                 <h3>¿Añadir una nueva foto?</h3>
                 <label for="labelTitulo">Título de la foto</label>

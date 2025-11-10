@@ -6,13 +6,13 @@
                     $ultimos_4 = json_decode($_COOKIE['ultimos_4_anuncios'], true); // El segundo parámetro true convierte el objeto en array asociativo, vamos, que accedo a los valores con ['algo'], en lugar de tener que hacer ->algo, pero vamos, si le paso un numero lo pasa a string, conque no tengo que pasar a string antes de meterlo
                     for($i = 0; $i < sizeof($ultimos_4); $i++) {
                         $idAnuncio = $ultimos_4[$i]['idAnuncio'];
-                        $tipoAnuncio = $ultimos_4[$i]['tipoAnuncio'];
                         $foto = $ultimos_4[$i]['foto'];
                         $altFoto = $ultimos_4[$i]['altFoto'];
                         $titulo = $ultimos_4[$i]['titulo'];
-                        $precio = $ultimos_4[$i]['precio'];
-                        $ciudad = $ultimos_4[$i]['ciudad'];
-                        $pais = $ultimos_4[$i]['pais'];
+                        $ciudad = isset($ultimos_4[$i]['ciudad']) ? $ultimos_4[$i]['ciudad'] : '';
+                        $pais = isset($ultimos_4[$i]['pais']) ? $ultimos_4[$i]['pais'] : '';
+                        $precio = isset($ultimos_4[$i]['precio']) ? $ultimos_4[$i]['precio'] : '';
+                        $tipoAnuncio = isset($ultimos_4[$i]['tipoAnuncio']) ? $ultimos_4[$i]['tipoAnuncio'] : '';
 
                         if($idAnuncio) { // si no esta vacio ese campo (se ha rellenado esa parte de la cookie)
                     
@@ -21,21 +21,21 @@
                 <li>
                     <article>
                         <a href="anuncio.php?idAnuncio=<?php echo $idAnuncio ?>">
-                            <img class="imagen_articulo" src="img/<?php echo $foto; ?>" alt="<?php echo $altFoto; ?>">
+                            <img src="img/<?php echo $foto; ?>" alt="<?php echo $altFoto; ?>">
+                            <h4><?php echo $titulo; ?></h4>
+                            <p class="detalles"><?php 
+                                $detalles = [];
+                                if($precio) {
+                                    $precio_formateado = $precio . '€';
+                                    if($tipoAnuncio === 'alquiler') $precio_formateado .= '/mes';
+                                    $detalles[] = $precio_formateado;
+                                }
+                                if($ciudad) $detalles[] = $ciudad;
+                                if($pais) $detalles[] = $pais;
+                                echo implode(' | ', $detalles);
+                            ?></p>
                         </a>
-                        <a href="anuncio.php?idAnuncio=<?php echo $idAnuncio; ?>" class="a_tituloPublicacion">
-                            <h2><?php echo $titulo; ?></h2>
-                        </a>  
-                        <p class="precio">Precio:   <?php 
-                                                        $cadena =  $precio.'€'; // precio en €
-                                                        if($tipoAnuncio == 'alquiler')
-                                                            $cadena .= '/mes'; // si es un alquiler pongo el /mes
-                                                        echo $cadena; // inserto la cadena en el <p>
-                                                    ?>
-                        </p>
-                        <p class="pais">País: <?php echo $pais; ?></p>
-                        <p class="ciudad">Ciudad: <?php echo $ciudad; ?></p>
-                    </article>       
+                    </article>        
                 </li>
             
                 <?php

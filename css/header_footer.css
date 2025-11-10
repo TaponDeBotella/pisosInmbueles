@@ -39,6 +39,7 @@ html {
 body {
     background-color: var(--colorFondo);
     margin: 0;
+    overflow-x: hidden;
 }
 
 i {
@@ -83,27 +84,92 @@ header {
 
 #ultimos4 {
     background-color: var(--colorFondoClaro);
+    width: 100%;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #ul_ultimos_anuncios {
     list-style-type: none; /* para quitar los puntitos de las listas */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     padding-left: 0; /* para que no se quede tirado a la derecha los articles */
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    > li {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
 
     > li > article {
         position: relative;
-        width: 90%;
-        height: auto;
+        width: 100% !important;
+        height: auto !important;
         border: 1px solid var(--colorBordesArticulos);
         background: var(--colorArticulo);
         box-shadow: 1px 1px 10px var(--sombra);
         border-radius: 10px;
-        margin: 30px;
-        overflow: hidden;
-        padding-bottom: 60px; /* Espacio para los elementos float */
+        overflow: visible !important;
+        padding: 0 !important;
+    }
+
+    > li > article > a {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+        align-items: flex-start !important;
+        text-decoration: none;
+        color: var(--colorFuente);
+        width: 100%;
+        padding: 10px;
+    }
+
+    > li > article > a > img {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px !important;
+        max-width: 60px !important;
+        object-fit: cover;
+        border-radius: 0;
+        flex-shrink: 0;
+        margin: 0 !important;
+        padding: 0;
+    }
+
+    > li > article > a > h4 {
+        margin: 0 !important;
+        margin-left: 80px !important;
+        padding: 0 !important;
+        font-size: var(--tamFuenteMediana);
+        font-weight: 700;
+        word-break: break-word;
+        white-space: normal;
+        width: 100%;
+    }
+
+    > li > article > a > p {
+        margin: 0 !important;
+        margin-left: 80px !important;
+        padding: 0 !important;
+        font-size: var(--tamFuentePequena);
+        flex-shrink: 1;
+        width: calc(100% - 80px);
+    }
+
+    > li > article > a > p.detalles {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        font-size: 0.9em;
+        flex-shrink: 1;
     }
 }
 

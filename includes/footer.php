@@ -2,17 +2,18 @@
             <h3><strong>Últimos anuncios visitados</strong></h3>
             <ul id="ul_ultimos_anuncios">
             <?php
-                if(isset($_COOKIE['ultimos_4_anuncios'])) { // lo pongo por si acaso, pero siempre se setea en el header
-                    $ultimos_4 = json_decode($_COOKIE['ultimos_4_anuncios'], true); // El segundo parámetro true convierte el objeto en array asociativo, vamos, que accedo a los valores con ['algo'], en lugar de tener que hacer ->algo, pero vamos, si le paso un numero lo pasa a string, conque no tengo que pasar a string antes de meterlo
+                // Solo mostrar los últimos anuncios si el usuario está logueado
+                if(isset($_SESSION['logueado']) && isset($_COOKIE['ultimos_4_anuncios'])) {
+                    $ultimos_4 = json_decode($_COOKIE['ultimos_4_anuncios'], true); // El segundo parametro true convierte el objeto en array asociativo, vamos, que accedo a los valores con ['algo'], en lugar de tener que hacer ->algo, pero vamos, si le paso un numero lo pasa a string, conque no tengo que pasar a string antes de meterlo
                     for($i = 0; $i < sizeof($ultimos_4); $i++) {
                         $idAnuncio = $ultimos_4[$i]['idAnuncio'];
                         $foto = $ultimos_4[$i]['foto'];
                         $altFoto = $ultimos_4[$i]['altFoto'];
                         $titulo = $ultimos_4[$i]['titulo'];
-                        $ciudad = isset($ultimos_4[$i]['ciudad']) ? $ultimos_4[$i]['ciudad'] : '';
-                        $pais = isset($ultimos_4[$i]['pais']) ? $ultimos_4[$i]['pais'] : '';
-                        $precio = isset($ultimos_4[$i]['precio']) ? $ultimos_4[$i]['precio'] : '';
-                        $tipoAnuncio = isset($ultimos_4[$i]['tipoAnuncio']) ? $ultimos_4[$i]['tipoAnuncio'] : '';
+                        $ciudad = $ultimos_4[$i]['ciudad'];
+                        $pais = $ultimos_4[$i]['pais'];
+                        $precio = $ultimos_4[$i]['precio'];
+                        $tipoAnuncio = $ultimos_4[$i]['tipoAnuncio'];
 
                         if($idAnuncio) { // si no esta vacio ese campo (se ha rellenado esa parte de la cookie)
                     

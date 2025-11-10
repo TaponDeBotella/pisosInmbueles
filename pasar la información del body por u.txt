@@ -1,1 +1,2 @@
-
+hay que cambiar lo del flashdata
+cambiar lo de la hora para que se vea bien (que se vea a hora que toca)

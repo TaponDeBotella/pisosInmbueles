@@ -54,7 +54,7 @@ $_SESSION['es_recordado'] = true;
 if($recordarme) {
     // se guarda el email y contrasenya
     setcookie('recordarme_email', $email, $duracion_cookie, '/', '', false, true);
-    setcookie('recordarme_password', $password, $duracion_cookie, '/', '', false, true);
+    setcookie('recordarme_password', $password, $duracion_cookie, '/', '', false, true); // aqui hay que hacer una especie de hash
 }
 
 // se redirige al perfil de usuario

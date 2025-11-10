@@ -6,17 +6,17 @@ $_SESSION = array();
 
 // se borra las cookies tambien
 if(isset($_COOKIE[session_name()])) {
-    setcookie(session_name(), '', time() - 1, '/');
+    setcookie(session_name(), '', time() - 1000, '/');
 }
 
 if(isset($_COOKIE['recordarme_email'])) {
-    setcookie('recordarme_email', '', time() - 1, '/'); // se borra y se le pone el tiempo -1 segundo
+    setcookie('recordarme_email', '', time() - 1000, '/'); // se borra y se le pone el tiempo -1 segundo
 }
 if(isset($_COOKIE['recordarme_password'])) {
-    setcookie('recordarme_password', '', time() - 1, '/');
+    setcookie('recordarme_password', '', time() - 1000, '/');
 }
 if(isset($_COOKIE['recordarme_ultima_visita'])) {
-    setcookie('recordarme_ultima_visita', '', time() - 1, '/');
+    setcookie('recordarme_ultima_visita', '', time() - 1000, '/');
 }
 
 // se destruye la sesin

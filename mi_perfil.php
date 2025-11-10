@@ -43,10 +43,10 @@
                         <a href="index.php"><i class="fa-solid fa-user-minus"></i>Darse de baja</a>
                     </li>-->
                     <li>
-                        <p><i class="fa-solid fa-table-cells-large"></i>Mis anuncios (esto será un enlace cuando se cree la página)</p>
+                        <a href="mis_anuncios.php"><i class="fa-solid fa-table-cells-large"></i>Mis anuncios</a>
                     </li>
                     <li>
-                        <p><i class="fa-solid fa-file-circle-plus"></i>Crear nuevo anuncio (esto será un enlace cuando se cree la página)</p>
+                        <a href="crear_anuncio.php"><i class="fa-solid fa-file-circle-plus"></i>Crear nuevo anuncio</a>
                     </li>
                     <li>
                         <a href="mis_mensajes.php"><i class="fa-solid fa-envelope"></i>Mis mensajes</a>

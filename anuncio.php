@@ -1,5 +1,6 @@
 <?php
     require_once 'includes/proteger.php';
+    session_start();
     verificarSesion(); // se verifica si el usuario esta logueado
     
     $title="Página del anuncio";
@@ -108,6 +109,7 @@
         <nav id="simular">
             <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>
         </nav>
+        
 <?php
     include 'includes/footer.php';
 ?>

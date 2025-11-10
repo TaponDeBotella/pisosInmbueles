@@ -2,13 +2,14 @@
     require_once 'includes/proteger.php';
     verificarSesion(); // se verifica si el usuario esta logueado
     
-    $title="Página de crear anuncio";
+    $title="Crear anuncio";
     $acceder = "Acceder";
     $css="css/crear_anuncio.css";
     include 'includes/header.php'; 
     ?>
     <script src="js/otras_funciones.js"></script>
 
+    <h1>Crear anuncio</h1>
     <form method="post">
         <section>
             <h3>Datos generales</h3>
@@ -71,7 +72,21 @@
         </section>
 
         
+        <section>
+            <label for="labelTitulo">Título de la foto</label>
+            <input type="text" id="titulo" name="titulo">
+        </section>
 
+        <section>
+            <label for="labelFoto">Foto: </label>
+            <label for="foto" class="boton" id="examinar" name="examinar">Examinar </label>
+            <!-- <input type="file" accept="image/*" required> -->
+            <input id="foto" type="file" style="display:none;">
+        </section>
+
+        <section>
+            <input type="submit" class="boton">
+        </section>
 
 
     </form>

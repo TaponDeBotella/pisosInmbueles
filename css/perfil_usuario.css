@@ -1,0 +1,107 @@
+#sectionPerfilUsuario {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: var(--colorFondoClaro);
+    border-radius: 8px;
+}
+
+.perfilUsuario {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.fotoUsuario {
+    flex-shrink: 0;
+}
+
+.fotoUsuario img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.datosUsuario {
+    flex: 1;
+}
+
+.datosUsuario h2 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    color: var(--colorFuente);
+}
+
+.fechaIncorporacion {
+    color: var(--colorFuente);
+    font-size: 14px;
+    margin: 0;
+}
+
+#sectionAnunciosUsuario {
+    margin: 30px 0;
+}
+
+#ul_anunciosUsuario {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.anuncioSimplificado {
+    background: var(--colorArticulo);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--sombra);
+}
+
+.anuncioSimplificado a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.imagen_anuncio {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.info_anuncio {
+    padding: 15px;
+}
+
+.a_titulo {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.a_titulo h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: var(--colorFuente);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tipo_anuncio {
+    color: var(--colorFuente);
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.precio {
+    font-weight: bold;
+    color: var(--colorFuente);
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.ciudad {
+    color: var(--colorFuente);
+    font-size: 13px;
+    margin: 5px 0;
+}

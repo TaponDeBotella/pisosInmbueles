@@ -4,25 +4,21 @@
     
     // verificar si hay cookies y si no hay sesion activa
     if(!isset($_SESSION['logueado']) && isset($_COOKIE['recordarme_email']) && isset($_COOKIE['recordarme_password'])) {
-        require_once __DIR__ . '/usuarios.php';
-        
         $email_cookie = $_COOKIE['recordarme_email'];
         $password_cookie = $_COOKIE['recordarme_password'];
         
-        // se busca el usuario
-        $usuario_encontrado = null;
-        foreach($usuarios as $usuario) {
-            if($usuario['email'] === $email_cookie && $usuario['password'] === $password_cookie) {
-                $usuario_encontrado = $usuario;
-                break;
-            }
-        }
+        // busca el usuario en la base de datos
+        $query = "SELECT IdUsuario, NomUsuario, Email, Clave, Estilo FROM Usuarios WHERE Email = '" . $email_cookie . "' AND Clave = '" . $password_cookie . "'";
+        $resultado = $db->query($query);
         
-        // si existe el usuario se inicia sesion sin que el usuario tenga que hacerlo
-        if($usuario_encontrado !== null) {
-            $_SESSION['usuario'] = $usuario_encontrado['email'];
-            $_SESSION['nombre'] = $usuario_encontrado['nombre'];
-            $_SESSION['estilo'] = $usuario_encontrado['estilo'];
+        if ($resultado && $resultado->num_rows > 0) { // si encuentra el usuario se guarda sus datos
+            $usuario_encontrado = $resultado->fetch_array(MYSQLI_ASSOC);
+            
+            // si existe el usuario se inicia sesion sin que el usuario tenga que hacerlo
+            $_SESSION['id_usuario'] = $usuario_encontrado['IdUsuario'];
+            $_SESSION['usuario'] = $usuario_encontrado['Email'];
+            $_SESSION['nombre'] = $usuario_encontrado['NomUsuario'];
+            $_SESSION['estilo'] = $usuario_encontrado['Estilo'];
             $_SESSION['logueado'] = true;
             $_SESSION['es_recordado'] = true;
             

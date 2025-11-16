@@ -16,6 +16,16 @@
             $texto_error = true;
         }
     }
+    
+    // se obtienen los tipos de mensajes de la base de datos
+    $resultadoTiposMensajes = $db->query('SELECT IdTMensaje, NomTMensaje FROM TiposMensajes');
+    if (!$resultadoTiposMensajes) {
+        die('Error: ' . $db->error);
+    }
+    $tiposMensajes = [];
+    while ($fila = $resultadoTiposMensajes->fetch_array(MYSQLI_ASSOC)) {
+        $tiposMensajes[] = $fila;
+    }
 ?>
 
         <h1>Enviar mensaje</h1>
@@ -30,9 +40,12 @@
             ?>
             <label id="tipo_mensaje">Tipo de mensaje</label>
             <select class="boton" id="msg_type" name="msg_type">
-                <option value="mas_info">Más información</option>
-                <option value="cita">Solicitar una cita</option>
-                <option value="oferta">Comunicar una oferta</option>
+                <option value="">-- Seleccionar --</option>
+                <?php foreach ($tiposMensajes as $tipo): ?> <!-- se recorre todo el array y se ponen las opciones en el select -->
+                    <option value="<?php echo $tipo['IdTMensaje']; ?>">
+                        <?php echo $tipo['NomTMensaje']; ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
             <input class="boton" type="submit" value="Enviar mensaje">            
         </form>

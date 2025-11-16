@@ -15,6 +15,22 @@
 
     }
     include 'includes/header.php';
+    
+    // primero se saca el id del usuario logueado
+    $usuarioID = $_SESSION['id_usuario']; 
+    
+    // y se le sacan los anuncios al usuario logueado
+    $queryAnuncios = "SELECT IdAnuncio, Titulo FROM Anuncios WHERE Usuario = " . intval($usuarioID) . " ORDER BY FRegistro DESC";
+    $resultadoAnuncios = $db->query($queryAnuncios);
+    
+    if (!$resultadoAnuncios) { // si no hay se muestra un error
+        die('Error: ' . $db->error);
+    }
+    
+    $anunciosUsuario = []; // y se crea el array donde se guardaran los anuncios
+    while ($fila = $resultadoAnuncios->fetch_array(MYSQLI_ASSOC)) {
+        $anunciosUsuario[] = $fila;
+    }
 
 ?>
         <h1><?php echo $title ?></h1>
@@ -190,9 +206,12 @@
                         <i class="fa-solid fa-file"></i>
                         <label for="anuncio_folleto">Anuncio del usuario (*)</label>
                         <select id="anuncio_folleto" name="anuncio_folleto" class="input_select">
-                            <option value="a1">Anuncio 1</option>
-                            <option value="a2">Anuncio 2</option>
-                            <option value="a3">Anuncio 3</option>
+                            <option value="">-- Seleccionar anuncio --</option>
+                            <?php foreach ($anunciosUsuario as $anuncio): ?> <!-- se recorre el array con los anuncios y se muestran en el select-->
+                                <option value="<?php echo $anuncio['IdAnuncio']; ?>">
+                                    <?php echo htmlspecialchars($anuncio['Titulo']); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                     </p> 
 

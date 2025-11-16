@@ -21,28 +21,31 @@ if(empty($email) && empty($password)) {
     exit;
 }
 
-// como no tenemos base de datos se sacan del usuarios.php de momento
-require_once 'usuarios.php';
+// se conecta a la base de datos
+require_once 'iniciarDB.php';
 
-// se busca el email en la lista
-$usuario_encontrado = null;
-foreach($usuarios as $usuario) { // se recorre todo
-    if($usuario['email'] === $email && $usuario['password'] === $password) { // comprueba si el email y la contrasenya coinciden con alguno guardado
-        $usuario_encontrado = $usuario; // si lo encuentra entonces se sigue para hacer el login
-        break;
-    }
+// buscar el usuario en la base de datos
+$query = "SELECT IdUsuario, NomUsuario, Email, Clave, Estilo FROM Usuarios WHERE Email = '" . $email . "' AND Clave = '" . $password . "'";
+$resultado = $db->query($query); // se hace la query
+
+if (!$resultado) { // si no encuentra se manda error
+    die('Error: ' . $db->error);
 }
 
 // si no se encuentra se manda el error de credenciales incorrectas
-if($usuario_encontrado === null) {
+if($resultado->num_rows === 0) {
     header('Location: ../login.php?error=credenciales_incorrectas');
     exit;
 }
 
+// si se encuentra el usuario se sacan sus datos
+$usuario_encontrado = $resultado->fetch_array(MYSQLI_ASSOC);
+
 // si si que existe se inicia la sesion con el SESSION
-$_SESSION['usuario'] = $usuario_encontrado['email'];
-$_SESSION['nombre'] = $usuario_encontrado['nombre'];
-$_SESSION['estilo'] = $usuario_encontrado['estilo'];
+$_SESSION['id_usuario'] = $usuario_encontrado['IdUsuario'];
+$_SESSION['usuario'] = $usuario_encontrado['Email'];
+$_SESSION['nombre'] = $usuario_encontrado['NomUsuario'];
+$_SESSION['estilo'] = $usuario_encontrado['Estilo'];
 $_SESSION['logueado'] = true;
 
 // se guarda la fecha de la ultima visita

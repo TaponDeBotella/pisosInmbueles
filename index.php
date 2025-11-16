@@ -7,7 +7,8 @@
     include 'includes/header.php';
 
 
-    $query_anuncios = $db->query('SELECT FPrincipal, Alternativo, Titulo, Precio, FRegistro, NomPais, Ciudad, Texto, NomTAnuncio, IdAnuncio FROM anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais ORDER BY FRegistro DESC'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes
+    $query_anuncios = $db->query('SELECT FPrincipal, Alternativo, Titulo, Precio, FRegistro, NomPais, Ciudad, Texto, NomTAnuncio, IdAnuncio FROM anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais ORDER BY FRegistro DESC'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes y se obtiene el nombre del pais y el tipo de anuncio
+    
     if (!$query_anuncios) { // comprobacion de si hay query_anuncios
         die('Error:  ' . $db->error); // para y da el error
     }

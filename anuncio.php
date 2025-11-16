@@ -1,25 +1,60 @@
 <?php
     require_once 'includes/proteger.php';
     verificarSesion(); // se verifica si el usuario esta logueado
-    
-    include 'includes/anuncios.php';
+    include 'includes/header.php';
     
     // obtengo el ID del anuncio de la URL
     $idAnuncio = (int)$_GET['idAnuncio'];
-    
-    // selecciono el anuncio según si el ID es par o impar
-    if($idAnuncio % 2 == 0) 
-        $indiceAnuncio = 2;  // si es par, usamos el segundo anuncio
-    else 
-        $indiceAnuncio = 1;  // si es impar, usamos el primer anuncio
-    
     $anuncio = null;
+    
+    $stmt = $db->prepare( // preparo la consulta (para evitar inyeccion sql, se pone ? donde se debe poner un parametro)
+        "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, a.Usuario,
+                a.FPrincipal, a.Alternativo, a.Titulo, a.Precio, a.FRegistro,
+                p.NomPais, a.Ciudad, a.Texto, ta.NomTAnuncio, a.IdAnuncio
+        FROM Anuncios a, Usuario
+        JOIN TiposAnuncios ta ON a.TAnuncio = ta.IdTAnuncio
+        JOIN Paises p ON a.Pais = p.IdPais
+        WHERE a.IdAnuncio = ?"
+    );    
+    
+    if (!$stmt) { // comprobacion de si hay statement
+        die('Error:  ' . $db->error); // para y da el error
+    }
+    
+    $stmt->bind_param('i', $idAnuncio); // vinculo el parametro idAnuncio como entero
 
-    for($i=0; $i<sizeof($anuncios); $i++) {
-        if($anuncios[$i]['idAnuncio'] == $indiceAnuncio)
-            $anuncio = $anuncios[$i]; 
+    if(!$stmt->execute()) { // ejecuto y miro si hay error
+        die('Error: ' . $stmt->error);
     }
 
+    $resultado = $stmt->get_result(); // guardo el resultado
+
+    if($resultado) {
+        $anuncio = $resultado->fetch_assoc(); // combierto el resultado en array asociativo
+        $resultado->free();
+    }
+
+    $stmt->close();
+
+    $stmt = $db->prepare('SELECT * FROM fotos WHERE Anuncio = ?'); // query para asociar fotos al anuncio 
+    if(!$stmt) { // idem
+        die('Error: '.$db->error); 
+    }
+
+    $stmt->bind_param('i', $idAnuncio); // vinculo el parametro idAnuncio como entero
+
+    if(!$stmt->execute()) { // ejecuto y miro si hay error
+        die('Error: ' . $stmt->error);
+    }
+
+    $resultado = $stmt->get_result(); // guardo el resultado
+    if($resultado) {
+            $fotos = $resultado->fetch_assoc(); // combierto el resultado en array asociativo
+            $resultado->free();
+    }
+
+    $stmt->close();
+    
     if(isset($_COOKIE['ultimos_4_anuncios'])) { // compruebo que la cookie existe
         $ultimos_4 = json_decode($_COOKIE['ultimos_4_anuncios'], true); // la recojo y decodifico de json
         $ultimos_4_copia = $ultimos_4;
@@ -30,13 +65,13 @@
             $ultimos_4['2'] = $ultimos_4_copia['1'];
             $ultimos_4['1'] = $ultimos_4_copia['0'];
             $ultimos_4['0'] = array(    'idAnuncio' => $idAnuncio, 
-                                        'tipoAnuncio' => $anuncio['tipoAnuncio'],
-                                        'foto' => $anuncio['fotos'][0][0],
-                                        'altFoto' => $anuncio['fotos'][1][0],
-                                        'titulo' => $anuncio['titulo'],
-                                        'precio' => $anuncio['precio'],
-                                        'ciudad' => $anuncio['ciudad'],
-                                        'pais' => $anuncio['pais']); // anyado el nuevo elemento a la posicion 0
+                                        'tipoAnuncio' => $anuncio['NomTAnuncio'],
+                                        'foto' => $anuncio['FPrincipal'],
+                                        'altFoto' => $anuncio['Alternativo'],
+                                        'titulo' => $anuncio['Titulo'],
+                                        'precio' => $anuncio['Precio'],
+                                        'ciudad' => $anuncio['Ciudad'],
+                                        'pais' => $anuncio['NomPais']); // anyado el nuevo elemento a la posicion 0
 
             $duracion_cookie = time() + (7*24*60*60); // dura una semana
             setcookie('ultimos_4_anuncios', json_encode($ultimos_4), $duracion_cookie, '/', '', false, true);  
@@ -73,13 +108,13 @@
     else {
         $duracion_cookie = time() + (7*24*60*60); // dura una semana
         $ultimos_4 = array("0"=>array(  'idAnuncio' => $idAnuncio, // 0 es el mas reciente, 3 el mas antiguo, pongo el anuncio y el id por separado porque estoy usando solo dos anuncios para 4 paginas, lo que me interesa es el idAnuncio, que es el id que realmente tendria el anuncio si no los repitiese
-                                        'tipoAnuncio' => $anuncio['tipoAnuncio'],
-                                        'foto' => $anuncio['fotos'][0][0],
-                                        'altFoto' => $anuncio['fotos'][1][0],
-                                        'titulo' => $anuncio['titulo'],
-                                        'precio' => $anuncio['precio'],
-                                        'ciudad' => $anuncio['ciudad'],
-                                        'pais' => $anuncio['pais']),
+                                        'tipoAnuncio' => $anuncio['NomTAnuncio'],
+                                        'foto' => $anuncio['FPrincipal'],
+                                        'altFoto' => $anuncio['Alternativo'],
+                                        'titulo' => $anuncio['Titulo'],
+                                        'precio' => $anuncio['Precio'],
+                                        'ciudad' => $anuncio['Ciudad'],
+                                        'pais' => $anuncio['NomPais']),
 
                             "1"=>array( 'idAnuncio' => '',
                                         'tipoAnuncio' => '',
@@ -119,12 +154,12 @@
     include 'includes/header.php';
 ?>
         <h1><?php echo $title; ?></h1>
-        <h2>Anuncio de <?php echo $anuncio['tipoAnuncio']; ?></h2>
-        <h3><?php echo $anuncio['tipoVivienda']; ?></h3>
+        <h2>Anuncio de <?php echo $anuncio['NomTAnuncio']; ?></h2>
+        <h3><?php echo $anuncio['tipoVivienda']; ?></h3> <!-- CAMBIAAAAAAAAR -->
         <figure>
-            <img id="carrusel" src="img/<?php echo $anuncio['fotos'][0][0]; ?>" alt="<?php echo $anuncio['fotos'][1][0]; ?>">
+            <img id="carrusel" src="img/<?php echo $anuncio['FPrincipal']; ?>" alt="<?php echo $anuncio['Alternativo']; ?>">
             
-            <figcaption>Foto de <?php echo strtolower($anuncio['tipoVivienda']); ?></figcaption>
+            <figcaption>Foto de <?php echo strtolower($anuncio['tipoVivienda']); ?></figcaption> <!-- CAMBIAAAAAAAAR -->
             
             <button class="boton">&larr;</button>
             <button class="boton">&rarr;</button>
@@ -132,35 +167,52 @@
 
 
         <article>
-            <h3><?php echo $anuncio['titulo']; ?></h3>
-            <h4><?php echo $anuncio['texto']; ?></h4>
-            <time datetime="<?php echo $anuncio['fecha']->format('Y-m-d'); ?>">
-                <?php echo $anuncio['fecha']->format('d-m-Y'); ?>
+            <h3><?php echo $anuncio['Titulo']; ?></h3>
+            <h4><?php echo $anuncio['Texto']; ?></h4>
+
+            <?php
+                $raw = $anuncio['FRegistro'];              // ej. "2025-11-09 14:30:00"
+                if (!empty($raw)) {
+                    $dt = new DateTime($raw);
+                    $iso = $dt->format('c');                   // formato ISO 8601 con offset: 2025-11-09T14:30:00+01:00
+                    $visible = $dt->format('d-m-Y');           // formato de visualización: 09-11-2025
+                } else {
+                    $iso = '';
+                    $visible = 'Fecha no disponible';
+                }
+            ?>
+
+            <time datetime="<?php echo htmlspecialchars($iso); ?>">
+                <?php echo htmlspecialchars($visible); ?>
             </time>
             
             <table>
                 <tr>
                     <th>Ciudad:</th>
-                    <td><?php echo $anuncio['ciudad']; ?></td>
+                    <td><?php echo $anuncio['Ciudad']; ?></td>
                 </tr>
                 <tr>
                     <th>País:</th>
-                    <td><?php echo $anuncio['pais']; ?></td>
+                    <td><?php echo $anuncio['Pais']; ?></td>
                 </tr>
                 <tr>
                     <th>Precio:</th>
                     <td><?php 
-                        if($anuncio['tipoAnuncio'] == 'Alquiler') 
-                            echo $anuncio['precio'].'€/mes';
-                        else 
-                            echo $anuncio['precio'].'€';
+                        $tipo_precio;
+                        if($anuncio['NomTAnuncio'] === 'Venta')
+                            $tipo_precio = '€';
+                        else
+                            $tipo_precio = '€/mes';
+                        
+                        echo $anuncio['precio'].htmlspecialchars($tipo_precio);
+                        
                     ?></td>
                 </tr>
                 <tr>
                     <th rowspan="5">Características:</th>
                     <td><?php 
-                        echo $anuncio['caracteristicas']['numBanyo'];
-                        if($anuncio['caracteristicas']['numBanyo'] > 1) 
+                        echo $anuncio['NBanyos'];
+                        if($anuncio['NBanyos'] > 1) 
                             echo ' baños';
                         else
                             echo ' baño';                      
@@ -168,21 +220,21 @@
                 </tr>
                 <tr>
                     <td><?php 
-                        echo $anuncio['caracteristicas']['numHabitaciones'];
-                        if($anuncio['caracteristicas']['numHabitaciones'] > 1) 
+                        echo $anuncio['NHabitaciones'];
+                        if($anuncio['NHabitaciones'] > 1) 
                             echo ' habitaciones';
                         else
                             echo ' habitación';
                     ?></td>
                 </tr>
                 <tr>
-                    <td><?php echo $anuncio['caracteristicas']['superficieVivienda']; ?>m<sup>2</sup></td>
+                    <td><?php echo $anuncio['Superficie']; ?>m<sup>2</sup></td>
                 </tr>
                 <tr>
-                    <td>Planta <?php echo $anuncio['caracteristicas']['planta']; ?></td>
+                    <td>Planta <?php echo $anuncio['Planta']; ?></td>
                 </tr>
                 <tr>
-                    <td>Año de construcción: <?php echo $anuncio['caracteristicas']['anyoConstruccion']; ?></td>
+                    <td>Año de construcción: <?php echo $anuncio['Anyo']; ?></td>
                 </tr>
             </table>
         </article>
@@ -190,12 +242,12 @@
         <figure>
             <?php
                 // Muestro todas las fotos en miniaturas porque lo pide el enunciado, esto en un futuro se sustituira por el carrusel al principio si le parece bien al profesor
-                for($i = 0; $i < count($anuncio['fotos'][0]) && $i < 4; $i++) 
-                    echo '<img class="miniatura" src="img/'.$anuncio['fotos'][0][$i].'" alt="'.$anuncio['fotos'][1][$i].'">';
+                for($i = 0; $i < count($fotos) && $i < 4; $i++) 
+                    echo '<img class="miniatura" src="img/'.$fotos['Foto'].'" alt="'.$fotos['Alternativo'].'">';
             ?>
         </figure>
 
-        <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['duenyo']?></h4>
+        <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['Usuario']?></h4>
 
         <nav id="simular">
             <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>

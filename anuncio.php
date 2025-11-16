@@ -1,20 +1,18 @@
 <?php
     require_once 'includes/proteger.php';
     verificarSesion(); // se verifica si el usuario esta logueado
-    include 'includes/header.php';
+    include 'includes/iniciarDB.php';
     
     // obtengo el ID del anuncio de la URL
     $idAnuncio = (int)$_GET['idAnuncio'];
     $anuncio = null;
     
     $stmt = $db->prepare( // preparo la consulta (para evitar inyeccion sql, se pone ? donde se debe poner un parametro)
-        "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, a.Usuario,
+        "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, NomUsuario,
                 a.FPrincipal, a.Alternativo, a.Titulo, a.Precio, a.FRegistro,
-                p.NomPais, a.Ciudad, a.Texto, ta.NomTAnuncio, a.IdAnuncio
-        FROM Anuncios a, Usuario
-        JOIN TiposAnuncios ta ON a.TAnuncio = ta.IdTAnuncio
-        JOIN Paises p ON a.Pais = p.IdPais
-        WHERE a.IdAnuncio = ?"
+                p.NomPais, a.Ciudad, a.Texto, ta.NomTAnuncio, a.IdAnuncio, NomTVivienda
+        FROM Anuncios a, Usuarios, TiposAnuncios ta, Paises p, TiposViviendas
+        WHERE a.IdAnuncio = ? AND a.Pais = p.IdPais AND a.TAnuncio = ta.IdTAnuncio AND IdUsuario = Usuario AND TVivienda = IdTVivienda"
     );    
     
     if (!$stmt) { // comprobacion de si hay statement
@@ -30,7 +28,7 @@
     $resultado = $stmt->get_result(); // guardo el resultado
 
     if($resultado) {
-        $anuncio = $resultado->fetch_assoc(); // combierto el resultado en array asociativo
+        $anuncio = $resultado->fetch_assoc(); // convierto el resultado en array asociativo
         $resultado->free();
     }
 
@@ -48,9 +46,12 @@
     }
 
     $resultado = $stmt->get_result(); // guardo el resultado
-    if($resultado) {
-            $fotos = $resultado->fetch_assoc(); // combierto el resultado en array asociativo
-            $resultado->free();
+    if ($resultado) {
+        // obtener todas las filas como array de arrays asociativos
+        $fotos = $resultado->fetch_all(MYSQLI_ASSOC);
+        $resultado->free();
+    } else {
+        $fotos = [];
     }
 
     $stmt->close();
@@ -155,11 +156,11 @@
 ?>
         <h1><?php echo $title; ?></h1>
         <h2>Anuncio de <?php echo $anuncio['NomTAnuncio']; ?></h2>
-        <h3><?php echo $anuncio['tipoVivienda']; ?></h3> <!-- CAMBIAAAAAAAAR -->
+        <h3><?php echo $anuncio['NomTVivienda']; ?></h3>
         <figure>
             <img id="carrusel" src="img/<?php echo $anuncio['FPrincipal']; ?>" alt="<?php echo $anuncio['Alternativo']; ?>">
             
-            <figcaption>Foto de <?php echo strtolower($anuncio['tipoVivienda']); ?></figcaption> <!-- CAMBIAAAAAAAAR -->
+            <figcaption>Foto de <?php echo strtolower($anuncio['NomTVivienda']); ?></figcaption>
             
             <button class="boton">&larr;</button>
             <button class="boton">&rarr;</button>
@@ -193,7 +194,7 @@
                 </tr>
                 <tr>
                     <th>País:</th>
-                    <td><?php echo $anuncio['Pais']; ?></td>
+                    <td><?php echo $anuncio['NomPais']; ?></td>
                 </tr>
                 <tr>
                     <th>Precio:</th>
@@ -204,7 +205,7 @@
                         else
                             $tipo_precio = '€/mes';
                         
-                        echo $anuncio['precio'].htmlspecialchars($tipo_precio);
+                        echo $anuncio['Precio'].htmlspecialchars($tipo_precio);
                         
                     ?></td>
                 </tr>
@@ -243,11 +244,11 @@
             <?php
                 // Muestro todas las fotos en miniaturas porque lo pide el enunciado, esto en un futuro se sustituira por el carrusel al principio si le parece bien al profesor
                 for($i = 0; $i < count($fotos) && $i < 4; $i++) 
-                    echo '<img class="miniatura" src="img/'.$fotos['Foto'].'" alt="'.$fotos['Alternativo'].'">';
+                    echo '<img class="miniatura" src="img/'.$fotos[$i]['Foto'].'" alt="'.$fotos[$i]['Alternativo'].'">';
             ?>
         </figure>
 
-        <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['Usuario']?></h4>
+        <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['NomUsuario']?></h4>
 
         <nav id="simular">
             <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>

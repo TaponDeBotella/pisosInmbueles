@@ -18,6 +18,15 @@
         $pais = $_SESSION['registro']['pais'];
     }
 
+
+    $resultadoPaises = $db->query('SELECT IdPais, NomPais FROM Paises');
+    if (!$resultadoPaises) {
+        die('Error: ' . $db->error);
+    }
+    $paises = [];
+    while ($fila = $resultadoPaises->fetch_array(MYSQLI_ASSOC)) {
+        $paises[] = $fila;
+    }
 ?>
 
         <h1>Registro</h1>
@@ -141,29 +150,24 @@
 
                 <select class="input_select" name="pais" id="country">
                     <?php
-                        $paises_value = ["Alemania", "Espanya", "Francia", "Grecia", "Italia", "Polonia", "ReinoUnido", "Suecia", "Suiza", "Ucrania"];
-                        $paises_nombre_bien_puesto = ["Alemania", "España", "Francia", "Grecia", "Italia", "Polonia", "Reino Unido", "Suecia", "Suiza", "Ucrania"];
                         if (!isset($_SESSION['registro'])) { // si no hay nada en la sesion pongo los datos por defecto
                             echo '  
-                                    <option selected value=""></option>
-                                    <option value="Alemania">Alemania</option>
-                                    <option value="Espanya">España</option>
-                                    <option value="Francia">Francia</option>
-                                    <option value="Grecia">Grecia</option>
-                                    <option value="Italia">Italia</option>
-                                    <option value="Polonia">Polonia</option>
-                                    <option value="ReinoUnido">Reino Unido</option>
-                                    <option value="Suecia">Suecia</option>
-                                    <option value="Suiza">Suiza</option>
-                                    <option value="Ucrania">Ucrania</option>';
+                                    <option selected value=""></option>';
+
+                            for($i=0; $i<sizeof($paises); $i++) {
+                                $cadena = '<option';
+                                $cadena .= ' value="'.htmlspecialchars($paises[$i]['IdPais']).'">'.htmlspecialchars($paises[$i]['NomPais']).'</option>';
+
+                                echo $cadena;
+                            }
                         }
                         else {
-                            for($i=0; $i<sizeof($paises_value); $i++) {
+                            for($i=0; $i<sizeof($paises); $i++) {
                                 $cadena = '<option';
-                                if($paises_value[$i] == $pais) 
+                                if($paises[$i]['IdPais'] == $pais) 
                                     $cadena .= ' selected';
 
-                                $cadena .= ' value="'.htmlspecialchars($paises_value[$i]).'">'.htmlspecialchars($paises_nombre_bien_puesto[$i]).'</option>';
+                                $cadena .= ' value="'.htmlspecialchars($paises[$i]['IdPais']).'">'.htmlspecialchars($paises[$i]['NomPais']).'</option>';
 
                                 echo $cadena;
                             }

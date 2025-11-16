@@ -8,20 +8,71 @@
     include 'includes/header.php';
     include 'includes/anuncios.php';
     
+    // obtengo el ID del anuncio de la URL
+    $idAnuncio = (int)$_GET['idAnuncio'];
+    $anuncio = null;
 
-    $anuncio = null; // inicializo el anuncio
-    $anuncios_del_usuario = [];
-    if(isset($_GET['idAnuncio'])) { // compruebo que esta en la peticion get de la url
-        for($i=0; $i<sizeof($anuncios); $i++) { // para cada  anuncio de anuncios
-            if($_GET['idAnuncio'] == $anuncios[$i]['idAnuncio']) // si la id del anuncio de esta iteracion coincide con el que recibo por el get
-                $anuncio = $anuncios[$i]; // asigno a anuncio ese anuncio
+    $nombre_usuario = $_SESSION['nombre'];
+    
+    $stmt = $db->prepare( // preparo la consulta (para evitar inyeccion sql, se pone ? donde se debe poner un parametro)
+        "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, NomUsuario,
+                a.FPrincipal, a.Alternativo, a.Titulo, a.Precio, a.FRegistro,
+                p.NomPais, a.Ciudad, a.Texto, ta.NomTAnuncio, a.IdAnuncio, NomTVivienda
+        FROM Anuncios a, Usuarios, TiposAnuncios ta, Paises p, TiposViviendas
+        WHERE a.IdAnuncio = ? AND a.Pais = p.IdPais AND a.TAnuncio = ta.IdTAnuncio AND IdUsuario = Usuario AND TVivienda = IdTVivienda"
+    );      
+    
+    if (!$stmt) { // comprobacion de si hay statement
+        die('Error:  ' . $db->error); // para y da el error
+    }
+    
+    $stmt->bind_param('i', $idAnuncio); // vinculo el parametro idAnuncio como entero
 
-            if($anuncios[$i]['duenyo'] == $_SESSION['nombre'])
-                $anuncios_del_usuario[] = $anuncios[$i]; 
-        }
+    if(!$stmt->execute()) { // ejecuto y miro si hay error
+        die('Error: ' . $stmt->error);
     }
 
-    if($anuncio['duenyo'] == $_SESSION['nombre']) { // si el usuario es correcto
+    $resultado = $stmt->get_result(); // guardo el resultado
+
+    if($resultado) {
+        $anuncio = $resultado->fetch_assoc(); // convierto el resultado en array asociativo
+        $resultado->free();
+    }
+
+    $stmt->close();
+
+    $stmt = $db->prepare('SELECT * FROM fotos WHERE Anuncio = ?'); // query para asociar fotos al anuncio 
+    if(!$stmt) { // idem
+        die('Error: '.$db->error); 
+    }
+
+    $stmt->bind_param('i', $idAnuncio); // vinculo el parametro idAnuncio como entero
+
+    if(!$stmt->execute()) { // ejecuto y miro si hay error
+        die('Error: ' . $stmt->error);
+    }
+
+    $resultado = $stmt->get_result(); // guardo el resultado
+    if ($resultado) {
+        // obtener todas las filas como array de arrays asociativos
+        $fotos = $resultado->fetch_all(MYSQLI_ASSOC);
+        $resultado->free();
+    } else {
+        $fotos = [];
+    }
+
+    $stmt->close();
+
+    $resultadoPaises = $db->query('SELECT IdPais, NomPais FROM Paises');
+    if (!$resultadoPaises) {
+        die('Error: ' . $db->error);
+    }
+    $paises = [];
+    while ($fila = $resultadoPaises->fetch_array(MYSQLI_ASSOC)) {
+        $paises[] = $fila;
+    }
+
+    if($anuncio['NomUsuario'] === $nombre_usuario) { // si el usuario es correcto
         
     ?>
 
@@ -36,76 +87,73 @@
                 <select disabled class="input_select" name="TipoAnuncio" id="TipoAnuncio" onchange="cambiarTipoPrecio(this.value);">
                     <option value=""></option>
                     <?php
-                    if($anuncio['tipoAnuncio'] == 'alquiler')
-                        echo '  <option selected value="alquiler">Alquiler</option>
-                                <option value="venta">Venta</option>
+                    if($anuncio['NomTAnuncio'] == 'Alquiler')
+                        echo '  <option selected value="2">Alquiler</option>
+                                <option value="1">Venta</option>
                         ';
                     else
-                        echo '  <option value="alquiler">Alquiler</option>
-                                <option selected value="venta">Venta</option>
+                        echo '  <option value="2">Alquiler</option>
+                                <option selected value="1">Venta</option>
                         ';
                     ?>
                 </select>
         
         
                 <label for="labelTipoVivienda">Tipo de vivienda</label>
-                <input readonly class="input_select" type="text" name="tipoVivienda" id="tipoVivienda" value="<?php echo $anuncio['tipoVivienda']; ?>" placeholder="Habitación, piso, casa...">
+                <input readonly class="input_select" type="text" name="tipoVivienda" id="tipoVivienda" value="<?php echo $anuncio['NomTVivienda']; ?>" placeholder="Habitación, piso, casa...">
         
                 <label for="labelTitulo">Título</label>
-                <input readonly class="input_select" type="text" name="titulo" id="titulo" value="<?php echo $anuncio['titulo']; ?>">
+                <input readonly class="input_select" type="text" name="titulo" id="titulo" value="<?php echo $anuncio['Titulo']; ?>">
         
                 <label for="labelTexto">Texto</label>
-                <textarea readonly class="input_select" name="texto" id="texto"><?php echo $anuncio['texto']; ?></textarea>
+                <textarea readonly class="input_select" name="texto" id="texto"><?php echo $anuncio['Texto']; ?></textarea>
                 
                 <label for="labelPrecio">Precio</label>
-                <input readonly class="input_select" type="number" step="50" min="0" name="precio" id="precio" value="<?php echo $anuncio['precio']; ?>"><label id="tipoPrecio"><?php echo $anuncio['tipoAnuncio'] == 'alquiler' ? '€/mes' : '€'; ?></label>
+                <input readonly class="input_select" type="number" step="50" min="0" name="precio" id="precio" value="<?php echo $anuncio['Precio']; ?>"><label id="tipoPrecio"><?php echo $anuncio['NomTAnuncio'] == 'alquiler' ? '€/mes' : '€'; ?></label>
                 
                 <label for="labelCiudad">Ciudad</label>
-                <input readonly class="input_select" type="text" name="ciudad" id="ciudad" value="<?php echo $anuncio['ciudad']; ?>">
+                <input readonly class="input_select" type="text" name="ciudad" id="ciudad" value="<?php echo $anuncio['Ciudad']; ?>">
         
                 <label for="labelCountry">País de residencia: </label>
         
                 <select disabled class="input_select" name="pais" id="country">
                     <?php
-                            $paises_value = ["Alemania", "Espanya", "Francia", "Grecia", "Italia", "Polonia", "ReinoUnido", "Suecia", "Suiza", "Ucrania"];
-                            $paises_nombre_bien_puesto = ["Alemania", "España", "Francia", "Grecia", "Italia", "Polonia", "Reino Unido", "Suecia", "Suiza", "Ucrania"];
-                            for($i=0; $i<sizeof($paises_value); $i++) {
-                                $cadena = '<option';
-                                if($paises_nombre_bien_puesto[$i] == $anuncio['pais']) 
-                                    $cadena .= ' selected';
+                        for($i=0; $i<sizeof($paises); $i++) {
+                            $cadena = '<option';
+                            if($paises[$i]['IdPais'] == $anuncio['NomPais']) 
+                                $cadena .= ' selected';
 
-                                $cadena .= ' value="'.htmlspecialchars($paises_value[$i]).'">'.htmlspecialchars($paises_nombre_bien_puesto[$i]).'</option>';
+                            $cadena .= ' value="'.htmlspecialchars($paises[$i]['IdPais']).'">'.htmlspecialchars($paises[$i]['NomPais']).'</option>';
 
-                                echo $cadena;
-                            }
+                            echo $cadena;
+                        }   
                     ?>
-
                 </select>
             </section>
 
             <section>
                 <h3>Características de la vivienda</h3>
                 <label for="labelSuperficie">Superficie</label>
-                <input readonly class="input_select" type="number" step="10" min="0" name="superficie" id="superficie" value="<?php echo $anuncio['caracteristicas']['superficieVivienda']; ?>"> <label id="metrosCuadrados">m<sup>2</sup></label>
+                <input readonly class="input_select" type="number" step="10" min="0" name="superficie" id="superficie" value="<?php echo $anuncio['Superficie']; ?>"> <label id="metrosCuadrados">m<sup>2</sup></label>
 
                 <label for="labelBanyos">Baños</label>
-                <input readonly class="input_select" type="number" step="1" min="0" name="banyos" id="banyos" value="<?php echo $anuncio['caracteristicas']['numBanyo']; ?>">
+                <input readonly class="input_select" type="number" step="1" min="0" name="banyos" id="banyos" value="<?php echo $anuncio['NBanyos']; ?>">
 
                 <label for="labelHabitaciones">Habitaciones</label>
-                <input readonly class="input_select" type="number" step="1" min="0" name="habitaciones" id="habitaciones" value="<?php echo $anuncio['caracteristicas']['numHabitaciones']; ?>">
+                <input readonly class="input_select" type="number" step="1" min="0" name="habitaciones" id="habitaciones" value="<?php echo $anuncio['NHabitaciones']; ?>">
 
                 <label for="labelPlanta">Planta</label>
-                <input readonly class="input_select" type="number" step="1" min="0" name="planta" id="planta" value="<?php echo $anuncio['caracteristicas']['planta']; ?>">
+                <input readonly class="input_select" type="number" step="1" min="0" name="planta" id="planta" value="<?php echo $anuncio['Planta']; ?>">
 
                 <label for="labelFechaCreacion">Año de construcción de la vivienda</label>
-                <input readonly class="input_select" type="number" step="1" min="1900" max="<?php echo date('Y'); ?>" name="fechaCreacion" id="fechaCreacion" value="<?php echo $anuncio['caracteristicas']['anyoConstruccion']; ?>">
+                <input readonly class="input_select" type="number" step="1" min="1900" max="<?php echo date('Y'); ?>" name="fechaCreacion" id="fechaCreacion" value="<?php echo $anuncio['Anyo']; ?>">
             </section>
         </form>
         
         <figure>
             <?php
-                for($i = 0; $i < count($anuncio['fotos'][0]) && $i < 4; $i++) 
-                    echo '<img class="miniatura" src="img/'.$anuncio['fotos'][0][$i].'" alt="'.$anuncio['fotos'][1][$i].'">';
+                for($i = 0; $i < count($fotos); $i++) 
+                    echo '<img class="miniatura" src="img/'.$fotos[$i]['Foto'].'" alt="'.$anuncio[$i]['Foto'].'">';
             ?>
         </figure>
 

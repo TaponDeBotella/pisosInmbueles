@@ -7,14 +7,14 @@
     include 'includes/header.php';
 
 
-    $resultado = $db->query('SELECT FPrincipal, Alternativo, Titulo, Precio, FRegistro, Pais, Ciudad, Texto, NomTAnuncio FROM anuncios a, TiposAnuncios ta WHERE a.TAnuncio = ta.IdTAnuncio ORDER BY FRegistro DESC'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes
-    if (!$resultado) { // comprobacion de si hay resultado
+    $query_anuncios = $db->query('SELECT FPrincipal, Alternativo, Titulo, Precio, FRegistro, NomPais, Ciudad, Texto, NomTAnuncio, IdAnuncio FROM anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais ORDER BY FRegistro DESC'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes
+    if (!$query_anuncios) { // comprobacion de si hay query_anuncios
         die('Error:  ' . $db->error); // para y da el error
     }
 
     $anuncios = [];
 
-    while ($fila = $resultado->fetch_array(MYSQLI_ASSOC)) { // hago fetch con array asociativo y guardo las filas en $anuncios por orden de la query
+    while ($fila = $query_anuncios->fetch_array(MYSQLI_ASSOC)) { // hago fetch con array asociativo y guardo las filas en $anuncios por orden de la query
         $anuncios[] = $fila;
     }
 
@@ -34,10 +34,10 @@
                 for($i=0; $i<5; $i++) {    
                     echo '<li>
                             <article>
-                                <a href="anuncio.php?idAnuncio=1">
+                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios[$i]['IdAnuncio']).'">
                                     <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios[$i]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios[$i]['Alternativo']).'">
                                 </a>
-                                <a href="anuncio.php?idAnuncio=1" class="a_tituloPublicacion">
+                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios[$i]['IdAnuncio']).'" class="a_tituloPublicacion">
                                     <h2>'.htmlspecialchars($anuncios[$i]['Titulo']).'</h2>
                                 </a>';  
 
@@ -62,8 +62,8 @@
                             
 
                                 echo '<p class="fecha">Fecha publicación: <time datetime="'.htmlspecialchars($iso).'">'.htmlspecialchars($visible).'</time></p>
-                                <p class="precio">Precio:'.htmlspecialchars($anuncios[$i]['Precio']).htmlspecialchars($tipo_precio).'</p>
-                                <p class="pais">País:'.htmlspecialchars($anuncios[$i]['Pais']).'</p>
+                                <p class="precio">Precio:'.htmlspecialchars(round($anuncios[$i]['Precio'], 0)).htmlspecialchars($tipo_precio).'</p>
+                                <p class="pais">País:'.htmlspecialchars($anuncios[$i]['NomPais']).'</p>
                                 <p class="ciudad">Ciudad:'.htmlspecialchars($anuncios[$i]['Ciudad']).'</p>
                                 <p class="p_descripcionA">'.htmlspecialchars(substr($anuncios[$i]['Texto'], 0, 100) . '...').'</p>    
                             </article>       

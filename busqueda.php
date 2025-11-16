@@ -7,6 +7,19 @@
     include 'includes/header.php';   
     include 'includes/anuncios.php';
 
+    $resultado = $db->query('SELECT * FROM anuncios ORDER BY FRegistro ASC'); // para poner los aunucios con los datos de la base de datos
+    if (!$resultado) {
+        die('Error:  ' . $db->error);
+    }
+
+    $anuncios = [];
+
+    while ($fila = $resultado->fetch_array(MYSQLI_ASSOC)) {
+        $anuncios[] = $fila;
+    }
+
+    echo $anuncios[0]['Precio'];
+
     // se sacan todos los datos de la base de datos para ponerlos en los filtros en los selects
     $resultadoTiposAnuncios = $db->query('SELECT IdTAnuncio, NomTAnuncio FROM TiposAnuncios');
     if (!$resultadoTiposAnuncios) { // si no hay entonces se lanza un error

@@ -5,7 +5,7 @@ USE pisosBD;
 CREATE TABLE IF NOT EXISTS Paises (
     IdPais INT AUTO_INCREMENT PRIMARY KEY,
     NomPais VARCHAR(100)
-)
+);
 
 -- tabla estilos
 CREATE TABLE IF NOT EXISTS Estilos (
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Estilos (
     Nombre VARCHAR(100),
     Descripcion TEXT,
     Fichero VARCHAR(255)
-)
+);
 
 -- tabla usuarios
 CREATE TABLE IF NOT EXISTS Usuarios (
@@ -30,15 +30,15 @@ CREATE TABLE IF NOT EXISTS Usuarios (
     Estilo INT,
     FOREIGN KEY (Pais) REFERENCES Paises(IdPais),
     FOREIGN KEY (Estilo) REFERENCES Estilos(IdEstilo)
-)
+);
 
 -- tabla tipos anuncios
 CREATE TABLE IF NOT EXISTS TiposAnuncios (
     IdTAnuncio TINYINT AUTO_INCREMENT PRIMARY KEY,
     NomTAnuncio VARCHAR(100)
-)
+);
 
---tablas tipos viviendas
+-- tablas tipos viviendas
 CREATE TABLE IF NOT EXISTS TiposViviendas (
     IdTVivienda TINYINT AUTO_INCREMENT PRIMARY KEY,
     NomTVivienda VARCHAR(50)
@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS Anuncios (
     FOREIGN KEY (TVivienda) REFERENCES TiposViviendas(IdTVivienda),
     FOREIGN KEY (Pais) REFERENCES Paises(IdPais),
     FOREIGN KEY (Usuario) REFERENCES Usuarios(IdUsuario)
-)
+);
 
---tabla fotos
+-- tabla fotos
 CREATE TABLE IF NOT EXISTS Fotos (
     IdFoto INT AUTO_INCREMENT PRIMARY KEY,
     Titulo VARCHAR(255),
@@ -77,13 +77,13 @@ CREATE TABLE IF NOT EXISTS Fotos (
     Alternativo VARCHAR(255),
     Anuncio INT,
     FOREIGN KEY (Anuncio) REFERENCES Anuncios(IdAnuncio)
-)
+);
 
 -- tabla tipo mensajes
 CREATE TABLE IF NOT EXISTS TiposMensajes (
     IdTMensaje TINYINT AUTO_INCREMENT PRIMARY KEY,
     NomTMensaje VARCHAR(50) NOT NULL
-)
+);
 
 -- tabla mensajes
 CREATE TABLE IF NOT EXISTS Mensajes (
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS Mensajes (
     FOREIGN KEY (Anuncio) REFERENCES Anuncios(IdAnuncio),
     FOREIGN KEY (UsuOrigen) REFERENCES Usuarios(IdUsuario),
     FOREIGN KEY (UsuDestino) REFERENCES Usuarios(IdUsuario)
-)
+);
 
 -- tabla solicitudes 
 CREATE TABLE IF NOT EXISTS Solicitudes (
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS Solicitudes (
     FRegistro TIMESTAMP,
     Coste DECIMAL(10, 2),
     FOREIGN KEY (Anuncio) REFERENCES Anuncios(IdAnuncio)
-)
+);
 
 -- aDATOS DE PRUEBA---------------------------------------------------------
 
@@ -128,9 +128,9 @@ INSERT INTO Paises (NomPais) VALUES
 ('Francia'),
 ('Italia'),
 ('Portugal'),
-('Alemania');
-('Suecia');
-('Lituania');
+('Alemania'),
+('Suecia'),
+('Lituania'),
 ('Austria');
 
 -- estilos (los que tenemos ya)

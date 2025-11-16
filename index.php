@@ -5,7 +5,24 @@
     $acceder = "Acceder";
     $css = "css/index.css";
     include 'includes/header.php';
-    include 'includes/anuncios.php';
+    include 'includes/iniciarDB.php';
+
+
+    $resultado = $db->query('SELECT * FROM anuncios ORDER BY ');
+    if (!$resultado) {
+        die('Error:  ' . $db->error);
+    }
+
+    $anuncios = [];
+
+    while ($fila = $resultado->fetch_array(MYSQLI_ASSOC)) {
+        $anuncios[] = $fila;
+    }
+
+    echo $anuncios[0]['Precio'];
+
+
+
 ?>
         <section id="sectio_barraNav">
             <form action="busqueda.php">
@@ -81,6 +98,7 @@
         </section>
 
 <?php
+    include 'includes/cerrarDB.php';
     include 'includes/footer.php';
 ?>
 

@@ -6,6 +6,36 @@
     $acceder="Acceder";
     include 'includes/header.php';   
     include 'includes/anuncios.php';
+
+    // se sacan todos los datos de la base de datos para ponerlos en los filtros en los selects
+    $resultadoTiposAnuncios = $db->query('SELECT IdTAnuncio, NomTAnuncio FROM TiposAnuncios');
+    if (!$resultadoTiposAnuncios) { // si no hay entonces se lanza un error
+        die('Error: ' . $db->error);
+    }
+    $tiposAnuncios = []; // se crea el array para guardar los tipos de anuncios
+    while ($fila = $resultadoTiposAnuncios->fetch_array(MYSQLI_ASSOC)) { // y se recorre toda la tabla
+        $tiposAnuncios[] = $fila; // se guarda conforme va recorriendo la tabla
+    }
+
+    // lo mismo pero con los tipos de viviendas
+    $resultadoTiposViviendas = $db->query('SELECT IdTVivienda, NomTVivienda FROM TiposViviendas');
+    if (!$resultadoTiposViviendas) {
+        die('Error: ' . $db->error);
+    }
+    $tiposViviendas = [];
+    while ($fila = $resultadoTiposViviendas->fetch_array(MYSQLI_ASSOC)) {
+        $tiposViviendas[] = $fila;
+    }
+
+    // y tambien con los paises, igual todo
+    $resultadoPaises = $db->query('SELECT IdPais, NomPais FROM Paises');
+    if (!$resultadoPaises) {
+        die('Error: ' . $db->error);
+    }
+    $paises = [];
+    while ($fila = $resultadoPaises->fetch_array(MYSQLI_ASSOC)) {
+        $paises[] = $fila;
+    }
 ?>
 
     <section id="secio_barraNav">
@@ -24,37 +54,36 @@
                     <p>
                     <label for="tipo_anuncio">Tipo de anuncio: </label>
                     <select id="tipo_anuncio" class="input_select">
-                        <option value="venta">Venta</option>
-                        <option value="alquiler">Alquiler</option>
-
+                        <option value="">-- Seleccionar --</option>
+                        <?php foreach ($tiposAnuncios as $tipo): // se recorre todo el array?>
+                            <option value="<?php echo $tipo['IdTAnuncio'];  // se le pone la opcion?>">
+                                <?php echo $tipo['NomTAnuncio']; ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     </p>
 
                     <p>
                     <label for="tipo_inmueble">Tipo de inmueble: </label>
                     <select id="tipo_inmueble" class="input_select">
-                        <option value="obra_nueva">Obra nueva</option>
-                        <option value="vivienda">Vivienda</option>
-                        <option value="oficina">Oficina</option>
-                        <option value="local">Local</option>
-                        <option value="garaje">Garaje</option>
-
+                        <option value="">-- Seleccionar --</option>
+                        <?php foreach ($tiposViviendas as $vivienda): // lo mismo que con los tipos de anuncios?>
+                            <option value="<?php echo $vivienda['IdTVivienda']; ?>">
+                                <?php echo $vivienda['NomTVivienda']; ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     </p>
 
                     <p>
                     <label for="pais_busqueda">País: </label>
                     <select id="pais_busqueda" class="input_select">
-                        <option value="gr">Alemania</option>
-                        <option value="es">España</option>
-                        <option value="fr">Francia</option>
-                        <option value="gre">Grecia</option>
-                        <option value="it">Italia</option>
-                        <option value="pol">Polonia</option>
-                        <option value="uk">Reino unido</option>
-                        <option value="swi">Suecia</option>
-                        <option value="swe">Suiza</option>
-                        <option value="ukr">Ucrania</option>
+                        <option value="">-- Seleccionar --</option>
+                        <?php foreach ($paises as $pais): // y los paises mas de lo mismo?>
+                            <option value="<?php echo $pais['IdPais']; ?>">
+                                <?php echo $pais['NomPais']; ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                     </p>
 

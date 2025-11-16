@@ -1,5 +1,7 @@
 <?php // esto tiene que ir en todos los php, es para poder guardar las sesiones de los usuarios y que se puedan recordar
     
+    include __DIR__ . '/iniciarDB.php'; // se abre la conexion con la base de datos
+    
     // verificar si hay cookies y si no hay sesion activa
     if(!isset($_SESSION['logueado']) && isset($_COOKIE['recordarme_email']) && isset($_COOKIE['recordarme_password'])) {
         require_once __DIR__ . '/usuarios.php';

@@ -93,13 +93,6 @@
     }
 ?>
 
-    <section id="secio_barraNav">
-        <form action="busqueda.php">
-            <input type="text" id="ciudad_busqueda" name="ciudad_busqueda">
-            <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
-        </form> 
-    </section>
-
     <h1>Resultados de Búsqueda</h1>
 
     <section id="sectionsBusquedaResultado">

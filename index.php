@@ -4,8 +4,31 @@
     $title = "Inicio";
     $acceder = "Acceder";
     $css = "css/index.css";
+    include 'includes/funciones.php';
+    
+    // he tenido que cambiar de lado el include del header porque si no no se podia hacer el get del formulario
+    if (!empty($_GET['ciudad_busqueda'])) { // se saca el texto de la busqueda rapida
+        include 'includes/iniciarDB.php'; // se incluye la base de datos para poder hacer la consulta y como el header aun no se ha llamado pues tengo que llamar a la base de datos aqui
+        $parametros = procesarBusquedaRapida($_GET['ciudad_busqueda'], $db); // se llama a la funcion 
+        
+        // se crea la url con los parametros sacados de la funcion de la busqueda rapida si hay
+        $urlBusqueda = 'busqueda.php?';
+        if (!empty($parametros['tipo_inmueble'])) { // se le pone el tipo de inmueble si hay 
+            $urlBusqueda .= 'tipo_inmueble=' . urlencode($parametros['tipo_inmueble']) . '&';
+        }
+        if (!empty($parametros['tipo_anuncio'])) { // el tipo de anuncio si hay 
+            $urlBusqueda .= 'tipo_anuncio=' . urlencode($parametros['tipo_anuncio']) . '&';
+        }
+        if (!empty($parametros['ciudad_busquedaForm'])) { // y la ciudad o pais (que lo de pais aun no me funciona pero bueno) si hay 
+            $urlBusqueda .= 'ciudad_busquedaForm=' . urlencode($parametros['ciudad_busquedaForm']) . '&';
+        }
+        
+        // y se redirige a la busqueda pero filtrada
+        header('Location: ' . rtrim($urlBusqueda, '&'));
+        exit;
+    }
+    
     include 'includes/header.php';
-
 
     $query_anuncios = $db->query('SELECT FPrincipal, Alternativo, Titulo, Precio, FRegistro, NomPais, Ciudad, Texto, NomTAnuncio, IdAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais ORDER BY FRegistro DESC'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes y se obtiene el nombre del pais y el tipo de anuncio
     
@@ -21,7 +44,7 @@
 
 ?>
         <section id="sectio_barraNav">
-            <form action="busqueda.php">
+            <form action="index.php" method="GET">
                 <input type="text" id="ciudad_busqueda" name="ciudad_busqueda">
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 

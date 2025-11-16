@@ -8,7 +8,7 @@
     include 'includes/iniciarDB.php';
 
 
-    $resultado = $db->query('SELECT * FROM anuncios ORDER BY ');
+    $resultado = $db->query('SELECT * FROM anuncios ORDER BY FRegistro ASC');
     if (!$resultado) {
         die('Error:  ' . $db->error);
     }

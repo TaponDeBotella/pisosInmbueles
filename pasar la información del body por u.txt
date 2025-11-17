@@ -1,2 +1,4 @@
-hay que cambiar lo del flashdata
-cambiar lo de la hora para que se vea bien (que se vea a hora que toca)
+encriptar claves	 
+ordenar datos de países de mayor a menor
+consultas preparadas para el buscar 
+con un require hacer lo de las dos paginas de fotos que son iguales 

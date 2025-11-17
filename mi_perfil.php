@@ -49,6 +49,9 @@
                         <a href="crear_anuncio.php"><i class="fa-solid fa-file-circle-plus"></i>Crear nuevo anuncio</a>
                     </li>
                     <li>
+                        <a href="configurar.php"><i class="fa-solid fa-sliders"></i>Configurar</a> <!-- enlace para lo de configurar los estilos -->
+                    </li>
+                    <li>
                         <a href="mis_mensajes.php"><i class="fa-solid fa-envelope"></i>Mis mensajes</a>
                     </li>
                     <li>

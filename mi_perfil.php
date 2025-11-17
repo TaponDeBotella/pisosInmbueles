@@ -37,7 +37,7 @@
                         </p>
                     </li>
                     <li id="primer_li"> <!-- se le pasa el nombre del usuario de la session --> 
-                        <p id="mis_datos"><i class="fa-solid fa-address-card"></i>Mis datos (esto será un enlace cuando se cree la página)</p>
+                        <a href="registro.php" id="mis_datos"><i class="fa-solid fa-address-card"></i>Mis datos</a>
                     </li>
                     <!--<li> esto lo comento porque ya tenemos la opcion de salir, luego se puede usar para eliminar usuarios de la base de datos si las practicas futuras lo piden
                         <a href="index.php"><i class="fa-solid fa-user-minus"></i>Darse de baja</a>

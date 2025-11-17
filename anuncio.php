@@ -198,16 +198,18 @@
                 </tr>
                 <tr>
                     <th>Precio:</th>
-                    <td><?php 
-                        $tipo_precio;
-                        if($anuncio['NomTAnuncio'] === 'Venta')
-                            $tipo_precio = '€';
-                        else
-                            $tipo_precio = '€/mes';
-                        
-                        echo $anuncio['Precio'].htmlspecialchars($tipo_precio);
-                        
-                    ?></td>
+                    <td>
+                        <?php 
+                            $tipo_precio;
+                            if($anuncio['NomTAnuncio'] === 'Venta')
+                                $tipo_precio = '€';
+                            else
+                                $tipo_precio = '€/mes';
+                            
+                            echo $anuncio['Precio'].htmlspecialchars($tipo_precio);
+                            
+                        ?>
+                    </td>
                 </tr>
                 <tr>
                     <th rowspan="5">Características:</th>
@@ -244,14 +246,19 @@
             <?php
                 // Muestro todas las fotos en miniaturas porque lo pide el enunciado, esto en un futuro se sustituira por el carrusel al principio si le parece bien al profesor
                 for($i = 0; $i < count($fotos) && $i < 4; $i++) 
-                    echo '<img class="miniatura" src="img/'.$fotos[$i]['Foto'].'" alt="'.$fotos[$i]['Alternativo'].'">';
+                    echo '<img class="miniatura" src="img/'.htmlspecialchars($fotos[$i]['Foto']).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
             ?>
+        <nav id="masFotos">
+            <a href="ver_fotos.php?idAnuncio=<?php echo htmlspecialchars($idAnuncio); ?>">Ver más fotos</a>
+        </nav>
         </figure>
+
 
         <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['NomUsuario']?></h4>
 
         <nav id="simular">
             <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>
+            <a href="ver_mensajes.php?idAnuncio=<?php echo htmlspecialchars($idAnuncio); ?>">Ver mensajes de la oferta</a>
         </nav>
         
 <?php

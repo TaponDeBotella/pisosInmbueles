@@ -5,7 +5,6 @@
     $acceder = "Acceder";
     $css = "css/mis_anuncios.css";
     include 'includes/header.php';
-    include 'includes/anuncios.php';
     
     $anuncios = [];
 

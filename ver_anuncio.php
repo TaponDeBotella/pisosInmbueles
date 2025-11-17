@@ -13,6 +13,30 @@
     $anuncio = null;
 
     $nombre_usuario = $_SESSION['nombre'];
+
+    $query_tAnuncios = $db->query('SELECT * FROM TiposAnuncios'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes y se obtiene el nombre del pais y el tipo de anuncio
+    
+    if (!$query_tAnuncios) { // comprobacion de si hay query_anuncios
+        die('Error:  ' . $db->error); // para y da el error
+    }
+
+    $tAnuncios = [];
+
+    while ($fila = $query_tAnuncios->fetch_array(MYSQLI_ASSOC)) { // hago fetch con array asociativo y guardo las filas en $anuncios por orden de la query
+        $tAnuncios[] = $fila;
+    }
+
+    $query_tViviendas = $db->query('SELECT * FROM TiposViviendas'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes y se obtiene el nombre del pais y el tipo de anuncio
+    
+    if (!$query_tViviendas) { // comprobacion de si hay query_anuncios
+        die('Error:  ' . $db->error); // para y da el error
+    }
+
+    $tViviendas = [];
+
+    while ($fila = $query_tViviendas->fetch_array(MYSQLI_ASSOC)) { // hago fetch con array asociativo y guardo las filas en $anuncios por orden de la query
+        $tViviendas[] = $fila;
+    }
     
     $stmt = $db->prepare( // preparo la consulta (para evitar inyeccion sql, se pone ? donde se debe poner un parametro)
         "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, NomUsuario,
@@ -35,7 +59,7 @@
     $resultado = $stmt->get_result(); // guardo el resultado
 
     if($resultado) {
-        $anuncio = $resultado->fetch_assoc(); // convierto el resultado en array asociativo
+        $anuncio = $resultado->fetch_array(MYSQLI_BOTH);
         $resultado->free();
     }
 
@@ -86,22 +110,43 @@
                 <label for="labelTipoAnuncio">Tipo de anuncio</label>
                 <select disabled class="input_select" name="TipoAnuncio" id="TipoAnuncio" onchange="cambiarTipoPrecio(this.value);">
                     <option value=""></option>
+                    
                     <?php
-                    if($anuncio['NomTAnuncio'] == 'Alquiler')
-                        echo '  <option selected value="2">Alquiler</option>
-                                <option value="1">Venta</option>
-                        ';
-                    else
-                        echo '  <option value="2">Alquiler</option>
-                                <option selected value="1">Venta</option>
-                        ';
+                    
+                        for($i=0; $i<sizeof($tAnuncios); $i++) {
+                            $cadena = '';
+                            $cadena .= '<option ';
+
+                            if($anuncio['NomTAnuncio'] == $tAnuncios[$i]['NomTAnuncio'])
+                                $cadena .= 'selected ';
+
+                            $cadena .= 'value="'.htmlspecialchars($tAnuncios[$i]['IdTAnuncio']).'">'.htmlspecialchars($tAnuncios[$i]['NomTAnuncio']).'</option>';
+
+                            echo $cadena;
+                        }
                     ?>
+                
                 </select>
-        
+    
+
         
                 <label for="labelTipoVivienda">Tipo de vivienda</label>
-                <input readonly class="input_select" type="text" name="tipoVivienda" id="tipoVivienda" value="<?php echo $anuncio['NomTVivienda']; ?>" placeholder="Habitación, piso, casa...">
-        
+                <select disabled class="input_select" name="tipoVivienda" id="tipoVivienda">
+                    <option value=""></option>
+                    <?php
+                        for($i=0; $i<sizeof($tViviendas); $i++) {
+                            $cadena = '';
+                            $cadena .= '<option ';
+
+                            if($anuncio['NomTVivienda'] == $tViviendas[$i]['NomTVivienda'])
+                                $cadena .= 'selected ';
+
+                            $cadena .= 'value="'.htmlspecialchars($tViviendas[$i]['IdTVivienda']).'">'.htmlspecialchars($tViviendas[$i]['NomTVivienda']).'</option>';
+
+                            echo $cadena;
+                        }
+                    ?>
+                </select>        
                 <label for="labelTitulo">Título</label>
                 <input readonly class="input_select" type="text" name="titulo" id="titulo" value="<?php echo $anuncio['Titulo']; ?>">
         
@@ -153,7 +198,7 @@
         <figure>
             <?php
                 for($i = 0; $i < count($fotos); $i++) 
-                    echo '<img class="miniatura" src="img/'.$fotos[$i]['Foto'].'" alt="'.$anuncio[$i]['Foto'].'">';
+                    echo '<img class="miniatura" src="img/'.htmlspecialchars($fotos[$i]['Foto']).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
             ?>
         </figure>
 

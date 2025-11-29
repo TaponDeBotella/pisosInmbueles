@@ -11,7 +11,18 @@
     $registro = flash_get_data('registro');
     $errores = flash_get_data('errores');
 
-    if($registro) {
+    // inicializo las variables de formulario para evitar warnings si no vienen en
+    // flash ni en la sesión. Se rellenarán más abajo si hay datos.
+    $nombre = $pass1 = $pass2 = $email = $sex = $nacimiento = $ciudad = $pais = '';
+
+    // si $errores no es null y tampoco es un array, convierto a array
+    if ($errores !== null && !is_array($errores)) {
+        $errores = [$errores];
+    }
+
+      
+
+    if($registro && $registro != null) {
         $nombre = $registro['nombre'];
         $pass1 = $registro['pass1'];
         $pass2 = $registro['pass2'];
@@ -61,7 +72,7 @@
         
 
 
-    $resultadoPaises = $db->query('SELECT IdPais, NomPais FROM Paises');
+    $resultadoPaises = $db->query('SELECT IdPais, NomPais FROM Paises ORDER BY NomPais ASC');
     if (!$resultadoPaises) {
         die('Error: ' . $db->error);
     }
@@ -76,13 +87,14 @@
             <form id="formRegistro" action="respuesta_registro.php" method="post">
                 <label for="labelName">Nombre: </label>
                 <?php
-                    if (!$registro && !$errores) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
-                        if(isset($_SESSION['nombre'])) // si ya hay una sesion iniciada (estoy en "MIS DATOS")
+                    if($registro == null && $errores == null) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                        if(isset($_SESSION['nombre'])) {// si ya hay una sesion iniciada (estoy en "MIS DATOS")
                             echo '<input class="input_select" name="nombre" value="'.htmlspecialchars($nombre).'" type="text" id="name">';
+                        }
                         else
                             echo '<input class="input_select" name="nombre" type="text" id="name">';
                     }
-                    else if($errores && in_array('nombreVacio', $errores)) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
+                    else if($registro == null && in_array('nombreVacio', $errores)) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
                         echo   '<section class="errorForm">
                                     <input class="input_select" name="nombre" type="text" id="name"><p class="errorForm">Este campo no puede estar vacío</p>
                                 </section>';
@@ -94,7 +106,7 @@
 
                 <label for="labelPassword">Contraseña: </label>
                 <?php
-                    if (!$registro && !$errores) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                    if ($registro == null && $errores == null) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
                         if(isset($_SESSION['nombre'])) // si ya hay una sesion iniciada (estoy en "MIS DATOS")
                             echo '<input class="input_select" name="pass1" value="'.htmlspecialchars($pass1).'" type="password" id="password">';
                         else 
@@ -112,18 +124,18 @@
                 
                 <label for="labelPassword2">Repetir contraseña: </label>
                 <?php
-                    if (!$registro && !$errores) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
+                    if ($registro == null && $errores == null) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
                         if(isset($_SESSION['nombre'])) // si ya hay una sesion iniciada (estoy en "MIS DATOS")
                             echo '<input class="input_select" value="'.htmlspecialchars($pass2).'" name="pass2" type="password" id="password2">';
                         else
                             echo '<input class="input_select" name="pass2" type="password" id="password2">';
                     }
-                    else if($errores && in_array('pass2Vacia', $errores)) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
+                    else if($errores != null && in_array('pass2Vacia', $errores)) { // si este campo esta vacio anyado el mensaje de error para resaltarlo
                         echo   '<section class="errorForm">
                                     <input class="input_select" name="pass2" type="password" id="password2"><p class="errorForm">Este campo no puede estar vacío</p>
                                 </section>';
                     }
-                    else if($errores && in_array('passNoCoinciden', $errores)) { // si las contrasenyas no coinciden
+                    else if($errores != null && in_array('passNoCoinciden', $errores)) { // si las contrasenyas no coinciden
                         echo   '<section class="errorForm">
                                     <input class="input_select" name="pass2" type="password" value="'.htmlspecialchars($pass2).'" id="password2"><p class="errorForm">Las contraseñas no coinciden</p>
                                 </section>';
@@ -135,7 +147,7 @@
                 
                 <label for="labelEmail">Correo electrónico: </label>
                 <?php
-                    if (!$registro)  {// si no hay datos en la sesion pongo el html por defecto
+                    if ($registro == null)  {// si no hay datos en la sesion pongo el html por defecto
                         if(isset($_SESSION['nombre']))
                             echo '<input class="input_select" name="email" value="'.htmlspecialchars($email).'" type="text" id="email" placeholder="parte-local@dominio">';
                         else
@@ -147,7 +159,7 @@
                 
                 <label for="labelSex">Sexo: </label>
                 <?php
-                    if (!$registro) { // si no hay nada en la sesion pongo los datos por defecto
+                    if ($registro == null) { // si no hay nada en la sesion pongo los datos por defecto
                         if(isset($_SESSION['nombre'])) {
                             if($sex == 'Hombre') { // caso hombre
                                 echo '  <select  name="sex" class="input_select" id="sex">
@@ -203,7 +215,7 @@
                 
                 <label for="labelBirth">Fecha de nacimiento: </label>
                 <?php
-                    if (!$registro) {// si no hay nada en la sesion pongo los datos por defecto
+                    if ($registro == null) {// si no hay nada en la sesion pongo los datos por defecto
                         if(isset($_SESSION['nombre'])) 
                             echo '<input class="input_select" name="nacimiento" value="'.htmlspecialchars($nacimiento).'" placeholder="dia-mes-año" type="text" id="birth">';
                         else
@@ -217,7 +229,7 @@
                 
                 <label for="labelCity">Ciudad de residencia: </label>
                 <?php
-                    if (!$registro) {// si no hay nada en la sesion pongo los datos por defecto
+                    if ($registro == null) {// si no hay nada en la sesion pongo los datos por defecto
                         if(isset($_SESSION['nombre'])) 
                             echo '<input class="input_select" name="ciudad" value="'.htmlspecialchars($ciudad).'" type="text" id="city">';
                         else
@@ -231,7 +243,7 @@
 
                 <select class="input_select" name="pais" id="country">
                     <?php
-                        if (!$registro) { // si no hay nada en la sesion pongo los datos por defecto
+                        if ($registro == null) { // si no hay nada en la sesion pongo los datos por defecto
                             if(isset($_SESSION['nombre'])) {
                                 for($i=0; $i<sizeof($paises); $i++) {
                                     $cadena = '<option';

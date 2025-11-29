@@ -6,6 +6,7 @@
     $acceder="Acceder";
     include 'includes/header.php';   
     include 'includes/anuncios.php';
+    include 'includes/funciones.php';
 
     // si el usuario ha enviado el formulario de busqueda se recogen los datos por si hay que hacer filtros para los anuncios que se ven
     // si hay algun campo vacio entonces se pone una cadena vacia para que no de error al hacer la consulta por si acaso
@@ -18,7 +19,7 @@
     $fechaPublicacion = isset($_GET['fecha_publicacion']) ? $_GET['fecha_publicacion'] : '';
 
     // ahora segun los datos del formlario se hace la consulta para ver que anuncios se mestran
-    $query = 'SELECT a.*, p.NomPais, ta.NomTAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais';
+    /* $query = 'SELECT a.*, p.NomPais, ta.NomTAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais';
 
     if (!empty($tipoAnuncio)) { // el tipo de anuncio
         $query .= " AND a.TAnuncio = " . intval($tipoAnuncio);
@@ -48,19 +49,92 @@
         $query .= " AND DATE(a.FRegistro) >= '" . $fechaPublicacion . "'";
     }
 
+    $query .= " ORDER BY a.FRegistro DESC"; // y se ordena por fecha de registro descendente para que los mas nuevos salgan primero */
+
+    $query = 'SELECT a.*, p.NomPais, ta.NomTAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais';
+
+    $tipoparams = '';
+    $params = [];
+
+    if (!empty($tipoAnuncio)) { // el tipo de anuncio
+        $query .= " AND a.TAnuncio = ?";
+        $tipoparams .= 'i';
+        $tipoAnuncioParam = ($tipoAnuncio !== '' ? intval($tipoAnuncio) : 0);
+        $params[] = $tipoAnuncioParam;
+    }
+
+    if (!empty($tipoVivienda)) { // el tipo de vivienda
+        $query .= " AND a.TVivienda = ?";
+        $tipoparams .= 'i';
+        $tipoViviendaParam = ($tipoVivienda !== '' ? intval($tipoVivienda) : 0);
+        $params[] = $tipoViviendaParam;
+    }
+
+    if (!empty($ciudad)) { // la ciudad, y con el lower para que si el usuario pone minusculas o mayusculas no de error
+        $query .= " AND LOWER(a.Ciudad) LIKE CONCAT('%', LOWER(?), '%')";
+        $tipoparams .= 's';
+        $params[] = $ciudad;
+    }
+
+    if (!empty($pais)) { // el pais
+        $query .= " AND a.Pais = ?";
+        $tipoparams .= 'i';
+        $paisParam = ($pais !== '' ? intval($pais) : 0);
+        $params[] = $paisParam;
+    }
+
+    if (!empty($precioMinimo)) { // el precio minimo
+        $query .= " AND a.Precio >= ?";
+        $tipoparams .= 'd';
+        $precioMinParam = ($precioMinimo !== '' ? floatval($precioMinimo) : 0.0);
+        $params[] = $precioMinParam;
+    }
+
+    if (!empty($precioMaximo)) { // el precio maximo
+        $query .= " AND a.Precio <= ?";
+        $tipoparams .= 'd';
+        $precioMaxParam = ($precioMaximo !== '' ? floatval($precioMaximo) : 0.0);
+        $params[] = $precioMaxParam;
+    }
+
+    if (!empty($fechaPublicacion)) { // la fecha de publicacion, que muestre los anuncios desde esa fecha en adelante (preguntar??? porque no se si quiere que vaya asi o que muestre los de la fecha exacta solo)
+        $query .= " AND DATE(a.FRegistro) >= ?";
+        $tipoparams .= 's';
+        $params[] = $fechaPublicacion;
+    }
+
     $query .= " ORDER BY a.FRegistro DESC"; // y se ordena por fecha de registro descendente para que los mas nuevos salgan primero
 
-    // ahora se ejecuta la consulta ya creada completamente
-    $resultado = $db->query($query);
-    if (!$resultado) {
-        die('Error: ' . $db->error);
+    $stmt = $db->prepare($query);
+
+    if (!$stmt)  // comprobacion de si hay statement
+        die('Error:  ' . $db->error);
+
+    // preparo las variables para bind_param
+    if(!empty($params)) {
+        // primer elemento de bind debe ser la cadena de tipos
+        array_unshift($params, $tipoparams); // esto pone $types primero en el array $params
+
+        call_user_func_array([$stmt, 'bind_param'], refValues($params)); // con esto llamo a la funcion bind_param usando las referencias en $params
     }
 
-    // se guardan todos los anuncios en un array
-    $anuncios = [];
-    while ($fila = $resultado->fetch_array(MYSQLI_ASSOC)) {
-        $anuncios[] = $fila;
+    if(!$stmt->execute()) { // ejecuto y miro si hay error
+        die('Error: ' . $stmt->error);
     }
+
+    $resultado = $stmt->get_result(); // guardo el resultado del prepared statement
+    if (!$resultado) {
+        $stmt->close();
+        die('Error getting result: ' . $db->error);
+    }
+
+    // recoger todos los anuncios en un array (más eficiente que fetch en bucle)
+    $anuncios = $resultado->fetch_all(MYSQLI_ASSOC);
+
+    $stmt->close();
+    
+    
+
 
     // se sacan todos los datos de la base de datos para ponerlos en los filtros en los selects
     $resultadoTiposAnuncios = $db->query('SELECT IdTAnuncio, NomTAnuncio FROM TiposAnuncios');

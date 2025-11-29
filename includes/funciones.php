@@ -107,4 +107,14 @@
             'ciudad_busquedaForm' => $parametrosCiudad
         ];
     }
+
+// helper para convertir a referencias (necesario para bind_param al construir dinamicamente la query sql)
+function refValues(array &$arr) {
+    $refs = [];
+    foreach ($arr as $k => &$v) {
+        $refs[$k] = &$v;
+    }
+    return $refs;
+}
+
 ?>

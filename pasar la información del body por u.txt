@@ -1,4 +1,4 @@
 encriptar claves	 
-ordenar datos de países de mayor a menor
+ordenar datos de países de mayor a menor // CREO QUE HECHO, AL MENOS EN REGISTRO, PERO LO DE LOS PAÍSES SE USA SUPUESTAMENTE EN MÁS SITIOS, PERO NO ME ACUERDO DÓNDE
 consultas preparadas para el buscar 
 con un require hacer lo de las dos paginas de fotos que son iguales 

@@ -74,6 +74,37 @@ a {
     grid-column: 2;
 }
 
+/* lo de la ventana modal*/
+#modalBaja {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--sombra);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;    
+}
+            
+#ventanaModalBaja {
+    background-color: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px var(--sombra);
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+            
+.botonesModal {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-top: 1em;
+}           
+
 @media (max-width: 480px) {
     section {
         width: 80%;

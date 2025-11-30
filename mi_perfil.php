@@ -63,9 +63,84 @@
                     <li>
                         <a href="includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
                     </li>
+                    <li>
+                        <button onclick="abrirModalBaja()" class="boton"><i class="fa-solid fa-user-minus"></i>Darme de baja</button> <!-- le anyado lo de la ventana modal para confirmar si el usuario de verdad quiere borrar la cuenta -->
+                    </li>
                 </ul>
             </nav>
         </section>
+
+        <!-- ventana modal para confirmar la baja -->
+        <section id="modalBaja" style="display: none;"> <!-- se pone display none para que no se vea al cargar la pagina -->
+            <section id="ventanaModalBaja">
+                <h2>Confirmar eliminación de cuenta</h2>
+                <p>Esta acción eliminará tu cuenta y todos tus datos asociados:</p>
+                
+                <h3>Tus anuncios y fotos:</h3>
+                <?php
+                    // se sacan los anuncios y fotos del usuario para mostrarlos en el resumen
+                    require_once 'includes/iniciarDB.php';
+                    $id_usuario = $_SESSION['id_usuario']; // se saca el id del usuario logueado
+                    
+                    $query = "SELECT IdAnuncio, Titulo FROM Anuncios WHERE Usuario = ? ORDER BY FRegistro DESC";
+                    $stmt = $db->prepare($query); // se prepara la query del select para sacar los datos para el reusmen
+                    $stmt->bind_param('i', $id_usuario);
+                    $stmt->execute();
+                    $resultado = $stmt->get_result(); // se obtienen los resultados
+                    
+                    $total_anuncios = 0; // las variables para el resumen
+                    $total_fotos = 0;
+                    
+                    if ($resultado->num_rows > 0) { // si hay resultado es que hay anuncios entonces se muestran en el resumen
+                        echo '<ul>';
+                        while ($anuncio = $resultado->fetch_array(MYSQLI_ASSOC)) { // se recorren los anuncios
+                            $total_anuncios++;
+                            $id_anuncio = $anuncio['IdAnuncio'];
+                            
+                            $query_fotos = "SELECT COUNT(*) as num_fotos FROM Fotos WHERE Anuncio = ?"; // se cuentan las fotos con el count
+                            $stmt_fotos = $db->prepare($query_fotos); // se prepara la query para contar las fotos
+                            $stmt_fotos->bind_param('i', $id_anuncio);
+                            $stmt_fotos->execute();
+                            $resultado_fotos = $stmt_fotos->get_result(); // se sacan los resultados
+                            $row_fotos = $resultado_fotos->fetch_array(MYSQLI_ASSOC); // se saca la fila
+                            $num_fotos = $row_fotos['num_fotos']; // se obtiene el numero de fotos
+                            $total_fotos += $num_fotos;
+                            
+                            echo '<li>' . htmlspecialchars($anuncio['Titulo']) . ' (' . $num_fotos . ' fotos)</li>'; // y se le pone el numero de fotos y el titulo del anuncio solo
+                            $stmt_fotos->close();
+                        }
+                        echo '</ul>';
+                    } else { // si no tienen anuncios entonces solo se muestra el mensjae de qu e no hay anuncios
+                        echo '<p>No tienes anuncios</p>';
+                    }
+                    
+                    $stmt->close();
+                ?>
+                
+                <h3>Resumen:</h3> <!-- el resumen con el numero total de anuncios y fotos-->
+                <p><strong>Total de anuncios:</strong> <?php echo $total_anuncios; ?></p>
+                <p><strong>Total de fotos:</strong> <?php echo $total_fotos; ?></p>
+                
+                <h3>Para confirmar, introduce tu contraseña:</h3> <!-- se le pide la contrasenya al usuario para poder eliminar la cuenta -->
+                <form method="POST" action="respuesta_darme_baja.php"> <!-- se hace el post con la contrasenya -->
+                    <input type="password" name="clave_confirmacion" placeholder="Contraseña" required class="input_select">
+                    <section class="botonesModal">
+                        <button type="submit" class="boton">Confirmar</button>
+                        <button type="button" onclick="cerrarModalBaja()" class="boton">Cancelar</button>
+                    </section>
+                </form>
+            </section>
+        </section>
+
+        <script>
+            function abrirModalBaja() { // esto es igual que en lo de confirmar para borrar un anuncio 
+                document.getElementById('modalBaja').style.display = 'flex'; // el flex para hacerlo visible
+            }
+            
+            function cerrarModalBaja() {
+                document.getElementById('modalBaja').style.display = 'none'; // el none para hacerlo invisile
+            }
+        </script>
 
         
 <?php

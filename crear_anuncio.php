@@ -48,7 +48,7 @@
     <script src="js/otras_funciones.js"></script>
 
     <h1>Crear anuncio</h1>
-    <form method="post">
+    <form method="post" action="respuesta_crear_anuncio.php">
         <section>
             <h3>Datos generales</h3>
             <label for="labelTipoAnuncio">Tipo de anuncio</label>
@@ -116,23 +116,9 @@
             <input class="input_select" type="number" step="1" min="1900" max="<?php echo date('Y'); ?>" name="fechaCreacion" id="fechaCreacion" value="2000">
         </section>
 
-        
         <section>
-            <label for="labelTitulo">Título de la foto</label>
-            <input type="text" id="titulo" name="titulo">
+            <input type="submit" class="boton" value="Crear anuncio">
         </section>
-
-        <section>
-            <label for="labelFoto">Foto: </label>
-            <label for="foto" class="boton" id="examinar" name="examinar">Examinar </label>
-            <!-- <input type="file" accept="image/*" required> -->
-            <input id="foto" type="file" style="display:none;">
-        </section>
-
-        <section>
-            <input type="submit" class="boton">
-        </section>
-
 
     </form>
 

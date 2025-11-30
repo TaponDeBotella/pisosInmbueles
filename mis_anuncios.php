@@ -89,6 +89,7 @@
                         
                         <nav>
                             <a id="ver_anuncio" href="ver_anuncio.php?idAnuncio=<?php echo htmlspecialchars($anuncio['IdAnuncio']) ?>"><i class="fa-solid fa-square-plus"></i>Añadir una foto</a>
+                            <a href="editar_anuncio.php?id=<?php echo htmlspecialchars($anuncio['IdAnuncio']) ?>" class="boton" title="Editar anuncio"><i class="fa-solid fa-pen-to-square"></i></a>
                             <button class="boton" onclick="abrirModalBorrar(<?php echo htmlspecialchars($anuncio['IdAnuncio']); ?>)" title="Borrar anuncio"><i class="fa-solid fa-circle-xmark"></i></button>
                         </nav>
                     </article>

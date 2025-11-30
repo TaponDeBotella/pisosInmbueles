@@ -87,7 +87,10 @@
                         <p class="ciudad">Ciudad: <?php echo $anuncio['Ciudad']; ?></p>
                         <p class="p_descripcionA"><?php echo substr($anuncio['Texto'], 0, 100) . '...'; ?></p>  
                         
-                        <a id="ver_anuncio" href="ver_anuncio.php?idAnuncio=<?php echo htmlspecialchars($anuncio['IdAnuncio']) ?>"><i class="fa-solid fa-square-plus"></i>Añadir una foto</a>
+                        <nav>
+                            <a id="ver_anuncio" href="ver_anuncio.php?idAnuncio=<?php echo htmlspecialchars($anuncio['IdAnuncio']) ?>"><i class="fa-solid fa-square-plus"></i>Añadir una foto</a>
+                            <button class="boton" onclick="abrirModalBorrar(<?php echo htmlspecialchars($anuncio['IdAnuncio']); ?>)" title="Borrar anuncio"><i class="fa-solid fa-circle-xmark"></i></button>
+                        </nav>
                     </article>
                 </li>
             <?php
@@ -97,6 +100,33 @@
         </section>
 
         <a id="nuevoAnuncio" href="crear_anuncio.php">¿Crear nuevo anuncio?</a>
+
+        <!-- la ventana modal para que el usuario pueda confirmar lo de borrar el anuncio -->
+        <section id="modalBorrar">
+            <section id="ventanaModal">
+                <h2>¿Borrar este anuncio?</h2>
+                <p>Esta acción no se puede deshacer.</p>
+                
+                <section id="modalBotones"> <!-- se hace un post para borrar el anuncio -->
+                    <form id="formBorrarAnuncio" action="respuesta_borrar_anuncio.php" method="POST" style="display:inline;">
+                        <input type="hidden" id="idAnuncioInput" name="idAnuncio" value="">
+                        <button class="boton" type="submit">Confirmar</button>
+                    </form>
+                    <button class="boton" onclick="cerrarModalBorrar()">Cancelar</button> <!--si no quiere borrarlo solo se llama a la funcion de borrar la ventana modal y ya -->
+                </section>
+            </section>
+        </section>
+
+        <script> // las funciones para abrir y cerrar la ventana modal
+            function abrirModalBorrar(idAnuncio) { // se le pasa el id del anuncio que se quiere borrar
+                document.getElementById('idAnuncioInput').value = idAnuncio; 
+                document.getElementById('modalBorrar').style.display = 'flex'; // se le pone display flex para mostrar
+            }
+
+            function cerrarModalBorrar() { // para cerrar la ventana modal
+                document.getElementById('modalBorrar').style.display = 'none'; // se le pone display none para ocultar
+            }
+        </script>
 <?php
     include 'includes/footer.php';
 ?>

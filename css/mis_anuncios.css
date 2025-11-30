@@ -105,6 +105,58 @@ article {
     padding-bottom: 1em;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px 10px 10px;
+    gap: 10px;
+}
+
+/* lo de la ventana modal */
+#modalBorrar { /* el modal para borrar un anuncio que es para centrarlo todo y para que se visible o invisible*/
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--sombra);
+    justify-content: center;
+    align-items: center;
+}
+
+#modalBorrar[style*="display: flex"] { /* cuando se pone visible se le pone el display flex */
+    display: flex !important;
+}
+
+#ventanaModal { /* el fondo blanco de la ventana modal */
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 20px var(--sombra);
+}
+
+#ventanaModal h2 { /* el texto grande de la ventana modal*/
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+#ventanaModal p { /* el texto de la ventana modal*/
+    margin: 0 0 20px 0;
+    color: #666;
+}
+
+#modalBotones { /* el section con el boton de confirmar el borrar o cancelarlo */
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
 @media (max-width: 480px) {
     #sectionArticulos {
         width: 95%;

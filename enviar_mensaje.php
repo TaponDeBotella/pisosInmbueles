@@ -9,6 +9,8 @@
     include 'includes/header.php';
     
     $texto_error = false;
+    $idAnuncio = isset($_GET['idAnuncio']) ? (int)$_GET['idAnuncio'] : 0; // se saca el id del anuncio de la url
+    $idUsuarioDestino = isset($_GET['idUsuarioDestino']) ? (int)$_GET['idUsuarioDestino'] : 0; // y el id del usuario al que se le manda el mensaje tambein
     
     // primero se comprueba si en la url hay un error
     if(isset($_GET['error'])) {
@@ -47,6 +49,9 @@
                     </option>
                 <?php endforeach; ?>
             </select>
+            <!-- como hay que saber el id del anuncio y del usuario al que se le manda el mensje se crean estos campos ocultos para que se pase pero que el usuario no lo vea y no haya problemas ni nada -->
+            <input type="hidden" name="idAnuncio" value="<?php echo htmlspecialchars($idAnuncio); ?>">
+            <input type="hidden" name="idUsuarioDestino" value="<?php echo htmlspecialchars($idUsuarioDestino); ?>">
             <input class="boton" type="submit" value="Enviar mensaje">            
         </form>
 

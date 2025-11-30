@@ -10,9 +10,9 @@
     $stmt = $db->prepare( // preparo la consulta (para evitar inyeccion sql, se pone ? donde se debe poner un parametro)
         "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, NomUsuario,
                 a.FPrincipal, a.Alternativo, a.Titulo, a.Precio, a.FRegistro,
-                p.NomPais, a.Ciudad, a.Texto, ta.NomTAnuncio, a.IdAnuncio, NomTVivienda
-        FROM Anuncios a, Usuarios, TiposAnuncios ta, Paises p, TiposViviendas
-        WHERE a.IdAnuncio = ? AND a.Pais = p.IdPais AND a.TAnuncio = ta.IdTAnuncio AND IdUsuario = Usuario AND TVivienda = IdTVivienda"
+                p.NomPais, a.Ciudad, a.Texto, ta.NomTAnuncio, a.IdAnuncio, NomTVivienda, u.IdUsuario
+        FROM Anuncios a, Usuarios u, TiposAnuncios ta, Paises p, TiposViviendas
+        WHERE a.IdAnuncio = ? AND a.Pais = p.IdPais AND a.TAnuncio = ta.IdTAnuncio AND u.IdUsuario = a.Usuario AND TVivienda = IdTVivienda"
     );    
     
     if (!$stmt) { // comprobacion de si hay statement
@@ -257,7 +257,7 @@
         <h4 style='margin-bottom: 1em;'><?php echo 'Esta vivienda pertenece a '.$anuncio['NomUsuario']?></h4>
 
         <nav id="simular">
-            <a href="enviar_mensaje.php">Enviar mensaje al dueño</a>
+            <a href="enviar_mensaje.php?idAnuncio=<?php echo htmlspecialchars($idAnuncio); ?>&idUsuarioDestino=<?php echo htmlspecialchars($anuncio['IdUsuario']); ?>">Enviar mensaje al dueño</a> <!-- se le pasa el id del anuncio y del usuario que ha hecho el anuncio para saber como mandar bien el mensaje -->
             <a href="ver_mensajes.php?idAnuncio=<?php echo htmlspecialchars($idAnuncio); ?>">Ver mensajes de la oferta</a>
         </nav>
         

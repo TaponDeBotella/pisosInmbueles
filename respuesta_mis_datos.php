@@ -6,6 +6,7 @@
     require_once 'includes/funciones.php';
     include 'includes/funciones_registro.php';
     include 'includes/flash.php';
+    require_once 'includes/iniciarDB.php';
     
 
     session_start();
@@ -114,7 +115,7 @@
         }
         else {
             $stmt = $db->prepare(
-                "UPDATE usuarios set (IdUsuario = IdUsuario, 
+                "UPDATE Usuarios SET 
                      NomUsuario = ?, 
                      Clave = ?, 
                      Email = ?, 
@@ -122,33 +123,37 @@
                      FNacimiento = ?, 
                      Ciudad = ?, 
                      Pais = ?, 
-                     Foto = ?) WHERE IdUsuario = ?;"
+                     Foto = ? 
+                 WHERE IdUsuario = ?"
             ); // se prepara la query para hacer el update
 
             $pais = (int)$pais; // me aseguro de que es entero
             $passHash = password_hash($pass1, PASSWORD_DEFAULT);
             $idUsuario = $_SESSION['id_usuario'];
+            // si no se proporciona foto en el formulario, usar cadena vacía
+            $foto = isset($_POST['foto']) ? $_POST['foto'] : '';
 
             if (!$stmt) { // si hay error se manda
                 $error_mensaje = 'Error en la preparación: ' . $db->error;
             } else { // si no entonces se le vinculan todos los parametros
                 $stmt->bind_param(
-                    'ssssssssi',
-                    $nombre, 
-                    $passHash, 
-                    $email, 
-                    $sex, 
-                    $nacimiento, 
-                    $ciudad, 
-                    $pais, 
-                    $foto, 
+                    'sssissisi',
+                    $nombre,
+                    $passHash,
+                    $email,
+                    $sex,
+                    $nacimiento,
+                    $ciudad,
+                    $pais,
+                    $foto,
                     $idUsuario
                 );
 
                 if (!$stmt->execute()) { // si hay error al ejecutar se manda el error
                     $error_mensaje = 'Error al actualizar usuario: ' . $stmt->error;
-                } else { // si no entonces se marca como creado
-                    $id_anuncio_creado = $stmt->insert_id;
+                } else {
+                    // actualización correcta
+                    $filas = $stmt->affected_rows;
                 }
 
                 $stmt->close();

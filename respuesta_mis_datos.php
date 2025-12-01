@@ -112,6 +112,48 @@
             header('Location: mis_datos.php');
             exit; 
         }
+        else {
+            $stmt = $db->prepare(
+                "UPDATE usuarios set (IdUsuario = IdUsuario, 
+                     NomUsuario = ?, 
+                     Clave = ?, 
+                     Email = ?, 
+                     Sexo = ?, 
+                     FNacimiento = ?, 
+                     Ciudad = ?, 
+                     Pais = ?, 
+                     Foto = ?) WHERE IdUsuario = ?;"
+            ); // se prepara la query para hacer el update
+
+            $pais = (int)$pais; // me aseguro de que es entero
+            $passHash = password_hash($pass1, PASSWORD_DEFAULT);
+            $idUsuario = $_SESSION['id_usuario'];
+
+            if (!$stmt) { // si hay error se manda
+                $error_mensaje = 'Error en la preparación: ' . $db->error;
+            } else { // si no entonces se le vinculan todos los parametros
+                $stmt->bind_param(
+                    'ssssssssi',
+                    $nombre, 
+                    $passHash, 
+                    $email, 
+                    $sex, 
+                    $nacimiento, 
+                    $ciudad, 
+                    $pais, 
+                    $foto, 
+                    $idUsuario
+                );
+
+                if (!$stmt->execute()) { // si hay error al ejecutar se manda el error
+                    $error_mensaje = 'Error al actualizar usuario: ' . $stmt->error;
+                } else { // si no entonces se marca como creado
+                    $id_anuncio_creado = $stmt->insert_id;
+                }
+
+                $stmt->close();
+            }
+        }
     }
 
 

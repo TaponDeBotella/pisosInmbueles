@@ -4,6 +4,7 @@
     $css="css/respuesta_registro.css";
    
     require_once 'includes/funciones.php';
+    include 'includes/iniciarDB.php'; // asegura que $db esté inicializada
     include 'includes/funciones_registro.php';
     include 'includes/flash.php';
     
@@ -20,6 +21,10 @@
         $nacimiento = $_POST['nacimiento'];
         $ciudad = $_POST['ciudad'];
         $pais = $_POST['pais'];
+        // el campo 'foto' puede venir por upload ($_FILES) o no venir en absoluto;
+        // evitar warning si no existe y usar cadena vacía por defecto
+        $foto = isset($_POST['foto']) ? $_POST['foto'] : '';
+        
         
         // Guardar datos en la sesión
         flash_set_data('registro', [
@@ -111,6 +116,44 @@
             flash_set_data('errores', $errores);
             header('Location: registro.php');
             exit; 
+        }
+        else {
+            $fechaRegistro = new DateTime();
+            $fechaRegistroStr = $fechaRegistro->format('Y-m-d H:i:s');
+            $stmt = $db->prepare(
+                "INSERT INTO usuarios (NomUsuario, Clave, Email, Sexo, FNacimiento, Ciudad, Pais, Foto, FRegistro, Estilo) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            ); // se prepara la query para hacer el post
+
+            $pais = (int)$pais; // me aseguro de que es entero
+            $estilo = 1;
+            $passHash = password_hash($pass1, PASSWORD_DEFAULT);
+
+            if (!$stmt) { // si hay error se manda
+                $error_mensaje = 'Error en la preparación: ' . $db->error;
+            } else { // si no entonces se le vinculan todos los parametros
+                $stmt->bind_param(
+                    'ssssssissi',
+                    $nombre, 
+                    $passHash, 
+                    $email, 
+                    $sex, 
+                    $nacimiento, 
+                    $ciudad, 
+                    $pais, 
+                    $foto, 
+                    $fechaRegistroStr, 
+                    $estilo
+                );
+
+                if (!$stmt->execute()) { // si hay error al ejecutar se manda el error
+                    $error_mensaje = 'Error al registrar usuario: ' . $stmt->error;
+                } else { // si no entonces se marca como creado
+                    $id_anuncio_creado = $stmt->insert_id;
+                }
+
+                $stmt->close();
+            }
         }
     }
 

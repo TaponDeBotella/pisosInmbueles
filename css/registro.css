@@ -25,11 +25,37 @@ label {
 }
 
 .errorForm {
-    display: flex;
-
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75em;
+    
     > p {
         color: var(--colorBordeError);
     }
+}
+
+
+
+.consejo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 1rem;
+    margin-left: 2em;
+    background-color: var(--colorFondoClaro);
+    padding: 1em;
+    border: 0.05em solid var(--colorBordes);
+    border-radius: 1em;
+    width: 15em;
+    max-height: 4em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    > p {
+        white-space: pre-wrap; /* respeta saltos de línea y envuelve texto */
+        margin-bottom: 1em;
+    }
+    
 }
 
 

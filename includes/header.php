@@ -119,9 +119,9 @@
                 <li id="acceder">
                     <?php
                         if(isset($_SESSION['logueado']) && $_SESSION['logueado'] === true){
-                            echo '<a href="mi_perfil.php"><i class="fa-solid fa-user-plus"></i>Mi perfil</a>';
+                            echo '<a href="mi_perfil.php"><i class="fa-solid fa-user"></i>Mi perfil</a>';
                         } else {
-                            echo '<a href="log_registro.php"><i class="fa-solid fa-user"></i>Acceder</a>';
+                            echo '<a href="log_registro.php"><i class="fa-solid fa-user-plus"></i>Acceder</a>';
                         }
                     ?>
                     

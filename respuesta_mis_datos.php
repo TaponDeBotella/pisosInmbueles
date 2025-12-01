@@ -1,5 +1,5 @@
 <?php
-    $title="Respuesta registro";
+    $title="Respuesta mis datos";
     $acceder = "Mi perfil";
     $css="css/respuesta_registro.css";
    
@@ -22,7 +22,7 @@
         $pais = $_POST['pais'];
         
         // Guardar datos en la sesión
-        flash_set_data('registro', [
+        flash_set_data('mis_datos', [
             'nombre' => htmlspecialchars($nombre),
             'pass1' => htmlspecialchars($pass1),
             'pass2' => htmlspecialchars($pass2),
@@ -76,14 +76,14 @@
 
 
             flash_set_data('errores', $errores);
-            header('Location: registro.php');
+            header('Location: mis_datos.php');
             exit; 
 
         }else{
 
             if($pass1 != $pass2) {
                 flash_set_data('errores', 'passNoCoinciden');
-                header('Location: registro.php');
+                header('Location: mis_datos.php');
                 exit; 
             }
 
@@ -109,7 +109,7 @@
     
         if(sizeof($errores) !== 0) {
             flash_set_data('errores', $errores);
-            header('Location: registro.php');
+            header('Location: mis_datos.php');
             exit; 
         }
     }
@@ -119,20 +119,20 @@
 ?>
     <?php
         // leer los datos guardados en flash
-        $registro = flash_get_data('registro');
-        if (!$registro) {
+        $mis_datos = flash_get_data('mis_datos');
+        if (!$mis_datos) {
             echo '<p>No hay datos de registro disponibles.</p>';
         } else {
     ?>
     <section id="respuesta">
-        <h4>Nombre: <?php echo htmlspecialchars($registro['nombre']); ?></h4>
-        <h4>Contraseña: <?php echo htmlspecialchars($registro['pass1']); ?></h4>
-        <h4>Repetir contraseña: <?php echo htmlspecialchars($registro['pass2']); ?></h4>
-        <h4>Email: <?php echo htmlspecialchars($registro['email']); ?></h4>
-        <h4>Sexo: <?php echo htmlspecialchars($registro['sex']); ?></h4>
-        <h4>Fecha de nacimiento: <?php echo htmlspecialchars($registro['nacimiento']); ?></h4>
-        <h4>Ciudad de residencia: <?php echo htmlspecialchars($registro['ciudad']); ?></h4>
-        <h4>País de residencia: <?php echo htmlspecialchars($paises_nombre_bien_puesto[array_search($registro['pais'], $paises_value)]); ?> </h4>
+        <h4>Nombre: <?php echo htmlspecialchars($mis_datos['nombre']); ?></h4>
+        <h4>Contraseña: <?php echo htmlspecialchars($mis_datos['pass1']); ?></h4>
+        <h4>Repetir contraseña: <?php echo htmlspecialchars($mis_datos['pass2']); ?></h4>
+        <h4>Email: <?php echo htmlspecialchars($mis_datos['email']); ?></h4>
+        <h4>Sexo: <?php echo htmlspecialchars($mis_datos['sex']); ?></h4>
+        <h4>Fecha de nacimiento: <?php echo htmlspecialchars($mis_datos['nacimiento']); ?></h4>
+        <h4>Ciudad de residencia: <?php echo htmlspecialchars($mis_datos['ciudad']); ?></h4>
+        <h4>País de residencia: <?php echo htmlspecialchars($paises_nombre_bien_puesto[array_search($mis_datos['pais'], $paises_value)]); ?> </h4>
     </section>
     <?php
         }

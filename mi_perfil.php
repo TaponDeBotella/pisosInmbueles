@@ -14,10 +14,22 @@
     $acceder = "Mi perfil";
     $css="css/mi_perfil.css";
     include 'includes/header.php';
+    
+    // se saca la foto del usuario de la base de datos
+    $id_usuario = $_SESSION['id_usuario'];
+    $query_foto = "SELECT Foto FROM Usuarios WHERE IdUsuario = ?"; // se prepara la consulta del select para sacar la foto
+    $stmt_foto = $db->prepare($query_foto);
+    $stmt_foto->bind_param('i', $id_usuario); // se vincula el parametro
+    $stmt_foto->execute(); // y se hace la consulta
+    $resultado_foto = $stmt_foto->get_result(); // se guarda el resultado
+    $usuario_foto = $resultado_foto->fetch_array(MYSQLI_ASSOC); // se convierte el resultado en array asociativo
+    $foto_perfil = $usuario_foto['Foto']; // se guarda la foto actual
+    $stmt_foto->close();
 ?>
-        <h1>Mi perfil</h1>        
-        <section>
-            <nav>
+        <h1>Mi perfil</h1>
+        
+        <section style="display: flex; align-items: flex-start; gap: 20px;">
+            <nav style="flex: 1;">
                 <ul>
                     <li>
                         <p>
@@ -68,6 +80,15 @@
                     </li>
                 </ul>
             </nav>
+            
+            <!-- se muestra la foto de perfil del usuario -->
+            <section style="flex-shrink: 0; text-align: center; padding: 20px;">
+                <?php if(!empty($foto_perfil) && file_exists($foto_perfil)) { ?> <!-- se comprueba que la foto existe y no esta vacia -->
+                    <img src="<?php echo htmlspecialchars($foto_perfil); ?>" alt="Foto de perfil" style="max-width: 200px; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"> <!-- se muestra la foto del usuario si hay -->
+                <?php } else { ?>
+                    <img src="./img/foto1.jpg" alt="Foto de perfil por defecto" style="max-width: 200px; height: auto; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"> <!-- si no hay foto se muestra una por defecto de img -->
+                <?php } ?>
+            </section>
         </section>
 
         <!-- ventana modal para confirmar la baja -->

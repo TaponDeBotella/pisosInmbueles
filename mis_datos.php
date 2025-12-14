@@ -80,11 +80,25 @@
     while ($fila = $resultadoPaises->fetch_array(MYSQLI_ASSOC)) {
         $paises[] = $fila;
     }
+    
+    // se saca la foto del usuario de la base de datos
+    $foto_actual = '';
+    if(isset($_SESSION['nombre'])) { // se compreuba que hay una sesion iniciada
+        $stmt_foto = $db->prepare("SELECT Foto FROM Usuarios WHERE NomUsuario = ?"); // se prepara la consulta del select para sacar la foto
+        $stmt_foto->bind_param('s', $_SESSION['nombre']); // se vincula el parametro
+        $stmt_foto->execute(); // y se hace la consulta
+        $resultado_foto = $stmt_foto->get_result(); // se guarda el resultado
+
+        if($fila_foto = $resultado_foto->fetch_array(MYSQLI_ASSOC)) { // se convierte el resultado en array asociativo
+            $foto_actual = $fila_foto['Foto']; // se guarda la foto actual
+        }
+        $stmt_foto->close();
+    }
 ?>
 
         <h1>Actualizar mis datos</h1>
         <section>
-            <form id="formRegistro" action="respuesta_mis_datos.php" method="post">
+            <form id="formRegistro" action="respuesta_mis_datos.php" method="post" enctype="multipart/form-data">
                 <label for="labelName">Nombre: </label>
                 <?php
                     if($cambio_datos == null && $errores == null) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
@@ -332,10 +346,26 @@
                     ?>
                 </select>
                 
-                <label for="labelFoto">Foto: </label>
-                <label for="foto" class="boton" id="examinar">Examinar </label>
-                <!-- <input type="file" accept="image/*" required> -->
-                <input id="foto" type="file" style="display:none;">
+                <label for="labelFoto">Foto de perfil: </label>
+                
+                <?php if(!empty($foto_actual) && file_exists($foto_actual)) { ?>
+                    <section style="margin: 10px 0;">
+                        <p>Foto actual:</p>
+                        <img src="<?php echo htmlspecialchars($foto_actual); ?>" alt="Foto actual" style="max-width: 150px; height: auto; border-radius: 5px;">
+                        <section style="margin-top: 10px;">
+                            <input type="checkbox" id="eliminar_foto" name="eliminar_foto" value="1">
+                            <label for="eliminar_foto" style="display: inline;">Eliminar foto actual</label>
+                        </section>
+                    </section>
+                <?php } else { ?>
+                    <section style="margin: 10px 0;">
+                        <p>Foto actual:</p>
+                        <img src="./img/foto1.jpg" alt="Foto por defecto" style="max-width: 150px; height: auto; border-radius: 5px;">
+                    </section>
+                <?php } ?>
+                
+                <label for="foto" class="boton" id="examinar">Cambiar foto </label>
+                <input id="foto" type="file" style="display:none;" name="foto">
     
                 
                 <input class="boton" id="confirmar" type="submit" value="Confirmar">

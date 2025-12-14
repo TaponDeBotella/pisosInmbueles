@@ -84,7 +84,7 @@
 
         <h1>Registro</h1>
         <section>
-            <form id="formRegistro" action="respuesta_registro.php" method="post">
+            <form id="formRegistro" action="respuesta_registro.php" method="post" enctype="multipart/form-data"> <!-- el enctype es para subir ficheros -->
                 <label for="labelName">Nombre: </label>
                 <?php
                     if($registro == null && $errores == null) { // si no hay errores ni se ha rellenado este campo en una sesion anterior pongo el html por defecto
@@ -363,7 +363,7 @@
                 <label for="labelFoto">Foto: </label>
                 <label for="foto" class="boton" id="examinar">Examinar </label>
                 <!-- <input type="file" accept="image/*" required> -->
-                <input id="foto" type="file" style="display:none;">
+                <input id="foto" type="file" style="display:none;" name="foto">
     
                 
                 <input class="boton" id="confirmar" type="submit" value="Confirmar">

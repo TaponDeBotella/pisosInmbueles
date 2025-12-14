@@ -225,4 +225,23 @@ function validarFechaNac($nacimiento):bool {
 
     return $fechaValida;
 }
+
+function validarFoto($foto):array {
+    $resultado = ['valida' => false, 'error' => '']; // de resultado le voy a devolver si la foto es valida o no con un bool y el mensaje de error en caso de que no lo sea
+
+    $tiposPermitidos = ['image/jpeg', 'image/png']; // los tipo de imagenes permitidos para que no puedan subir archivos malos
+    $tamanyoMaximo = 5 * 1024 * 1024; // tamanyo maximo de 5mb para que no se puedan subir archivos muy pesados y llenar la base de datos
+
+    if(in_array($foto['type'], $tiposPermitidos)) { // si el tipo de la foto esta en el array de tipos permitidos entonces se comprueba el tamanyo
+        if($foto['size'] <= $tamanyoMaximo) { // si el tamnayo es valido entonces la foto es valida
+            $resultado['valida'] = true; // se pone a true
+        } else { // si es demasiado grande entonces se le manda ese erorr tambien
+            $resultado['error'] = 'fotoMuyGrande';
+        }
+    } else { // si el formato no es valido se manda ese error
+        $resultado['error'] = 'formatoFotoNoValido';
+    }
+
+    return $resultado; // se devuelve el bool y el mensaje de error si hay
+}
 ?>

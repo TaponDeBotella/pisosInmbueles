@@ -79,7 +79,13 @@
                 for($i = 0; $i < count($fotos); $i++) {
                     echo '<article class="contenedor_foto">';
                     echo '<h2>'.htmlspecialchars($fotos[$i]['Titulo']).'</h2>';
-                    echo '<img src="img/'.htmlspecialchars($fotos[$i]['Foto']).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
+                    // si la foto tiene ruta completa (la carpeta de fotosSubidas) se usa
+                    // si no entonces se asume que es una foto antigua en img (porque no voy a cambiar las fotos antiguas de momento)
+                    $rutaFoto = $fotos[$i]['Foto'];
+                    if(strpos($rutaFoto, 'fotosSubidas/') !== 0 && strpos($rutaFoto, '/') === false) {
+                        $rutaFoto = 'img/' . $rutaFoto;
+                    }
+                    echo '<img src="'.htmlspecialchars($rutaFoto).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
                     if ($es_propietario) {
                         echo '<button class="boton" onclick="abrirModalBorrarFoto('.htmlspecialchars($fotos[$i]['IdFoto']).', \''.htmlspecialchars($fotos[$i]['Titulo']).'\')"><i class="fa-solid fa-circle-xmark"></i></button>';
                     }

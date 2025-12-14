@@ -40,7 +40,8 @@
                     'texto_alternativo_corto' => 'El texto alternativo debe tener al menos 10 caracteres.',
                     'texto_alternativo_redundante' => 'El texto alternativo no puede empezar por palabras como "foto", "imagen", etc.',
                     'anuncio_vacio' => 'Debes seleccionar un anuncio.',
-                    'anuncio_no_pertenece' => 'El anuncio no te pertenece.'
+                    'anuncio_no_pertenece' => 'El anuncio no te pertenece.',
+                    'foto_requerida' => 'Debes seleccionar una foto para subir.'
                 );
                 
                 $mensaje = isset($mensajes_error[$error]) ? $mensajes_error[$error] : 'Error desconocido.';
@@ -48,7 +49,7 @@
             }
         ?>
 
-        <form method="post" action="respuesta_nueva_foto.php">   
+        <form method="post" action="respuesta_nueva_foto.php" enctype="multipart/form-data">   
             <section>
                 <h3>¿Añadir una nueva foto?</h3>
                 <label for="labelAnuncioAElegir">Elige el anuncio al que quieres añadir la foto</label>
@@ -75,6 +76,10 @@
                 
                 <label for="labelTextoAlternativo">Texto alternativo</label>
                 <textarea class="input_select" required minlength="10" name="textoAlternativo" id="textoAlternativo"></textarea>
+                
+                <label for="labelFoto">Archivo de la foto</label>
+                <label for="foto" class="boton" id="examinar">Examinar </label>
+                <input id="foto" type="file" style="display:none;" name="foto" required accept="image/*">
 
                 <input type="submit" class="boton">
             </section>

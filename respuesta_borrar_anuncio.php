@@ -32,6 +32,25 @@
                 if ($resultado->num_rows === 0) { // si no hay resultados es porque el anuncio no es del usuario que quiere borrarlo  (que no deberia pasar pero por si acaso lo compruebo)
                     $error_mensaje = 'Error: No tienes permiso para borrar este anuncio';
                 } else { // si si que es un anuncio del usuario entonces se borra
+                    // primero se sacan las rutas de las fotos para eliminar los archivos fisicos
+                    $stmt_get_fotos = $db->prepare("SELECT Foto FROM Fotos WHERE Anuncio = ?");
+                    if ($stmt_get_fotos) {
+                        $stmt_get_fotos->bind_param('i', $idAnuncio);
+                        $stmt_get_fotos->execute();
+                        $resultado_fotos = $stmt_get_fotos->get_result();
+                        
+                        // se elimina cada archivo fisico si esta en fotosSubidas
+                        while ($fila_foto = $resultado_fotos->fetch_assoc()) {
+                            $rutaFoto = $fila_foto['Foto'];
+                            // solo se elimina si la foto esta en fotosSubidas y el archivo existe
+                            if (!empty($rutaFoto) && strpos($rutaFoto, 'fotosSubidas/') === 0 && file_exists($rutaFoto)) {
+                                unlink($rutaFoto);
+                            }
+                        }
+                        $stmt_get_fotos->close();
+                    }
+                    
+                    // ahora se eliminan las fotos de la base de datos
                     $stmt_fotos = $db->prepare("DELETE FROM Fotos WHERE Anuncio = ?"); // se prepara el delete
                     if ($stmt_fotos) {  // se borran las fotos relacionadas con el anuncio
                         $stmt_fotos->bind_param('i', $idAnuncio);

@@ -40,6 +40,24 @@
                     $resultado = $stmt_verificar->get_result(); // y se le sacan los resultados
                     
                     if ($resultado->num_rows > 0) { // si hay resultados significa que la foto pertenece al usuario
+                        // primero se saca la ruta de la foto para eliminar el archivo fisico
+                        $stmt_get_foto = $db->prepare("SELECT Foto FROM Fotos WHERE IdFoto = ?");
+                        if ($stmt_get_foto) {
+                            $stmt_get_foto->bind_param('i', $idFoto);
+                            $stmt_get_foto->execute();
+                            $resultado_foto = $stmt_get_foto->get_result();
+                            
+                            if ($fila_foto = $resultado_foto->fetch_assoc()) {
+                                $rutaFoto = $fila_foto['Foto'];
+                                // Solo eliminar si la foto está en fotosSubidas y el archivo existe
+                                if (!empty($rutaFoto) && strpos($rutaFoto, 'fotosSubidas/') === 0 && file_exists($rutaFoto)) {
+                                    unlink($rutaFoto);
+                                }
+                            }
+                            $stmt_get_foto->close();
+                        }
+                        
+                        // Ahora eliminar la foto de la base de datos
                         $stmt_delete = $db->prepare("DELETE FROM Fotos WHERE IdFoto = ?"); // se prepara el delete
                         
                         if (!$stmt_delete) {

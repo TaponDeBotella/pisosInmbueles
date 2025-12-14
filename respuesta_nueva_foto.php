@@ -64,25 +64,60 @@
             $stmt_verificar->close();
         }
         
-        // si no hay error se hace el post de la foto
+        // se comprueba que se haya subido un archivo
+        if (!isset($_FILES['foto']) || $_FILES['foto']['error'] !== 0) {
+            header('Location: nueva_foto.php?error=foto_requerida');
+            exit;
+        }
+        
+        // si no hay error se procesa la foto
         if (empty($error_mensaje)) {
-            $stmt = $db->prepare(
-                "INSERT INTO Fotos (Titulo, Alternativo, Anuncio) 
-                 VALUES (?, ?, ?)"
-            );
+            // se valida y se sube la foto
+            require_once 'includes/funciones_registro.php';
+            $fotoValidacion = validarFoto($_FILES['foto']);
             
-            if (!$stmt) {
-                $error_mensaje = 'Error en la preparación de la sentencia: ' . $db->error;
+            if(!$fotoValidacion['valida']) { // si no es valida se manda el error
+                $error_mensaje = 'Error: La foto no es válida. ' . $fotoValidacion['mensaje'];
             } else {
-                $stmt->bind_param('ssi', $titulo_foto, $texto_alternativo_foto, $idAnuncio);
-                
-                if (!$stmt->execute()) {
-                    $error_mensaje = 'Error al agregar la foto: ' . $stmt->error;
-                } else {
-                    $foto_agregada = true;
+                // si es valida entonces se sube la foto
+                $directorio = 'fotosSubidas/anuncios';
+                if (!is_dir($directorio)) { // se comprubea si la caprtea existe y si no se crea
+                    mkdir($directorio, 0755, true);
                 }
                 
-                $stmt->close();
+                $nombreArchivo = uniqid() . '_' . basename($_FILES['foto']['name']); // se usa el uniqid para evitar nombres repetidos
+                $rutaFoto = $directorio . '/' . $nombreArchivo;
+                
+                if(move_uploaded_file($_FILES['foto']['tmp_name'], $rutaFoto)) { // se mueve el archivo a la carpeta
+                    // y se mete en la base de datos tambien
+                    $stmt = $db->prepare(
+                        "INSERT INTO Fotos (Titulo, Foto, Alternativo, Anuncio) 
+                         VALUES (?, ?, ?, ?)"
+                    );
+                    
+                    if (!$stmt) { // si hay error al preparar la consulta se manda el error
+                        $error_mensaje = 'Error en la preparación de la sentencia: ' . $db->error;
+                        if(file_exists($rutaFoto)) { // se elimina el archivo subido si falla la preparacion
+                            unlink($rutaFoto);
+                        }
+                    } else { // si no hay error se ejecuta la consulta
+                        $stmt->bind_param('sssi', $titulo_foto, $rutaFoto, $texto_alternativo_foto, $idAnuncio);
+                        
+                        if (!$stmt->execute()) { // si hay error al ejecutar se manda el error
+                            $error_mensaje = 'Error al agregar la foto: ' . $stmt->error;
+
+                            if(file_exists($rutaFoto)) { // se elimina el archivo subido si falla la ejecucion
+                                unlink($rutaFoto);
+                            }
+                        } else { // si no hay error se indica que la foto se agrego correctamente
+                            $foto_agregada = true;
+                        }
+                        
+                        $stmt->close();
+                    }
+                } else {
+                    $error_mensaje = 'Error al subir el archivo de la foto.';
+                }
             }
         }
     }
@@ -102,6 +137,11 @@
                 echo '<p>La foto ha sido agregada correctamente al anuncio.</p>';
                 echo '<p><strong>Título:</strong> ' . htmlspecialchars($titulo_foto) . '</p>';
                 echo '<p><strong>Texto alternativo:</strong> ' . htmlspecialchars($texto_alternativo_foto) . '</p>';
+                // se muestra la foto subida
+                if(isset($rutaFoto) && file_exists($rutaFoto)) {
+                    echo '<p><strong>Foto subida:</strong></p>';
+                    echo '<img src="' . htmlspecialchars($rutaFoto) . '" alt="' . htmlspecialchars($texto_alternativo_foto) . '" style="max-width: 400px; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">';
+                }
                 echo '</article>';
                 echo '<nav><a href="mis_anuncios.php">Ir a mis anuncios</a></nav>';
             } else { // esto es si se accede por url sin post

@@ -48,10 +48,45 @@
                             $fotos_borradas = 0;
                             $anuncios_borrados = 0;
                             
+                            // primero se saca la foto del usuario para eliminarla de la base de datos
+                            $stmt_foto_perfil = $db->prepare("SELECT Foto FROM Usuarios WHERE IdUsuario = ?");
+                            if ($stmt_foto_perfil) {
+                                $stmt_foto_perfil->bind_param('i', $id_usuario);
+                                $stmt_foto_perfil->execute();
+                                $resultado_foto_perfil = $stmt_foto_perfil->get_result();
+                                
+                                if ($fila_foto_perfil = $resultado_foto_perfil->fetch_assoc()) {
+                                    $rutaFotoPerfil = $fila_foto_perfil['Foto'];
+                                    // se elimina de la carpeta fisica tambien
+                                    if (!empty($rutaFotoPerfil) && strpos($rutaFotoPerfil, 'fotosSubidas/') === 0 && file_exists($rutaFotoPerfil)) {
+                                        unlink($rutaFotoPerfil);
+                                    }
+                                }
+                                $stmt_foto_perfil->close();
+                            }
+                            
                             // ahora borra fotos de todos los anuncios
                             while ($anuncio = $resultado_anuncios->fetch_array(MYSQLI_ASSOC)) {
                                 $id_anuncio = $anuncio['IdAnuncio'];
                                 
+                                // se sacan las fotos del anuncio para eliminar los archivos fisicos
+                                $stmt_get_fotos = $db->prepare("SELECT Foto FROM Fotos WHERE Anuncio = ?");
+                                if ($stmt_get_fotos) {
+                                    $stmt_get_fotos->bind_param('i', $id_anuncio);
+                                    $stmt_get_fotos->execute();
+                                    $resultado_fotos_anuncio = $stmt_get_fotos->get_result();
+                                    
+                                    // se eliminan los archivos fisicos
+                                    while ($fila_foto = $resultado_fotos_anuncio->fetch_assoc()) {
+                                        $rutaFoto = $fila_foto['Foto'];
+                                        if (!empty($rutaFoto) && strpos($rutaFoto, 'fotosSubidas/') === 0 && file_exists($rutaFoto)) {
+                                            unlink($rutaFoto);
+                                        }
+                                    }
+                                    $stmt_get_fotos->close();
+                                }
+                                
+                                // ahora se eliminan las fotos de la base de datos
                                 $stmt_fotos = $db->prepare("DELETE FROM Fotos WHERE Anuncio = ?"); // se prepara el delete
                                 $stmt_fotos->bind_param('i', $id_anuncio);
                                 if ($stmt_fotos->execute()) { 

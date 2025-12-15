@@ -13,6 +13,17 @@
     $ids_array = array_column($data, 'id-anuncio'); // creo array de claves (ids)
     array_multisort(array_map('intval', $ids_array), SORT_ASC, $data); // uso map para convertirlas en entero y uso ese array de enteros como claves para array-multisort, que  ordenara siguiendo esas claves  y de forma ascendente el contenido de data
 
+
+    $consejos = file_get_contents('consejos.json');
+
+    $consejos = json_decode($consejos, true);
+
+    $consejos = ordenarConsejosTipo($consejos);
+
+    $consejosCompra = darSegunImportancia($consejos['Compra']);
+    $consejosVenta = darSegunImportancia($consejos['Venta']);
+    $consejosAlquiler = darSegunImportancia($consejos['Alquiler']);
+
     // he tenido que cambiar de lado el include del header porque si no no se podia hacer el get del formulario
     if (!empty($_GET['ciudad_busqueda'])) { // se saca el texto de la busqueda rapida
         include 'includes/iniciarDB.php'; // se incluye la base de datos para poder hacer la consulta y como el header aun no se ha llamado pues tengo que llamar a la base de datos aqui
@@ -154,6 +165,142 @@
                         </li>';
                     }
                 ?>
+            </ul>
+        </section>
+
+        <section class="menu" id="consejos">
+            <label for="burger_menu_consejos"><p id="menu_consejos">Consejos compra/venta/alquiler</p></label>
+            <input type="checkbox" id="burger_menu_consejos">
+            <ul class="menu_head" >
+                <li>
+                    <input type="checkbox" id="compra" />
+                    <label class="menu_item_label" for="compra">Consejos de compra</label>
+                    <ul class="submenu">
+                        <?php
+                            if(count($consejosCompra['Baja']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="compra_baja" />
+                                            <label class="menu_item_label" for="compra_baja">Baja</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosCompra['Baja'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                            
+                            if(count($consejosCompra['Media']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="compra_Media" />
+                                            <label class="menu_item_label" for="compra_Media">Media</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosCompra['Media'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                            
+                            if(count($consejosCompra['Alta']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="compra_Alta" />
+                                            <label class="menu_item_label" for="compra_Alta">Alta</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosCompra['Alta'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                        ?>
+                    </ul>
+                </li>
+                <li>
+                    <input type="checkbox" id="venta" />
+                    <label class="menu_item_label" for="venta">Consejos de venta</label>
+                    <ul class="submenu">
+                        <?php
+                            if(count($consejosVenta['Baja']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="Venta_baja" />
+                                            <label class="menu_item_label" for="Venta_baja">Baja</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosVenta['Baja'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                            
+                            if(count($consejosVenta['Media']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="Venta_Media" />
+                                            <label class="menu_item_label" for="Venta_Media">Media</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosVenta['Media'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                            
+                            if(count($consejosVenta['Alta']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="Venta_Alta" />
+                                            <label class="menu_item_label" for="Venta_Alta">Alta</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosVenta['Alta'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                        ?>
+                    </ul>
+                </li>
+                <li>
+                    <input type="checkbox" id="alquiler" />
+                    <label class="menu_item_label" for="alquiler">Consejos de alquiler</label>
+                    <ul class="submenu">
+                        <?php
+                            if(count($consejosAlquiler['Baja']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="Alquiler_baja" />
+                                            <label class="menu_item_label" for="Alquiler_baja">Baja</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosAlquiler['Baja'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                            
+                            if(count($consejosAlquiler['Media']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="Alquiler_Media" />
+                                            <label class="menu_item_label" for="Alquiler_Media">Media</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosAlquiler['Media'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                            
+                            if(count($consejosAlquiler['Alta']) !== 0) {
+                                echo '  <li>
+                                            <input type="checkbox" id="Alquiler_Alta" />
+                                            <label class="menu_item_label" for="Alquiler_Alta">Alta</label>
+                                            <ul class="submenu_importancia">';
+                                            
+                                            foreach($consejosAlquiler['Alta'] as $consejo)
+                                                echo '<li><p>'.htmlspecialchars($consejo['descripcion']).'</p></li>';
+                                echo        '</ul>
+                                        </li>';
+                            }
+                        ?>
+                    </ul>
+                </li>
             </ul>
         </section>
 

@@ -117,4 +117,85 @@ function refValues(array &$arr) {
     return $refs;
 }
 
+/* function tipoConsejo($consejo) {
+    $devolver = -1;
+    switch($consejo['categoria']) {
+        case 'Compra':
+            $devolver = 0;
+            break;
+
+        case 'Venta':
+            $devolver = 1;
+            break;
+        
+        case 'Alquiler':
+            $devolver = 2;
+            break;
+    }
+
+    return $devolver;
+} */
+
+function ordenarConsejosTipo($consejos) {
+    $array = [];
+
+    $arrayCompra = [];
+    $arrayVenta = [];
+    $arrayAlquiler = [];
+
+    
+
+    foreach($consejos as $consejo) {
+        if($consejo['categoria'] === 'Compra') {
+            unset($consejo['categoria']);
+            $arrayCompra[] = $consejo;
+        }
+        else if($consejo['categoria'] === 'Venta') {
+            unset($consejo['categoria']);
+            $arrayVenta[] = $consejo;
+        }
+        else if($consejo['categoria'] === 'Alquiler') {
+            unset($consejo['categoria']);
+            $arrayAlquiler[] = $consejo;
+        }
+    }
+
+    $array['Compra'] = $arrayCompra;
+    $array['Venta'] = $arrayVenta;
+    $array['Alquiler'] = $arrayAlquiler;
+
+    return $array;
+}
+
+function darSegunImportancia($consejos) {
+    $array = [];
+
+    $arrayBaja= [];
+    $arrayMedia= [];
+    $arrayAlta = [];
+
+    
+
+    foreach($consejos as $consejo) {
+        if($consejo['importancia'] === 'Baja') {
+            unset($consejo['importancia']);
+            $arrayBaja[] = $consejo;
+        }
+        else if($consejo['importancia'] === 'Media') {
+            unset($consejo['importancia']);
+            $arrayMedia[] = $consejo;
+        }
+        else if($consejo['importancia'] === 'Alta') {
+            unset($consejo['importancia']);
+            $arrayAlta[] = $consejo;
+        }
+    }
+
+    $array['Baja'] = $arrayBaja;
+    $array['Media'] = $arrayMedia;
+    $array['Alta'] = $arrayAlta;
+
+    return $array;
+}
+
 ?>

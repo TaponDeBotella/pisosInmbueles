@@ -53,7 +53,98 @@ article {
     margin: 30px;
 }
 
+#consejos {
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    margin: auto;
+    z-index: 1000;
+}
 
+#menu_consejos {
+    display: block;
+    width: fit-content;
+}
+
+nav label[for="burger_menu_consejos"], #burger_menu_consejos, label[for="menu_estilo"], #menu_estilo { /* para que no se vea el checkbox*/
+    display: none;
+    color: var(--colorFuente);
+    
+}
+
+nav label[for="burger_menu_consejos"] {
+    display: flex;
+}
+
+/* Submenu toggle inside #consejos */
+.menu_head {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    > li {
+        margin: 6px 0;
+        position: relative;
+    
+        > input {
+            display: none;
+        }
+    }
+}
+
+.menu_head .menu_item_label {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+.menu_head .submenu {
+    display: none;
+    list-style: none;
+    padding-left: 12px;
+    margin-top: 6px;
+}
+.menu_head input[type="checkbox"]:checked + .menu_item_label + .submenu {
+    display: block;
+}
+.menu_head .submenu li p {
+    margin: 4px 0;
+    padding: 4px 8px;
+    color: var(--colorFuenteMenu);
+    background: var(--colorBoton);
+    border-radius: 4px;
+}
+
+.menu_head .submenu_importancia {
+    display: none;
+    list-style: none;
+    padding-left: 12px;
+    margin-top: 6px;
+}
+.menu_head input[type="checkbox"]:checked + .menu_item_label + .submenu_importancia {
+    display: block;
+}
+.menu_head .submenu_importancia li p {
+    margin: 4px 0;
+    padding: 4px 8px;
+    color: var(--colorFuenteMenu);
+    background: var(--colorBoton);
+    border-radius: 4px;
+}
+
+.menu_head input[type="checkbox"] {
+    display: none;
+}
+
+nav label[for="burger_menu_consejos"]:hover {
+    color:var(--colorFuente);
+}
+
+#burger_menu_consejos:checked~.menu_head { /* el ~ sirve para referirse al hermano adyacente */
+    display: flex;
+    transform: translateX(-40%);
+    transition: 1s;
+    
+}
 
 @media (max-width: 480px) {
     .sectionArticulos {

@@ -95,6 +95,11 @@
 
         // recoger todos los anuncios en un array (más eficiente que fetch en bucle)
         $anuncios_recomendados = $resultado->fetch_all(MYSQLI_ASSOC);
+
+        $anuncio_ganador = array_rand($anuncios_recomendados, 1);
+
+
+
         $stmt->close();
     }
     
@@ -110,33 +115,33 @@
             <ul class="ul_articulos">
                 <?php
 
-                for($i=0; $i<count($data); $i++) {    
+                if(count($data) !== 0) {    
                     echo '
                         <li>
                             <article>
-                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$i]['IdAnuncio']).'">
-                                    <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios_recomendados[$i]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios_recomendados[$i]['Alternativo']).'">
+                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['IdAnuncio']).'">
+                                    <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Alternativo']).'">
                                 </a>
-                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$i]['IdAnuncio']).'" class="a_tituloPublicacion">
-                                    <h2>'.htmlspecialchars($data[$i]['titulo']).'</h2>
+                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['IdAnuncio']).'" class="a_tituloPublicacion">
+                                    <h2>'.htmlspecialchars($data[$anuncio_ganador]['titulo']).'</h2>
                                 </a>';  
 
                                 $tipo_precio = '';
                                 
-                                if($anuncios_recomendados[$i]['NomTAnuncio'] === 'Venta')
+                                if($anuncios_recomendados[$anuncio_ganador]['NomTAnuncio'] === 'Venta')
                                     $tipo_precio = '€';
                                 else
                                     $tipo_precio = '€/mes';
                             
 
-                                echo '<p class="precio">Precio:'.htmlspecialchars(round($anuncios_recomendados[$i]['Precio'], 0)).htmlspecialchars($tipo_precio).'</p>
-                                <p class="pais">País:'.htmlspecialchars($anuncios_recomendados[$i]['NomPais']).'</p>
-                                <p class="ciudad">Ciudad:'.htmlspecialchars($anuncios_recomendados[$i]['Ciudad']).'</p>';
+                                echo '<p class="precio">Precio:'.htmlspecialchars(round($anuncios_recomendados[$anuncio_ganador]['Precio'], 0)).htmlspecialchars($tipo_precio).'</p>
+                                <p class="pais">País:'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['NomPais']).'</p>
+                                <p class="ciudad">Ciudad:'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Ciudad']).'</p>';
 
                                 $texto_completo = '';
                                 $texto_pasado = '';
-                                if(isset($data[$i]['texto']))
-                                    $texto_completo = $data[$i]['texto'];
+                                if(isset($data[$anuncio_ganador]['texto']))
+                                    $texto_completo = $data[$anuncio_ganador]['texto'];
 
                                 if (mb_strlen($texto_completo) > 100) {
                                     $texto_pasado = htmlspecialchars(mb_substr($texto_completo, 0, 100)) . '...';
@@ -144,7 +149,7 @@
                                     $texto_pasado = htmlspecialchars($texto_completo);
                                 }
 
-                                echo '<p class="p_descripcionA">'.'"'.htmlspecialchars($texto_pasado).'"'.' - '.htmlspecialchars($data[$i]['autor']).'</p>    
+                                echo '<p class="p_descripcionA">'.'"'.htmlspecialchars($texto_pasado).'"'.' - '.htmlspecialchars($data[$anuncio_ganador]['autor']).'</p>    
                             </article>       
                         </li>';
                     }

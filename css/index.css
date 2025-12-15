@@ -10,6 +10,10 @@ h2 {
     color: var(--colorFuente);
 }
 
+#destacado {
+    text-align: center;
+}
+
 #sectio_barraNav {
     display: flex;
     justify-content: center;
@@ -78,4 +82,13 @@ article {
         clear: right;
         float: left;
     }
+}
+#destacado {
+    grid-column: 1 / -1; /* ocupar todas las columnas */
+    justify-self: center;
+}
+
+#destacado article {
+    margin: 30px auto;
+    width: 90%;
 }

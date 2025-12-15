@@ -1,19 +1,15 @@
 {<autor> -> <<Juan josé>>
-<titulo> -> <<Chollo en Lisboa>>
 <texto> -> <<o melhor de Portugal>>
 <id-anuncio> -> <<2>>}
 
 {<autor> -> <<Juan Antonio>>
-<titulo> -> <<Oficina increíble en París>>
 <texto> -> <<Mon dieu, croissant, baguette, oui oui>>
 <id-anuncio> -> <<3>>}
 
 {<autor> -> <<Perico los palotes>>
-<titulo> -> <<Vivienda en Alicante>>
 <texto> -> <<Es un chollo, porque lo digo yo>>
 <id-anuncio> -> <<1>>}
 
 {<autor> -> <<Paco Jones>>
-<titulo> -> <<Sacadme de madrid>>
-<texto> -> <<No vivo aquí ni aunque me paguen, de verdad>>
+<texto> -> <<No vivo aquí ni aunque me paguen, de verdad, odio Madrid>>
 <id-anuncio> -> <<4>>}

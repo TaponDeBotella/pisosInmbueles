@@ -53,7 +53,7 @@
     if(count($data) !== 0) {// hay datos
         $tipoparams = '';
         $params = [];
-        $query = 'SELECT FPrincipal, Alternativo, Precio, Ciudad, NomPais, NomTAnuncio, IdAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais AND IdAnuncio IN';
+        $query = 'SELECT FPrincipal, Alternativo, Titulo, Precio, Ciudad, NomPais, NomTAnuncio, IdAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais AND IdAnuncio IN';
 
         for($i=0; $i<count($data); $i++) { // preparo las id que tiene que buscar la base de datos
             if($i === 0) // inicio del bucle
@@ -110,20 +110,20 @@
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 
         </section>
-        <h2>Anuncios destacados</h2>
+        <h2>Anuncio destacado</h2>
         <section class="sectionArticulos">
             <ul class="ul_articulos">
                 <?php
 
                 if(count($data) !== 0) {    
                     echo '
-                        <li>
+                        <li id="destacado">
                             <article>
                                 <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['IdAnuncio']).'">
                                     <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Alternativo']).'">
                                 </a>
                                 <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['IdAnuncio']).'" class="a_tituloPublicacion">
-                                    <h2>'.htmlspecialchars($data[$anuncio_ganador]['titulo']).'</h2>
+                                    <h2>'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Titulo']).'</h2>
                                 </a>';  
 
                                 $tipo_precio = '';

@@ -151,21 +151,38 @@
                  WHERE IdUsuario = ?"
             ); // se prepara la query para hacer el update
 
-            $pais = (int)$pais; // me aseguro de que es entero
+            // convertir sexo de string a int
+            if ($sex === 'Hombre') {
+                $sexo_int = 1;
+            } else {
+                $sexo_int = 2;
+            }
+            
+            // convertir fecha de dia-mes-año a YYYY-MM-DD
+            $fechaNacParts = explode('-', $nacimiento);
+            $fechaNacSQL = $fechaNacParts[2] . '-' . $fechaNacParts[1] . '-' . $fechaNacParts[0];
+            
+            // manejar pais NULL si esta vacio
+            if (empty($pais) || $pais == 0) {
+                $pais_final = null;
+            } else {
+                $pais_final = (int)$pais;
+            }
+            
             $passHash = password_hash($pass1, PASSWORD_DEFAULT);
 
             if (!$stmt) { // si hay error se manda
                 $error_mensaje = 'Error en la preparación: ' . $db->error;
             } else { // si no entonces se le vinculan todos los parametros
                 $stmt->bind_param(
-                    'sssissisi',
+                    'sssisisi',
                     $nombre,
                     $passHash,
                     $email,
-                    $sex,
-                    $nacimiento,
+                    $sexo_int,
+                    $fechaNacSQL,
                     $ciudad,
-                    $pais,
+                    $pais_final,
                     $foto_nueva,
                     $idUsuario
                 );

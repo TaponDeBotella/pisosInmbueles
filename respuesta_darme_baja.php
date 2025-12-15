@@ -37,8 +37,8 @@
                     if ($resultado->num_rows > 0) { // si hay algun resultado entonces se saca la fila
                         $usuario = $resultado->fetch_array(MYSQLI_ASSOC);
                         
-                        // se verifica que la contrasenya introducida es correcta
-                        if ($usuario['Clave'] === $clave_confirmacion) {
+                        // se verifica que la contrasenya introducida es correcta usando password_verify
+                        if (password_verify($clave_confirmacion, $usuario['Clave'])) {
                             // se sacan todos los anuncios del usuario para borrar sus fotos primero
                             $stmt_anuncios = $db->prepare("SELECT IdAnuncio FROM Anuncios WHERE Usuario = ?"); // se prepara la query del select
                             $stmt_anuncios->bind_param('i', $id_usuario);

@@ -5,31 +5,41 @@
     // verificar si hay cookies y si no hay sesion activa
     if(!isset($_SESSION['logueado']) && isset($_COOKIE['recordarme_email']) && isset($_COOKIE['recordarme_password'])) {
         $email_cookie = $_COOKIE['recordarme_email'];
-        $password_cookie = $_COOKIE['recordarme_password'];
+        $hash_cookie = $_COOKIE['recordarme_password'];
         
-        // busca el usuario en la base de datos
-        $query = "SELECT IdUsuario, NomUsuario, Email, Clave, Estilo FROM Usuarios WHERE Email = '" . $email_cookie . "' AND Clave = '" . $password_cookie . "'";
-        $resultado = $db->query($query);
+        // busca el usuario en la base de datos usando prepared statement
+        $stmt = $db->prepare("SELECT IdUsuario, NomUsuario, Email, Clave, Estilo FROM Usuarios WHERE Email = ?");
         
-        if ($resultado && $resultado->num_rows > 0) { // si encuentra el usuario se guarda sus datos
-            $usuario_encontrado = $resultado->fetch_array(MYSQLI_ASSOC);
+        if ($stmt) {
+            $stmt->bind_param('s', $email_cookie);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
             
-            // si existe el usuario se inicia sesion sin que el usuario tenga que hacerlo
-            $_SESSION['id_usuario'] = $usuario_encontrado['IdUsuario'];
-            $_SESSION['usuario'] = $usuario_encontrado['Email'];
-            $_SESSION['nombre'] = $usuario_encontrado['NomUsuario'];
-            $_SESSION['estilo'] = $usuario_encontrado['Estilo'];
-            $_SESSION['logueado'] = true;
-            $_SESSION['es_recordado'] = true;
-            
-            // se guardar la fecha ANTERIOR IMPORTANTE en la session antes de actualizar la cookie para hacer lo de las multiples visitas recordadno la fecha de la ultima
-            if(isset($_COOKIE['recordarme_ultima_visita'])) {
-                $_SESSION['ultima_visita_anterior'] = $_COOKIE['recordarme_ultima_visita'];
+            if ($resultado && $resultado->num_rows > 0) {
+                $usuario_encontrado = $resultado->fetch_array(MYSQLI_ASSOC);
+                
+                // verifico que el hash de la cookie coincide con el hash de la base de datos
+                if ($hash_cookie === $usuario_encontrado['Clave']) {
+                    // si existe el usuario se inicia sesion sin que el usuario tenga que hacerlo
+                    $_SESSION['id_usuario'] = $usuario_encontrado['IdUsuario'];
+                    $_SESSION['usuario'] = $usuario_encontrado['Email'];
+                    $_SESSION['nombre'] = $usuario_encontrado['NomUsuario'];
+                    $_SESSION['estilo'] = $usuario_encontrado['Estilo'];
+                    $_SESSION['logueado'] = true;
+                    $_SESSION['es_recordado'] = true;
+                    
+                    // se guardar la fecha ANTERIOR IMPORTANTE en la session antes de actualizar la cookie para hacer lo de las multiples visitas recordadno la fecha de la ultima
+                    if(isset($_COOKIE['recordarme_ultima_visita'])) {
+                        $_SESSION['ultima_visita_anterior'] = $_COOKIE['recordarme_ultima_visita'];
+                    }
+                    
+                    // se actualiza la hora de la ultima visita
+                    $duracion_cookie = time() + (90 * 24 * 60 * 60);
+                    setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
+                }
             }
             
-            // se actualiza la hora de la ultima visita
-            $duracion_cookie = time() + (90 * 24 * 60 * 60);
-            setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
+            $stmt->close();
         }
     }
 ?>

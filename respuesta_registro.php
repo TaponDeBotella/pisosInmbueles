@@ -121,21 +121,42 @@
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
             ); // se prepara la query para hacer el post
 
-            $pais = (int)$pais; // me aseguro de que es entero
+            // convierto pais a entero o NULL si está vacio
+            if (!empty($pais) && $pais > 0) 
+                $pais = (int)$pais;
+            else 
+                $pais = null;
+            
+            
             $estilo = 1;
             $passHash = password_hash($pass1, PASSWORD_DEFAULT);
             $fotoInicial = ''; // primero la foto va vacia, luego se actualiza si se sube una foto
+            
+            // convierto sexo de texto a numero (1=Hombre, 2=Mujer)
+            if ($sex === 'Hombre') 
+                $sexoInt = 1;
+            else 
+                $sexoInt = 2;
+            
+            
+            // reformeteo la fecha de dia-mes-año a YYYY-MM-DD para la BD
+            $fechaNacParts = explode('-', $nacimiento);
+            if (count($fechaNacParts) === 3) 
+                $nacimientoBD = $fechaNacParts[2] . '-' . $fechaNacParts[1] . '-' . $fechaNacParts[0];
+            else 
+                $nacimientoBD = $nacimiento; // fallback por si acaso
+            
 
             if (!$stmt) { // si hay error se manda
                 $error_mensaje = 'Error en la preparación: ' . $db->error;
             } else { // si no entonces se le vinculan todos los parametros
                 $stmt->bind_param(
-                    'ssssssissi',
+                    'sssississi',
                     $nombre, 
                     $passHash, 
                     $email, 
-                    $sex, 
-                    $nacimiento, 
+                    $sexoInt, 
+                    $nacimientoBD, 
                     $ciudad, 
                     $pais, 
                     $fotoInicial, 

@@ -24,22 +24,37 @@ if(empty($email) && empty($password)) {
 // se conecta a la base de datos
 require_once 'iniciarDB.php';
 
-// buscar el usuario en la base de datos
-$query = "SELECT IdUsuario, NomUsuario, Email, Clave, Estilo FROM Usuarios WHERE Email = '" . $email . "' AND Clave = '" . $password . "'";
-$resultado = $db->query($query); // se hace la query
+// buscar el usuario en la base de datos (solo por email, usando prepared statement)
+$stmt = $db->prepare("SELECT IdUsuario, NomUsuario, Email, Clave, Estilo FROM Usuarios WHERE Email = ?");
 
-if (!$resultado) { // si no encuentra se manda error
-    die('Error: ' . $db->error);
+if (!$stmt) {
+    die('Error en la preparación: ' . $db->error);
 }
+
+$stmt->bind_param('s', $email);
+
+if (!$stmt->execute()) {
+    die('Error al ejecutar: ' . $stmt->error);
+}
+
+$resultado = $stmt->get_result();
 
 // si no se encuentra se manda el error de credenciales incorrectas
 if($resultado->num_rows === 0) {
+    $stmt->close();
     header('Location: ../login.php?error=credenciales_incorrectas');
     exit;
 }
 
 // si se encuentra el usuario se sacan sus datos
 $usuario_encontrado = $resultado->fetch_array(MYSQLI_ASSOC);
+$stmt->close();
+
+// verifico la contrasenya con password_verify
+if (!password_verify($password, $usuario_encontrado['Clave'])) {
+    header('Location: ../login.php?error=credenciales_incorrectas');
+    exit;
+}
 
 // si si que existe se inicia la sesion con el SESSION
 $_SESSION['id_usuario'] = $usuario_encontrado['IdUsuario'];
@@ -48,16 +63,13 @@ $_SESSION['nombre'] = $usuario_encontrado['NomUsuario'];
 $_SESSION['estilo'] = $usuario_encontrado['Estilo'];
 $_SESSION['logueado'] = true;
 
-// se guarda la fecha de la ultima visita
-$duracion_cookie = time() + (90 * 24 * 60 * 60);
-setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
-$_SESSION['es_recordado'] = true;
-
-// ahora se hace lo de las cookies si el usurio lo ha marcado recordarme
+// si marco recordarme se guardan las cookies
 if($recordarme) {
-    // se guarda el email y contrasenya
-    setcookie('recordarme_email', $email, $duracion_cookie, '/', '', false, true);
-    setcookie('recordarme_password', $password, $duracion_cookie, '/', '', false, true); // aqui hay que hacer una especie de hash
+    $duracion_cookie = time() + (90 * 24 * 60 * 60);
+    setcookie('recordarme_email', $usuario_encontrado['Email'], $duracion_cookie, '/', '', false, true);
+    setcookie('recordarme_password', $usuario_encontrado['Clave'], $duracion_cookie, '/', '', false, true);
+    setcookie('recordarme_ultima_visita', date('d/m/Y H:i'), $duracion_cookie, '/', '', false, true);
+    $_SESSION['es_recordado'] = true;
 }
 
 // se redirige al perfil de usuario

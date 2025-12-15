@@ -25,7 +25,6 @@ function extraer_experto(string $nombre_archivo):array {
         }
     }
 
-    var_dump($data);
 
     return $data;
 }

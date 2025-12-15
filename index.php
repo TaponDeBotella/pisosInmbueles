@@ -12,7 +12,6 @@
 
     $ids_array = array_column($data, 'id-anuncio'); // creo array de claves (ids)
     array_multisort(array_map('intval', $ids_array), SORT_ASC, $data); // uso map para convertirlas en entero y uso ese array de enteros como claves para array-multisort, que  ordenara siguiendo esas claves  y de forma ascendente el contenido de data
-    var_dump($data);
 
     // he tenido que cambiar de lado el include del header porque si no no se podia hacer el get del formulario
     if (!empty($_GET['ciudad_busqueda'])) { // se saca el texto de la busqueda rapida
@@ -96,7 +95,6 @@
 
         // recoger todos los anuncios en un array (más eficiente que fetch en bucle)
         $anuncios_recomendados = $resultado->fetch_all(MYSQLI_ASSOC);
-        var_dump($anuncios_recomendados);
         $stmt->close();
     }
     

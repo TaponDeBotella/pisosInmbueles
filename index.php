@@ -6,6 +6,14 @@
     $css = "css/index.css";
     include 'includes/funciones.php';
     
+    require_once 'includes/extraer_experto.php';
+
+    $data = extraer_experto('anuncios_recomendados.experto');
+
+    $ids_array = array_column($data, 'id-anuncio'); // creo array de claves (ids)
+    array_multisort(array_map('intval', $ids_array), SORT_ASC, $data); // uso map para convertirlas en entero y uso ese array de enteros como claves para array-multisort, que  ordenara siguiendo esas claves  y de forma ascendente el contenido de data
+    var_dump($data);
+
     // he tenido que cambiar de lado el include del header porque si no no se podia hacer el get del formulario
     if (!empty($_GET['ciudad_busqueda'])) { // se saca el texto de la busqueda rapida
         include 'includes/iniciarDB.php'; // se incluye la base de datos para poder hacer la consulta y como el header aun no se ha llamado pues tengo que llamar a la base de datos aqui
@@ -42,6 +50,56 @@
         $anuncios[] = $fila;
     }
 
+    
+    if(count($data) !== 0) {// hay datos
+        $tipoparams = '';
+        $params = [];
+        $query = 'SELECT FPrincipal, Alternativo, Precio, Ciudad, NomPais, NomTAnuncio, IdAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais AND IdAnuncio IN';
+
+        for($i=0; $i<count($data); $i++) { // preparo las id que tiene que buscar la base de datos
+            if($i === 0) // inicio del bucle
+                $query .= ' (?';
+            else
+                $query .= '?';
+
+            if($i+1 !== count($data)) // si aun quedan iteraciones
+                $query .= ',';
+            else
+                $query .= ')';
+        }
+
+        $query .= ' ORDER BY IdAnuncio ASC';
+
+        $stmt = $db->prepare($query);
+
+        for($i=0; $i<count($data); $i++) { // preparo el bind
+            $tipoparams .= 'i';
+            $params[] = $data[$i]['id-anuncio'];
+        }
+
+        if (!$stmt)  // si hay error se manda
+            $error_mensaje = 'Error en la preparación: ' . $db->error;
+        
+        else {
+            array_unshift($params, $tipoparams);
+            call_user_func_array([$stmt, 'bind_param'], refValues($params)); // con esto llamo a la funcion bind_param usando las referencias en $params
+        }
+        
+        if(!$stmt->execute()) { // ejecuto y miro si hay error
+            die('Error: ' . $stmt->error);
+        }
+        $resultado = $stmt->get_result(); // guardo el resultado del prepared statement
+        if (!$resultado) {
+            $stmt->close();
+            die('Error getting result: ' . $db->error);
+        }
+
+        // recoger todos los anuncios en un array (más eficiente que fetch en bucle)
+        $anuncios_recomendados = $resultado->fetch_all(MYSQLI_ASSOC);
+        var_dump($anuncios_recomendados);
+        $stmt->close();
+    }
+    
 ?>
         <section id="sectio_barraNav">
             <form action="index.php" method="GET">
@@ -49,10 +107,56 @@
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 
         </section>
+        <h2>Anuncios destacados</h2>
+        <section class="sectionArticulos">
+            <ul class="ul_articulos">
+                <?php
+
+                for($i=0; $i<count($data); $i++) {    
+                    echo '
+                        <li>
+                            <article>
+                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$i]['IdAnuncio']).'">
+                                    <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios_recomendados[$i]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios_recomendados[$i]['Alternativo']).'">
+                                </a>
+                                <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$i]['IdAnuncio']).'" class="a_tituloPublicacion">
+                                    <h2>'.htmlspecialchars($data[$i]['titulo']).'</h2>
+                                </a>';  
+
+                                $tipo_precio = '';
+                                
+                                if($anuncios_recomendados[$i]['NomTAnuncio'] === 'Venta')
+                                    $tipo_precio = '€';
+                                else
+                                    $tipo_precio = '€/mes';
+                            
+
+                                echo '<p class="precio">Precio:'.htmlspecialchars(round($anuncios_recomendados[$i]['Precio'], 0)).htmlspecialchars($tipo_precio).'</p>
+                                <p class="pais">País:'.htmlspecialchars($anuncios_recomendados[$i]['NomPais']).'</p>
+                                <p class="ciudad">Ciudad:'.htmlspecialchars($anuncios_recomendados[$i]['Ciudad']).'</p>';
+
+                                $texto_completo = '';
+                                $texto_pasado = '';
+                                if(isset($data[$i]['texto']))
+                                    $texto_completo = $data[$i]['texto'];
+
+                                if (mb_strlen($texto_completo) > 100) {
+                                    $texto_pasado = htmlspecialchars(mb_substr($texto_completo, 0, 100)) . '...';
+                                } else {
+                                    $texto_pasado = htmlspecialchars($texto_completo);
+                                }
+
+                                echo '<p class="p_descripcionA">'.'"'.htmlspecialchars($texto_pasado).'"'.' - '.htmlspecialchars($data[$i]['autor']).'</p>    
+                            </article>       
+                        </li>';
+                    }
+                ?>
+            </ul>
+        </section>
 
         <h1>Inicio</h1>
-        <section id="sectionArticulos">
-            <ul id="ul_articulos">
+        <section class="sectionArticulos">
+            <ul class="ul_articulos">
                 <?php
 
                 for($i=0; $i<5; $i++) {    
@@ -94,6 +198,7 @@
                         </li>';
                     }
                 ?>
+            </ul>
         </section>
 
 <?php

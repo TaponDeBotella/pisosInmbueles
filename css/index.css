@@ -2,6 +2,14 @@
     margin: 0; /* esto es para que el header y el body puedan ocupar todo el espacio */
 }
 
+h2 {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: var(--tamFuenteSuperGrande);
+    color: var(--colorFuente);
+}
+
 #sectio_barraNav {
     display: flex;
     justify-content: center;
@@ -21,7 +29,7 @@
 
 
 
-#ul_articulos {
+.ul_articulos {
     list-style-type: none; /* para quitar los puntitos de las listas */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -44,12 +52,12 @@ article {
 
 
 @media (max-width: 480px) {
-    #sectionArticulos {
+    .sectionArticulos {
         width: 95%;
         padding: 20px 10px;
     }
 
-    #ul_articulos {
+    .ul_articulos {
         grid-template-columns: 1fr;
         gap: 20px;
     }

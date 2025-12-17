@@ -53,8 +53,16 @@
         $pass1 = '';
         $pass2 = '';
         $email = $usuario['Email'];
-        $sex = $usuario['Sexo'];
+        // paso el sexo a caracteres
+        if($usuario['Sexo'] == 1) 
+            $sex = 'Hombre';
+        else
+            $sex = 'Mujer';
+        // Reformateo porque la db cambia el formato
         $nacimiento = $usuario['FNacimiento'];
+        if (!empty($nacimiento)) {
+            $nacimiento = date('d-m-Y', strtotime($nacimiento));
+        }
         $ciudad = $usuario['Ciudad'];
         $pais = $usuario['NomPais'];
     }

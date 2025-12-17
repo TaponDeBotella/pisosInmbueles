@@ -96,7 +96,7 @@
         if(validarPass($pass1) === null)
             $errores[] = "malPass1";
         
-        if(validarRepeatPass($pass1, $pass2) === null)
+        if(validarRepeatPass($pass1, $pass2) === false)
             $errores[] = "malRepetirPass";
         
         if(validarEmail($email) === null)
@@ -175,7 +175,7 @@
                 $error_mensaje = 'Error en la preparación: ' . $db->error;
             } else { // si no entonces se le vinculan todos los parametros
                 $stmt->bind_param(
-                    'sssisisi',
+                    'sssissisi',
                     $nombre,
                     $passHash,
                     $email,

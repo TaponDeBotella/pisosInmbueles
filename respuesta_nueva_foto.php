@@ -111,6 +111,25 @@
                             }
                         } else { // si no hay error se indica que la foto se agrego correctamente
                             $foto_agregada = true;
+
+                            // Si el anuncio no tiene foto principal, usar esta como foto principal
+                            $stmt_get = $db->prepare('SELECT FPrincipal FROM Anuncios WHERE IdAnuncio = ?');
+                            if ($stmt_get) {
+                                $stmt_get->bind_param('i', $idAnuncio);
+                                $stmt_get->execute();
+                                $res_get = $stmt_get->get_result();
+                                if ($row = $res_get->fetch_assoc()) {
+                                    if (empty($row['FPrincipal'])) {
+                                        $stmt_update = $db->prepare('UPDATE Anuncios SET FPrincipal = ?, Alternativo = ? WHERE IdAnuncio = ?');
+                                        if ($stmt_update) {
+                                            $stmt_update->bind_param('ssi', $rutaFoto, $texto_alternativo_foto, $idAnuncio);
+                                            $stmt_update->execute();
+                                            $stmt_update->close();
+                                        }
+                                    }
+                                }
+                                $stmt_get->close();
+                            }
                         }
                         
                         $stmt->close();

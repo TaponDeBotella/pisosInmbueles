@@ -197,8 +197,10 @@
         
         <figure>
             <?php
-                for($i = 0; $i < count($fotos); $i++) 
-                    echo '<img class="miniatura" src="fotosSubidas/anuncios'.htmlspecialchars($fotos[$i]['Foto']).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
+                for($i = 0; $i < count($fotos); $i++) {
+                    $ruta = ruta_imagen($fotos[$i]['Foto']);
+                    echo '<img class="miniatura" src="'.htmlspecialchars($ruta).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
+                }
             ?>
         </figure>
 

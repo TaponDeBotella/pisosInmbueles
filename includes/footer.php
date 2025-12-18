@@ -22,7 +22,8 @@
                 <li>
                     <article>
                         <a href="anuncio.php?idAnuncio=<?php echo $idAnuncio ?>">
-                            <img src="img/<?php echo $foto; ?>" alt="<?php echo $altFoto; ?>">
+                            <?php $src_img = ruta_imagen($foto); ?>
+                            <img src="<?php echo htmlspecialchars($src_img); ?>" alt="<?php echo htmlspecialchars($altFoto); ?>">
                             <h4><?php echo $titulo; ?></h4>
                             <p class="detalles"><?php 
                                 $detalles = [];
@@ -53,5 +54,5 @@
 
     </html>
 <?php
-    include __DIR__ . '/cerrarDB.php'; // se cierra la conexion con la base de datos
+    include 'includes/cerrarDB.php'; // se cierra la conexion con la base de datos
 ?>

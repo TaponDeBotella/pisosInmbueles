@@ -117,6 +117,18 @@ function refValues(array &$arr) {
     return $refs;
 }
 
+// Devuelve la ruta correcta para usar en el atributo src de una imagen
+function ruta_imagen($ruta) {
+    if (empty($ruta)) 
+        return '';
+    // Si ya es una ruta dentro de fotosSubidas o contiene una barra, devolverla tal cual
+    if (strpos($ruta, 'fotosSubidas/') === 0 || strpos($ruta, '/') !== false) {
+        return $ruta;
+    }
+    // Si es solo un nombre de archivo antiguo, está en la carpeta img
+    return 'img/' . $ruta;
+}
+
 /* function tipoConsejo($consejo) {
     $devolver = -1;
     switch($consejo['categoria']) {

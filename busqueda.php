@@ -248,9 +248,10 @@
                         <?php foreach ($anuncios as $anuncio): // se hace el foreach de los anuncios que se han obtenido con los filtros?>
                             <li>
                                 <article>
-                                    <a href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>">  <!-- se le pone el enlace al anuncio -->
-                                        <img class="imagen_articulo" src="img/<?php echo htmlspecialchars($anuncio['FPrincipal']); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>"> <!-- la foto o el texto alternativo dependiendo de si va o no -->
-                                    </a>
+                                        <a href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>">  <!-- se le pone el enlace al anuncio -->
+                                            <?php $src_principal = ruta_imagen($anuncio['FPrincipal']); ?>
+                                            <img class="imagen_articulo" src="<?php echo htmlspecialchars($src_principal); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>"> <!-- la foto o el texto alternativo dependiendo de si va o no -->
+                                        </a>
                                     <a href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>" class="a_tituloPublicacion"> <!-- el titulo del anuncio como enlace -->
                                         <h2><?php echo htmlspecialchars($anuncio['Titulo']); ?></h2>
                                     </a>  

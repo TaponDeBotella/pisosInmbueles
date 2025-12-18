@@ -53,7 +53,8 @@
             <section class="perfilUsuario">
                 <figure class="fotoUsuario">
                     <?php if (!empty($usuario['Foto'])): ?> <!-- si el usuario tiene foto se muestra -->
-                        <img src="img/<?php echo htmlspecialchars($usuario['Foto']); ?>" alt="Foto de <?php echo htmlspecialchars($usuario['NomUsuario']); ?>">
+                        <?php $src_usuario = ruta_imagen($usuario['Foto']); ?>
+                        <img src="<?php echo htmlspecialchars($src_usuario); ?>" alt="Foto de <?php echo htmlspecialchars($usuario['NomUsuario']); ?>">
                     <?php endif; ?>
                 </figure>
                 
@@ -73,7 +74,8 @@
                         <li>
                             <article class="anuncioSimplificado">
                                 <a href="ver_anuncio.php?idAnuncio=<?php echo htmlspecialchars($anuncio['IdAnuncio']); ?>">
-                                    <img class="imagen_anuncio" src="img/<?php echo htmlspecialchars($anuncio['FPrincipal']); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>">
+                                    <?php $src_anuncio = ruta_imagen($anuncio['FPrincipal']); ?>
+                                    <img class="imagen_anuncio" src="<?php echo htmlspecialchars($src_anuncio); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>">
                                 </a>
                                 
                                 <header class="info_anuncio">

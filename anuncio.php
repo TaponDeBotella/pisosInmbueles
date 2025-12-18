@@ -158,7 +158,8 @@
         <h2>Anuncio de <?php echo $anuncio['NomTAnuncio']; ?></h2>
         <h3><?php echo $anuncio['NomTVivienda']; ?></h3>
         <figure>
-            <img id="carrusel" src="img/<?php echo $anuncio['FPrincipal']; ?>" alt="<?php echo $anuncio['Alternativo']; ?>">
+            <?php $srcPrincipal = ruta_imagen($anuncio['FPrincipal']); ?>
+            <img id="carrusel" src="<?php echo htmlspecialchars($srcPrincipal); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>">
             
             <figcaption>Foto de <?php echo strtolower($anuncio['NomTVivienda']); ?></figcaption>
             
@@ -245,8 +246,10 @@
         <figure>
             <?php
                 // Muestro todas las fotos en miniaturas porque lo pide el enunciado, esto en un futuro se sustituira por el carrusel al principio si le parece bien al profesor
-                for($i = 0; $i < count($fotos) && $i < 4; $i++) 
-                    echo '<img class="miniatura" src="img/'.htmlspecialchars($fotos[$i]['Foto']).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
+                for($i = 0; $i < count($fotos) && $i < 4; $i++) {
+                    $ruta = ruta_imagen($fotos[$i]['Foto']);
+                    echo '<img class="miniatura" src="'.htmlspecialchars($ruta).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
+                }
             ?>
         <nav id="masFotos">
             <a href="ver_fotos.php?idAnuncio=<?php echo htmlspecialchars($idAnuncio); ?>">Ver más fotos</a>

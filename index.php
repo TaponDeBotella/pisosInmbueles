@@ -131,7 +131,7 @@
                         <li id="destacado">
                             <article>
                                 <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['IdAnuncio']).'">
-                                    <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Alternativo']).'">
+                                        <img class="imagen_articulo" src="'.htmlspecialchars(ruta_imagen($anuncios_recomendados[$anuncio_ganador]['FPrincipal'])).'" alt="'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Alternativo']).'">
                                 </a>
                                 <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['IdAnuncio']).'" class="a_tituloPublicacion">
                                     <h2>'.htmlspecialchars($anuncios_recomendados[$anuncio_ganador]['Titulo']).'</h2>
@@ -310,10 +310,11 @@
                 <?php
 
                 for($i=0; $i<5; $i++) {    
-                    echo '<li>
+                        $src = ruta_imagen($anuncios[$i]['FPrincipal']);
+                        echo '<li>
                             <article>
                                 <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios[$i]['IdAnuncio']).'">
-                                    <img class="imagen_articulo" src="img/'.htmlspecialchars($anuncios[$i]['FPrincipal']).'" alt="'.htmlspecialchars($anuncios[$i]['Alternativo']).'">
+                                        <img class="imagen_articulo" src="'.htmlspecialchars($src).'" alt="'.htmlspecialchars($anuncios[$i]['Alternativo']).'">
                                 </a>
                                 <a href="anuncio.php?idAnuncio='.htmlspecialchars($anuncios[$i]['IdAnuncio']).'" class="a_tituloPublicacion">
                                     <h2>'.htmlspecialchars($anuncios[$i]['Titulo']).'</h2>

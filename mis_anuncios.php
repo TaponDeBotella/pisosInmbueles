@@ -52,7 +52,8 @@
                 <li> <!-- para cada vez que se de la condicion del if inyectara un nuevo elemento a la lista siguiendo la estructura del index pero metiendo los valores que pone en el enunciado -->
                     <article> 
                         <a  href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>">
-                            <img class="imagen_articulo" src="img/<?php echo $anuncio['FPrincipal']; ?>" alt="<?php echo $anuncio['Alternativo']; ?>">
+                            <?php $src_img = ruta_imagen($anuncio['FPrincipal']); ?>
+                            <img class="imagen_articulo" src="<?php echo htmlspecialchars($src_img); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>">
                         </a>
                         <a href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>" class="a_tituloPublicacion">
                             <h2><?php echo $anuncio['Titulo']; ?></h2>

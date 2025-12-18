@@ -76,6 +76,9 @@
                         <a href="includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
                     </li>
                     <li>
+                        <a href="exportar_datos.php"><i class="fa-solid fa-download"></i>Exportar mis datos</a>
+                    </li>
+                    <li>
                         <button onclick="abrirModalBaja()" class="boton"><i class="fa-solid fa-user-minus"></i>Darme de baja</button> <!-- le anyado lo de la ventana modal para confirmar si el usuario de verdad quiere borrar la cuenta -->
                     </li>
                 </ul>

@@ -1,0 +1,2 @@
+http://localhost/pisosInmbueles/feed.php?formato=rss
+http://localhost/pisosInmbueles/feed.php?formato=atom

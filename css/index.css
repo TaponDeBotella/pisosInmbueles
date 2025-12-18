@@ -114,6 +114,19 @@ nav label[for="burger_menu_consejos"] {
     border-radius: 4px;
 }
 
+#cont_graf_barras {
+    display: block;
+    padding: 2em 0 2em 0;
+    text-align: center;
+    align-content: center;
+}
+
+#graf_barras {
+    display: inline-block;
+    align-self: center;
+    margin: auto;
+}
+
 .menu_head .submenu_importancia {
     display: none;
     list-style: none;

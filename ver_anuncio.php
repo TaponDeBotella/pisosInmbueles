@@ -204,36 +204,22 @@
             ?>
         </figure>
 
-        <form method="post">   
+        <form method="post" action="respuesta_nueva_foto.php" enctype="multipart/form-data">   
             <section>
                 <h3>¿Añadir una nueva foto?</h3>
-                <label for="labelAnuncioAElegir">Elige el anuncio al que quieres añadir la foto</label>
-                <select class="input_select" disabled name="anuncio" id="anuncio">
-                    <?php
-                        for($i=0; $i<sizeof($anuncios_del_usuario); $i++){
-                            $cadena = '<option';
-                            if($anuncios_del_usuario[$i]['idAnuncio'] == $anuncio['idAnuncio']) 
-                                $cadena .= ' selected';
+                <!-- enviar el id del anuncio como campo oculto -->
+                <input type="hidden" name="anuncio" value="<?php echo htmlspecialchars($idAnuncio); ?>">
 
-                            $cadena .= ' value="'.htmlspecialchars($anuncios_del_usuario[$i]['idAnuncio']).'">'.htmlspecialchars($anuncios_del_usuario[$i]['titulo']).'</option>';
-
-                            echo $cadena;
-                        }
-                    ?>
-                </select>
-                
                 <label for="labelTitulo">Título de la foto</label>
                 <input class="input_select" required type="text" id="titulo" name="titulo">
-                
+
                 <label for="labelTextoAlternativo">Texto alternativo</label>
                 <textarea class="input_select" required minlength="10" name="textoAlternativo" id="textoAlternativo"></textarea>
 
-                <label for="labelFoto">Foto: </label>
-                <label for="foto" class="boton" id="examinar" name="examinar">Examinar </label>
-                <!-- <input type="file" accept="image/*" required> -->
-                <input required id="foto" type="file" style="display:none;">
+                <label for="labelFoto">Foto</label>
+                <input id="foto" type="file" name="foto" required accept="image/*">
 
-                <input type="submit" class="boton">
+                <input type="submit" class="boton" value="Subir foto">
             </section>
         </form>
 

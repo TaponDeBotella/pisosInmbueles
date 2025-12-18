@@ -48,6 +48,17 @@
     
     include 'includes/header.php';
 
+    $query_fotos = $db->query(' SELECT COUNT(*) AS num_fotos
+                                FROM Fotos
+                                WHERE FRegistro >= DATE_SUB(NOW(), INTERVAL 7 DAY);');
+
+    if(!$query_fotos) {
+        die('Error: '.$db->error);
+    }
+
+    $fila = $query_fotos->fetch_assoc();
+    $num_fotos_7_dias = intval($fila['num_fotos']);
+
     $query_anuncios = $db->query('SELECT FPrincipal, Alternativo, Titulo, Precio, FRegistro, NomPais, Ciudad, Texto, NomTAnuncio, IdAnuncio FROM Anuncios a, TiposAnuncios ta, Paises p WHERE a.TAnuncio = ta.IdTAnuncio AND a.Pais = p.IdPais ORDER BY FRegistro DESC'); // query a la db donde se filtra ya por FRegistro para obtener los mas recientes y se obtiene el nombre del pais y el tipo de anuncio
     
     if (!$query_anuncios) { // comprobacion de si hay query_anuncios
@@ -121,6 +132,13 @@
                 <input type="submit" value="Confirmar" id="boton_buscar" class="boton">
             </form> 
         </section>
+        <figure id="cont_graf_barras">
+            <?php
+
+                echo '<img id="graf_barras" src="includes/gd_optativa.php?ancho=350&alto=300&grosor_ejes=5&salto_eje=5&valor_eje='.htmlspecialchars($num_fotos_7_dias).'">';
+
+            ?>
+        </figure>
         <h2>Anuncio destacado</h2>
         <section class="sectionArticulos">
             <ul class="ul_articulos">

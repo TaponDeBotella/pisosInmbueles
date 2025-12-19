@@ -13,33 +13,7 @@
         $texto_alternativo_foto = isset($_POST['textoAlternativo']) ? trim($_POST['textoAlternativo']) : ''; // se guarda el texto alternativo
         $idAnuncio = isset($_POST['anuncio']) ? (int)$_POST['anuncio'] : 0; // id del anuncio
         
-        // si el titulo esta vacio se manda el error
-        if (empty($titulo_foto)) {
-            header('Location: nueva_foto.php?error=titulo_vacio');
-            exit;
-        }
-        
-        // si el texto alternativo esta vacio se manda el error
-        if (empty($texto_alternativo_foto)) {
-            header('Location: nueva_foto.php?error=texto_alternativo_vacio');
-            exit;
-        }
-        
-        // si el texto alternativo es menor a 10 caracteres se manda el error
-        if (strlen($texto_alternativo_foto) < 10) {
-            header('Location: nueva_foto.php?error=texto_alternativo_corto');
-            exit;
-        }
-        
-        // si el texto alternativo empieza por una palabra redundante se manda el error
-        $textoAlternativoLower = strtolower(trim($texto_alternativo_foto));
-        $palabras_redundantes = array('foto', 'imagen', 'picture', 'image', 'photo');
-        foreach ($palabras_redundantes as $palabra) {
-            if (strpos($textoAlternativoLower, $palabra) === 0) {
-                header('Location: nueva_foto.php?error=texto_alternativo_redundante');
-                exit;
-            }
-        }
+
         
         // si el id del anuncio no existe se manda el error
         if ($idAnuncio <= 0) {
@@ -77,6 +51,8 @@
 
         require_once 'includes/funciones_registro.php';
         $rutas_subidas = array();
+        $titulos_subidos = array();
+        $alternativos_subidos = array();
 
         // normalizar $_FILES['foto'] a estructura de arrays aunque el formulario envíe un solo fichero
         $files = $_FILES['foto'];
@@ -90,7 +66,27 @@
             );
         }
 
+        $regex = "/^<<(?P<valor>[\p{Latin}\p{M}\p{N}\s\.\-\_\'\,]+)>>$/um";
+
+        $data_titulos = [];
+        $data_alternativos = [];
+
+        $titulo_foto = explode('>>', $titulo_foto); // separo por el delimitador
+        $texto_alternativo_foto = explode('>>', $texto_alternativo_foto); // separo por el delimitador
+
+        foreach($titulo_foto as $titulo) { // saco los titulos
+            if(preg_match($regex, $titulo.'>>', $valores))
+                $data_titulos[] = $valores['valor'];
+        }
+
+        foreach($texto_alternativo_foto as $alternativo) { // saco los textos alternativos
+            if(preg_match($regex, $alternativo.'>>', $valores))
+                $data_alternativos[] = $valores['valor'];
+        }
+
+
         for ($i = 0; $i < count($files['name']); $i++) {
+            
             // se comprueba que se haya subido un archivo: ignorar inputs vacíos, abortar en otros errores
             if (!isset($files['error'][$i])) {
                 continue;
@@ -139,7 +135,16 @@
                                 unlink($rutaFoto);
                             }
                         } else { // si no hay error se ejecuta la consulta
-                            $titulo_foto = $archivo['name']; // se le pone el nombre que tenia el archivo original
+                            if (count($data_titulos) > $i && $data_titulos[$i] !== '') 
+                                $titulo_foto = $data_titulos[$i];
+                            else
+                                $titulo_foto = 'predeterminado';
+
+                            if (count($data_alternativos) > $i && $data_alternativos[$i] !== '') 
+                                $texto_alternativo_foto = $data_alternativos[$i];
+                            else
+                                $texto_alternativo_foto = 'predeterminado';
+
                             $stmt->bind_param('sssi', $titulo_foto, $rutaFoto, $texto_alternativo_foto, $idAnuncio);
                             
                             if (!$stmt->execute()) { // si hay error al ejecutar se manda el error
@@ -151,6 +156,8 @@
                             } else { // si no hay error se indica que la foto se agrego correctamente
                                 $foto_agregada = true;
                                 $rutas_subidas[] = $rutaFoto;
+                                $titulos_subidos[] = $titulo_foto;
+                                $alternativos_subidos[] = $texto_alternativo_foto;
     
                                 // Si el anuncio no tiene foto principal, usar esta como foto principal
                                 $stmt_get = $db->prepare('SELECT FPrincipal FROM Anuncios WHERE IdAnuncio = ?');
@@ -197,18 +204,23 @@
                 echo '<h3>Fotos agregadas con éxito</h3>';
                 echo '<article>';
                 echo '<p>Las fotos han sido agregadas correctamente al anuncio.</p>';
-                echo '<p><strong>Título:</strong> ' . htmlspecialchars($titulo_foto) . '</p>';
-                echo '<p><strong>Texto alternativo:</strong> ' . htmlspecialchars($texto_alternativo_foto) . '</p>';
                 // se muestran las fotos subidas
                 if (!empty($rutas_subidas)) {
                     echo '<p><strong>Fotos subidas:</strong></p>';
-                    foreach ($rutas_subidas as $rf) {
-                        if (file_exists($rf)) {
-                            echo '<img src="' . htmlspecialchars($rf) . '" alt="' . htmlspecialchars($texto_alternativo_foto) . '" style="max-width: 200px; height: auto; margin-right:8px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">';
-                        }
+                    foreach ($rutas_subidas as $idx => $rf) {
+                        if (!file_exists($rf)) continue;
+                        $t = isset($titulos_subidos[$idx]) ? $titulos_subidos[$idx] : '';
+                        $a = isset($alternativos_subidos[$idx]) ? $alternativos_subidos[$idx] : '';
+                        echo '<div style="display:inline-block; margin-right:12px; text-align:left;">';
+                        echo '<p style="margin:4px 0;"><strong>Título:</strong> ' . htmlspecialchars($t) . '</p>';
+                        echo '<p style="margin:4px 0;"><strong>Alt:</strong> ' . htmlspecialchars($a) . '</p>';
+                        echo '<img src="' . htmlspecialchars($rf) . '" alt="' . htmlspecialchars($a) . '" style="max-width: 200px; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">';
+                        echo '</div>';
                     }
                 } elseif (isset($rutaFoto) && file_exists($rutaFoto)) {
                     echo '<p><strong>Foto subida:</strong></p>';
+                    echo '<p><strong>Título:</strong> ' . htmlspecialchars($titulo_foto) . '</p>';
+                    echo '<p><strong>Texto alternativo:</strong> ' . htmlspecialchars($texto_alternativo_foto) . '</p>';
                     echo '<img src="' . htmlspecialchars($rutaFoto) . '" alt="' . htmlspecialchars($texto_alternativo_foto) . '" style="max-width: 400px; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">';
                 }
                 echo '</article>';

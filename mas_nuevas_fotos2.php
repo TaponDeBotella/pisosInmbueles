@@ -84,10 +84,12 @@
                 </select>
                 
                 <label for="labelTitulo">Título de la primera foto</label>
+                <label for="labelTitulo">Para cada foto que añadas, pon un título contenido en << >></label>
                 <input class="input_select" required type="text" id="titulo" name="titulo">
                 
                 <label for="labelTextoAlternativo">Texto alternativo</label>
-                <textarea class="input_select" required minlength="10" name="textoAlternativo" id="textoAlternativo"></textarea>
+                <label for="labelTitulo">Para cada foto que añadas, pon un texto alternativo contenido en << >></label>
+                <textarea class="input_select" required name="textoAlternativo" id="textoAlternativo"></textarea>
                 
                 <label for="labelFoto">Archivo de la foto</label>
                 <label for="foto" class="boton" id="examinar">Examinar </label>

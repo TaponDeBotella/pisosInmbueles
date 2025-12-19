@@ -59,8 +59,13 @@
     }
 
     $stmt->close();
-    
+
     $es_propietario = isset($_SESSION['id_usuario']) && $anuncio['Usuario'] == $_SESSION['id_usuario']; // compruebo si el usuario es el propietario del anuncio para saber si puede borrar fotos o no
+
+    // paginacion: obtener pagina actual (0-index) y tamannio por pagina
+    $pag_actual = isset($_GET['pag_actual']) ? intval($_GET['pag_actual']) : 0;
+    if(!isset($tam_paginacion)) 
+        $tam_paginacion = 5; // por defecto 5 fotos por pagina
 ?>
 
 
@@ -75,26 +80,28 @@
     <h2><?php echo htmlspecialchars($anuncio['Titulo']).' | '.htmlspecialchars($anuncio['Ciudad']).' | '.htmlspecialchars($anuncio['NomPais']).' | '.htmlspecialchars(round($anuncio['Precio'], 0)).htmlspecialchars($tipo_precio); ?></h2>
     
     <figure>
-            <?php
-                for($i = 0; $i < count($fotos); $i++) {
-                    echo '<article class="contenedor_foto">';
-                    echo '<h2>'.htmlspecialchars($fotos[$i]['Titulo']).'</h2>';
-                    // si la foto tiene ruta completa (la carpeta de fotosSubidas) se usa
-                    // si no entonces se asume que es una foto antigua en img (porque no voy a cambiar las fotos antiguas de momento)
-                    $rutaFoto = $fotos[$i]['Foto'];
-                    if(strpos($rutaFoto, 'fotosSubidas/') !== 0 && strpos($rutaFoto, '/') === false) {
-                        $rutaFoto = 'img/' . $rutaFoto;
-                    }
-                    echo '<img src="'.htmlspecialchars($rutaFoto).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
-                    if ($es_propietario) {
-                        echo '<button class="boton" onclick="abrirModalBorrarFoto('.htmlspecialchars($fotos[$i]['IdFoto']).', \''.htmlspecialchars($fotos[$i]['Titulo']).'\')"><i class="fa-solid fa-circle-xmark"></i></button>';
-                    }
-                    echo '</article>';
+        <?php
+            $cont = 0;
+            for ($i = $pag_actual * $tam_paginacion; $i < count($fotos) && $cont < $tam_paginacion; $cont++, $i++) {
+                echo '<article class="contenedor_foto">';
+                echo '<h2>'.htmlspecialchars($fotos[$i]['Titulo']).'</h2>';
+                // si la foto tiene ruta completa (la carpeta de fotosSubidas) se usa
+                // si no entonces se asume que es una foto antigua en img
+                $rutaFoto = $fotos[$i]['Foto'];
+                if (strpos($rutaFoto, 'fotosSubidas/') !== 0 && strpos($rutaFoto, '/') === false) {
+                    $rutaFoto = 'img/' . $rutaFoto;
                 }
-            ?>
+                $src_img = ruta_imagen($rutaFoto);
+                echo '<img src="'.htmlspecialchars('includes/gd_optativa.php?f=' . urlencode($src_img)).'" alt="'.htmlspecialchars($fotos[$i]['Alternativo']).'">';
+                if ($es_propietario) {
+                    echo '<button class="boton" onclick="abrirModalBorrarFoto(' . htmlspecialchars($fotos[$i]['IdFoto']) . ', \'' . addslashes(htmlspecialchars($fotos[$i]['Titulo'])) . '\')"><i class="fa-solid fa-circle-xmark"></i></button>';
+                }
+                echo '</article>';
+            }
+        ?>
     </figure>
 
-    <?php if ($es_propietario): ?> <!-- si el usuario es el duenyo entonces va a poder borrar las fotos, si no no-->
+    <?php if ($es_propietario): ?>
         <!-- la ventana modal para que el usuario pueda confirmar lo de borrar la foto -->
         <section id="modalBorrarFoto"> <!--esto es un copia pega de la ventana modal del borrar anuncio literalmente -->
             <section id="ventanaModalFoto">
@@ -126,6 +133,36 @@
             }
         </script>
     <?php endif; ?>
+
+    <!-- paginacion -->
+    <section id="paginacion">
+        <nav>
+            <?php 
+                $pag_real = $pag_actual + 1;
+                if($pag_actual == 0) {
+                    echo '<a class="boton">&larr;</a>';
+                    echo '<p>'.htmlspecialchars($pag_real).'</p>';
+                    if(count($fotos) <= $tam_paginacion)
+                        echo '<a class="boton">&rarr;</a>';
+                    else
+                        echo '<a href="ver_fotos.php?idAnuncio='.htmlspecialchars($idAnuncio).'&pag_actual='.htmlspecialchars($pag_actual+1).'" class="boton">&rarr;</a>';
+                }
+                else if(($pag_actual+1)*$tam_paginacion < count($fotos)) {
+                    echo '<a href="ver_fotos.php?idAnuncio='.htmlspecialchars($idAnuncio).'&pag_actual='.htmlspecialchars($pag_actual-1).'" class="boton">&larr;</a>';
+                    echo '<p>'.htmlspecialchars($pag_real).'</p>';
+                    echo '<a href="ver_fotos.php?idAnuncio='.htmlspecialchars($idAnuncio).'&pag_actual='.htmlspecialchars($pag_actual+1).'" class="boton">&rarr;</a>';
+                }
+                else {
+                    echo '<a href="ver_fotos.php?idAnuncio='.htmlspecialchars($idAnuncio).'&pag_actual='.htmlspecialchars($pag_actual-1).'" class="boton">&larr;</a>';
+                    echo '<p>'.htmlspecialchars($pag_real).'</p>';
+                    if(($pag_actual+1)*$tam_paginacion < count($fotos))
+                        echo '<a href="ver_fotos.php?idAnuncio='.htmlspecialchars($idAnuncio).'&pag_actual='.htmlspecialchars($pag_actual+1).'" class="boton">&rarr;</a>';
+                    else
+                        echo '<a class="boton">&rarr;</a>';
+                }
+            ?>
+        </nav>
+    </section>
 
 <?php
     include 'includes/footer.php';

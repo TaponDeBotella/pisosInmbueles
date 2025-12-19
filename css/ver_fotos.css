@@ -4,15 +4,26 @@ h2 {
 
 .contenedor_foto {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin: 1em;
     text-align: center;
+    vertical-align: middle;
+    min-height: 140px; 
 }
 
 .contenedor_foto img {
     max-width: 400px;
     height: auto;
     display: block;
+    margin: 0 auto;
+}
+
+figure {
+    text-align: center;
+    margin: 0 auto;
 }
 
 .contenedor_foto h2 {
@@ -20,7 +31,11 @@ h2 {
     padding: 0.5em 0;
 }
 
-/* modal para borrar foto */
+.contenedor_foto h2 {
+    margin: 0;
+    padding: 0.5em 0;
+}
+
 #modalBorrarFoto {
     position: fixed;
     top: 0;
@@ -57,4 +72,32 @@ h2 {
     gap: 1em;
     justify-content: center;
     margin-top: 2em;
+}
+
+#paginacion {
+    margin-top: 1.5rem;
+}
+#paginacion nav {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+}
+#paginacion nav p {
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    font-weight: 700;
+}
+#paginacion nav a.boton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+@media (max-width: 420px) {
+    #paginacion nav { gap: 0.5rem; }
+    #paginacion nav p { font-size: 0.95rem; }
 }

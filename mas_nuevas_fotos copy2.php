@@ -61,7 +61,7 @@
             }
         ?>
 
-        <form method="post" action="respuesta_mas_nuevas_fotos.php" enctype="multipart/form-data">   
+        <form method="post" action="respuesta_mas_nuevas_fotos2.php" enctype="multipart/form-data">   
             <section>
                 <h3>¿Añadir una nueva foto?</h3>
                 <label for="labelAnuncioAElegir">Elige el anuncio al que quieres añadir la foto</label>
@@ -83,8 +83,11 @@
                     ?>
                 </select>
                 
-                <!-- El título será el nombre original del archivo; el texto alternativo se asigna por defecto -->
-                <input type="hidden" name="textoAlternativo" value="Predeterminado">
+                <label for="labelTitulo">Título de la primera foto</label>
+                <input class="input_select" required type="text" id="titulo" name="titulo">
+                
+                <label for="labelTextoAlternativo">Texto alternativo</label>
+                <textarea class="input_select" required minlength="10" name="textoAlternativo" id="textoAlternativo"></textarea>
                 
                 <label for="labelFoto">Archivo de la foto</label>
                 <label for="foto" class="boton" id="examinar">Examinar </label>

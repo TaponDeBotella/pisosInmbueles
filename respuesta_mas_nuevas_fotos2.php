@@ -13,7 +13,11 @@
         $texto_alternativo_foto = isset($_POST['textoAlternativo']) ? trim($_POST['textoAlternativo']) : ''; // se guarda el texto alternativo
         $idAnuncio = isset($_POST['anuncio']) ? (int)$_POST['anuncio'] : 0; // id del anuncio
         
-        // El título se tomará del nombre original del archivo; no es obligatorio en el formulario
+        // si el titulo esta vacio se manda el error
+        if (empty($titulo_foto)) {
+            header('Location: nueva_foto.php?error=titulo_vacio');
+            exit;
+        }
         
         // si el texto alternativo esta vacio se manda el error
         if (empty($texto_alternativo_foto)) {

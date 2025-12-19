@@ -73,6 +73,9 @@
                         <a href="nueva_foto.php"><i class="fa-solid fa-square-plus"></i>Añadir una foto a un anuncio</a>
                     </li>
                     <li>
+                        <a href="mas_nuevas_fotos.php"><i class="fa-solid fa-square-plus"></i>Añadir aún más fotos a un anuncio</a>
+                    </li>
+                    <li>
                         <a href="includes/logout.php"><i class="fa-solid fa-right-from-bracket"></i>Salir</a>
                     </li>
                     <li>

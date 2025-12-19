@@ -3,7 +3,7 @@
     include 'includes/iniciarDB.php'; // se abre la conexion con la base de datos
     require_once 'includes/funciones.php';
     
-    $tam_paginacion = 2; // tamanyo de la paginacion para alla donde haya paginacion
+    $tam_paginacion = 10; // tamanyo de la paginacion para alla donde haya paginacion
 
     // verificar si hay cookies y si no hay sesion activa
     if(!isset($_SESSION['logueado']) && isset($_COOKIE['recordarme_email']) && isset($_COOKIE['recordarme_password'])) {

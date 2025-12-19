@@ -6,7 +6,7 @@
     $acceder="Acceder";
     include 'includes/header.php';   
     include 'includes/anuncios.php';
-    include 'includes/funciones.php';
+    include_once 'includes/funciones.php';
 
     // si el usuario ha enviado el formulario de busqueda se recogen los datos por si hay que hacer filtros para los anuncios que se ven
     // si hay algun campo vacio entonces se pone una cadena vacia para que no de error al hacer la consulta por si acaso

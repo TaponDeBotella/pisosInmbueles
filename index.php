@@ -4,7 +4,7 @@
     $title = "Inicio";
     $acceder = "Acceder";
     $css = "css/index.css";
-    include 'includes/funciones.php';
+    include_once 'includes/funciones.php';
     
     require_once 'includes/extraer_experto.php';
 
@@ -135,7 +135,7 @@
         <figure id="cont_graf_barras">
             <?php
 
-                echo '<img id="graf_barras" src="includes/gd_optativa.php?ancho=350&alto=300&grosor_ejes=5&salto_eje=5&valor_eje='.htmlspecialchars($num_fotos_7_dias).'">';
+                echo '<img id="graf_barras" src="includes/grafica_barras.php?ancho=350&alto=300&grosor_ejes=5&salto_eje=5&valor_eje='.htmlspecialchars($num_fotos_7_dias).'">';
 
             ?>
         </figure>

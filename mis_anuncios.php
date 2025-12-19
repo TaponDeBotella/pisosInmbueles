@@ -4,9 +4,14 @@
     $title = "Mis anuncios";
     $acceder = "Acceder";
     $css = "css/mis_anuncios.css";
-    include 'includes/header.php';
+    include_once 'includes/header.php';
     
     $anuncios = [];
+
+    $pag_actual = 0;
+
+    if(isset($_GET['pag_actual'])) 
+        $pag_actual = intval($_GET['pag_actual']);
 
     $stmt = $db->prepare( // preparo la consulta (para evitar inyeccion sql, se pone ? donde se debe poner un parametro)
         "SELECT a.Superficie, a.NHabitaciones, a.NBanyos, a.Planta, a.Anyo, NomUsuario,
@@ -45,7 +50,8 @@
         <section id="sectionArticulos">
             <ul id="ul_articulos">
             <?php
-                for($i=0; $i<sizeof($anuncios); $i++) { // recorro los anuncios con un bucle
+                $cont = 0; // contador de anuncios cargados
+                for($i=(0 + $pag_actual*$tam_paginacion); $i<count($anuncios) && $cont < $tam_paginacion; $cont++, $i++) { // recorro los anuncios con un bucle
                     $anuncio = $anuncios[$i]; // para cada iteracion selecciono un anuncio
                     
             ?> <!-- en php se pueden abrir y cerrar las etiquetas php cuando quiera. Puedo cortar el if y el for y cerrarlos mas abajo para no tener que hacer un echo gigante -->
@@ -53,7 +59,7 @@
                     <article> 
                         <a  href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>">
                             <?php $src_img = ruta_imagen($anuncio['FPrincipal']); ?>
-                            <img class="imagen_articulo" src="<?php echo htmlspecialchars($src_img); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>">
+                            <img class="imagen_articulo" src="<?php echo htmlspecialchars('includes/gd_optativa.php?f=' . urlencode($src_img)); ?>" alt="<?php echo htmlspecialchars($anuncio['Alternativo']); ?>">
                         </a>
                         <a href="anuncio.php?idAnuncio=<?php echo $anuncio['IdAnuncio']; ?>" class="a_tituloPublicacion">
                             <h2><?php echo $anuncio['Titulo']; ?></h2>
@@ -101,6 +107,43 @@
             </ul>
         </section>
 
+
+        <section id="paginacion">
+            <nav>
+                <?php 
+                
+                    $pag_real = $pag_actual+1; 
+                    
+                    if($pag_actual == 0) {
+                        echo '<a class="boton">&larr;</a>';
+                        echo '<p>'.htmlspecialchars($pag_real).'</p>';
+                        
+                        if(count($anuncios) <= $tam_paginacion)
+                            echo '<a class="boton">&rarr;</a>';
+                        else
+                            echo '<a href="mis_anuncios.php?pag_actual='.htmlspecialchars($pag_actual+1).'" class="boton">&rarr;</a>';
+                    }
+                    else if(($pag_actual+1)*$tam_paginacion < count($anuncios)) {
+                        echo '<a href="mis_anuncios.php?pag_actual='.htmlspecialchars($pag_actual-1).'" class="boton">&larr;</a>';
+                        echo '<p>'.htmlspecialchars($pag_real).'</p>';
+                        echo '<a href="mis_anuncios.php?pag_actual='.htmlspecialchars($pag_actual+1).'" class="boton">&rarr;</a>';
+                    }
+                    else {
+                        echo '<a href="mis_anuncios.php?pag_actual='.htmlspecialchars($pag_actual-1).'" class="boton">&larr;</a>';
+                        echo '<p>'.htmlspecialchars($pag_real).'</p>';
+
+
+                        if(($pag_actual+1)*$tam_paginacion < count($anuncios))
+                            echo '<a href="mis_anuncios.php?pag_actual='.htmlspecialchars($pag_actual+1).'" class="boton">&rarr;</a>';
+                        else
+                            echo '<a class="boton">&rarr;</a>';
+                    }
+                
+                
+                ?>
+            </nav>
+        </section>
+
         <a id="nuevoAnuncio" href="crear_anuncio.php">¿Crear nuevo anuncio?</a>
 
         <!-- la ventana modal para que el usuario pueda confirmar lo de borrar el anuncio -->
@@ -130,6 +173,6 @@
             }
         </script>
 <?php
-    include 'includes/footer.php';
+    include_once 'includes/footer.php';
 ?>
 

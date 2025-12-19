@@ -32,6 +32,12 @@ a:hover {
     padding-left: 0; /* para que no se quede tirado a la derecha los articles */
 }
 
+.imagen_articulo {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
 article {
     position: relative;
     width: 90%;
@@ -43,11 +49,16 @@ article {
     margin: 30px;
 }
 
-.imagen_articulo { 
-    width: 100%;
-    height: 200px;
-    object-fit: cover;        /* para que las fotos no se vean deformes */        
-    border-radius: 10px 10px 0px 0px;
+
+/* !important hacen que se ignore otras reglas, habria que usar una id, pero como tendria que autogenerar los id me parece mas simple asi */
+.imagen_articulo {
+    display: block;
+    max-width: 300px !important; /* limita el ancho de la miniatura */
+    width: auto !important; /* no forzar el ancho al 100% para evitar upscaling */
+    height: auto !important; /* conservar proporción */
+    object-fit: cover; /* opcional: cover/contain según prefieras */
+    border-radius: 10px 10px 0 0;
+    margin: 0 auto !important;
 }
 
 .a_tituloPublicacion {

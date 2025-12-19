@@ -22,8 +22,20 @@
         $anuncios_del_usuario[] = $fila;
     }
     
-    // Preseleccionar el primer anuncio si existe
-    $anuncio_seleccionado = !empty($anuncios_del_usuario) ? $anuncios_del_usuario[0]['IdAnuncio'] : null;
+    // Preseleccionar el anuncio pasado por GET (si existe y pertenece al usuario)
+    $anuncio_seleccionado = null;
+    if (isset($_GET['anuncio'])) {
+        $anuncio_get = intval($_GET['anuncio']);
+        foreach ($anuncios_del_usuario as $an) {
+            if ($an['IdAnuncio'] == $anuncio_get) {
+                $anuncio_seleccionado = $anuncio_get;
+                break;
+            }
+        }
+    }
+    if ($anuncio_seleccionado === null && !empty($anuncios_del_usuario)) {
+        $anuncio_seleccionado = $anuncios_del_usuario[0]['IdAnuncio'];
+    }
         
     ?>
         <script src="js/otras_funciones.js"></script>

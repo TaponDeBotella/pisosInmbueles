@@ -92,7 +92,7 @@
                 echo '<p><strong>Título:</strong> ' . htmlspecialchars($titulo_anuncio) . '</p>';
                 echo '<p>Ahora puedes añadir tu primera fotografía al anuncio.</p>';
                 echo '<nav>';
-                echo '<a href="nueva_foto.php" class="boton">Añadir foto</a>';
+                echo '<a href="nueva_foto.php?anuncio=' . urlencode($id_anuncio_creado) . '" class="boton">Añadir foto</a>';
                 echo '<a href="mis_anuncios.php" class="boton">Ver mis anuncios</a>';
                 echo '</nav>';
                 echo '</section>';
